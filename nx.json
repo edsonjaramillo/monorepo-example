@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["{options.outputPath}"],
+      "cache": true
+    },
+    "dev": {
+      "dependsOn": [],
+      "cache": false
+    }
+  }
+}

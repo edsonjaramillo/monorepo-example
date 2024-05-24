@@ -1,0 +1,19 @@
+{
+  "name": "monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "nx run-many --target=build",
+    "clean": "nx run-many --target=clean",
+    "clean_node_modules": "nx run-many --target=clean_node_modules",
+    "dev": "nx run-many --target=dev"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "4.3.0",
+    "nx": "19.0.7",
+    "prettier-plugin-tailwindcss": "0.5.14",
+    "prettier": "3.2.5",
+    "tailwindcss": "3.4.3",
+    "typescript": "5.4.5"
+  }
+}

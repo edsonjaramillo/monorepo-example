@@ -1,0 +1,34 @@
+# monorepo
+.nx
+
+# core
+node_modules
+
+# next
+.next
+/out/
+next-env.d.ts
+.vercel
+
+# testing
+/coverage
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# environment
+.env.local
+.env.development
+
+# hidden
+.DS_Store
+*.pem
+
+# build
+build
+dist
