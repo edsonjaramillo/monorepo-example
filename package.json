@@ -6,7 +6,9 @@
     "build": "nx run-many --target=build",
     "clean": "nx run-many --target=clean",
     "clean_node_modules": "nx run-many --target=clean_node_modules",
-    "dev": "nx run-many --target=dev"
+    "dev": "nx run-many --target=dev",
+    "dev:server": "pnpm --filter server dev",
+    "dev:web": "pnpm --filter web dev"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.3.0",
