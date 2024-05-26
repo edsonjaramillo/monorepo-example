@@ -24,6 +24,7 @@ yarn-error.log*
 # environment
 .env.local
 .env.development
+.env
 
 # hidden
 .DS_Store
