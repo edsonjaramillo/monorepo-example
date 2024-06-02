@@ -1,17 +1,19 @@
 {
   "name": "server",
-  "type": "module",
+  "type": "commonjs",
   "module": "index.ts",
   "scripts": {
-    "build": "bun build index.ts --outfile=dist/index.js --minify --target=bun",
+    "build": "rm -rf dist && tsc",
     "db:generate": "env-cmd -f ./.env.local drizzle-kit generate",
     "db:migrate": "env-cmd -f ./.env.local tsx src/db/migrate.ts",
     "db:push": "env-cmd -f ./.env.local drizzle-kit push",
     "db:studio": "env-cmd -f ./.env.local drizzle-kit studio",
     "dev": "NODE_ENV=development bun --watch run index.ts",
-    "start": "bun run dist/index.js"
+    "start": "node dist/index.js",
+    "start:dev": "node --env-file=.env.local dist/index.js"
   },
   "dependencies": {
+    "@hono/node-server": "1.11.1",
     "drizzle-orm": "0.30.10",
     "hono": "4.3.2",
     "postgres": "3.4.4",
@@ -19,7 +21,6 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@types/bun": "latest",
     "@types/node": "20.12.12",
     "drizzle-kit": "0.21.4",
     "env-cmd": "10.1.0",

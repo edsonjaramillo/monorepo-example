@@ -35,6 +35,9 @@ importers:
 
   apps/server:
     dependencies:
+      '@hono/node-server':
+        specifier: 1.11.1
+        version: 1.11.1
       drizzle-orm:
         specifier: 0.30.10
         version: 0.30.10(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.9)(pg@8.11.5)(postgres@3.4.4)(react@18.3.1)
@@ -44,9 +47,6 @@ importers:
       postgres:
         specifier: 3.4.4
         version: 3.4.4
-      typescript:
-        specifier: 5.4.5
-        version: 5.4.5
       uuidv7:
         specifier: 1.0.0
         version: 1.0.0
@@ -69,6 +69,9 @@ importers:
       tsx:
         specifier: 4.11.0
         version: 4.11.0
+      typescript:
+        specifier: 5.4.5
+        version: 5.4.5
 
   apps/web:
     dependencies:
@@ -627,6 +630,10 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@hono/node-server@1.11.1':
+    resolution: {integrity: sha512-GW1Iomhmm1o4Z+X57xGby8A35Cu9UZLL7pSMdqDBkD99U5cywff8F+8hLk5aBTzNubnsFAvWQ/fZjNwPsEn9lA==}
+    engines: {node: '>=18.14.1'}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -2458,6 +2465,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.20.2':
     optional: true
+
+  '@hono/node-server@1.11.1': {}
 
   '@isaacs/cliui@8.0.2':
     dependencies:
