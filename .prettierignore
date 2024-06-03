@@ -9,3 +9,12 @@
 **/.next
 **/dist
 **/build
+
+# monorepo
+**/.nx
+
+# misc
+pnpm-lock.yaml
+pnpm-workspace.yaml
+README.md
+docker-compose.yaml
