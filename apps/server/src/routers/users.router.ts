@@ -1,13 +1,14 @@
 import { Hono } from 'hono';
 
 import { UsersQueries } from '../db/queries/users.queries';
+import { JSend } from '../utils/JSend';
 
 export const usersRouter = new Hono();
 
 usersRouter.get('/users', async (c) => {
   const users = await UsersQueries.getUsers();
 
-  return c.json({ users });
+  return c.json(JSend.success(users, 'Users fetched successfully'));
 });
 
 usersRouter.get('/users/:id', async (c) => {
@@ -16,8 +17,8 @@ usersRouter.get('/users/:id', async (c) => {
   const user = await UsersQueries.getUserById(id);
 
   if (!user) {
-    return c.json({ user }, 404);
+    return c.json(JSend.error('User not found'), 404);
   }
 
-  return c.json({ user });
+  return c.json(JSend.success(user, 'User fetched successfully'));
 });
