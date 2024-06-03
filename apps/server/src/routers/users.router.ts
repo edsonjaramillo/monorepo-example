@@ -5,13 +5,13 @@ import { JSend } from '../utils/JSend';
 
 export const usersRouter = new Hono();
 
-usersRouter.get('/users', async (c) => {
+usersRouter.get('/', async (c) => {
   const users = await UsersQueries.getUsers();
 
   return c.json(JSend.success(users, 'Users fetched successfully'));
 });
 
-usersRouter.get('/users/:id', async (c) => {
+usersRouter.get('/:id', async (c) => {
   const id = c.req.param('id');
 
   const user = await UsersQueries.getUserById(id);
@@ -23,7 +23,7 @@ usersRouter.get('/users/:id', async (c) => {
   return c.json(JSend.success(user, 'User fetched successfully'));
 });
 
-usersRouter.get('/users/:id/pets', async (c) => {
+usersRouter.get('/:id/pets', async (c) => {
   const id = c.req.param('id');
 
   const user = await UsersQueries.getUserWithPets(id);
