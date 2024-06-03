@@ -1,11 +1,16 @@
-type Data = Record<string, unknown> | Record<string, unknown>[];
+type PossibleData = Record<string, unknown> | Record<string, unknown>[];
+type Data<T = PossibleData> = T;
 
-export type SuccessResponse = { status: 'success'; data: Data; message: string };
+export type SuccessResponse<T> = { status: 'success'; data: Data<T>; message: string };
 export type ErrorResponse = { status: 'error'; data: undefined; message: string };
-export type InfoResponse = { status: 'info'; data: Data; message: string };
+export type InfoResponse<T> = { status: 'info'; data: Data<T>; message: string };
 export type WarningResponse = { status: 'warning'; data: undefined; message: string };
 
-type JSendResponse = SuccessResponse | ErrorResponse | InfoResponse | WarningResponse;
+type JSendResponse<T = PossibleData> =
+  | SuccessResponse<T>
+  | ErrorResponse
+  | InfoResponse<T>
+  | WarningResponse;
 
 export class JSend {
   static success(data: Data, message: string): JSendResponse {
