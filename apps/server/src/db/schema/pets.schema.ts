@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, varchar } from 'drizzle-orm/pg-core';
 
-import { createdAt, updatedAt, id } from './fields';
+import { createdAt, id, updatedAt } from './fields';
 import { usersTable } from './users.schema';
 
 export const petsTable = pgTable('pets', {

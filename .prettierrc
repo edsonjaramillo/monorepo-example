@@ -6,7 +6,7 @@
   "bracketSameLine": true,
   "importOrder": ["^ui", "^\\."],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": false,
+  "importOrderSortSpecifiers": true,
   "tailwindConfig": "./packages/config/tailwind.config.js",
   "tailwindAttributes": ["cva", "cn"],
   "tailwindFunctions": ["cva", "cn"]
