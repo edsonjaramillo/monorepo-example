@@ -1,1 +1,2 @@
-export { usersTable } from './users.schema';
+export * from './users.schema';
+export * from './pets.schema';
