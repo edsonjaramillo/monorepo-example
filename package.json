@@ -8,7 +8,8 @@
     "clean_node_modules": "nx run-many --target=clean_node_modules && rm -rf node_modules",
     "dev": "nx run-many --target=dev",
     "dev:server": "pnpm --filter server dev",
-    "dev:web": "pnpm --filter web dev"
+    "dev:web": "pnpm --filter web dev",
+    "format": "prettier --write . --cache --ignore-path .prettierignore --config .prettierrc"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.3.0",
