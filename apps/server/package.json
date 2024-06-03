@@ -1,7 +1,5 @@
 {
   "name": "server",
-  "type": "commonjs",
-  "module": "index.ts",
   "scripts": {
     "build": "rm -rf dist && tsc",
     "clean_node_modules": "rm -rf node_modules",
