@@ -4,7 +4,7 @@ import { db } from '../client';
 import { DEFAULT_PETS_COLUMNS } from '../columns/pets.columns';
 import { DEFAULT_USERS_COLUMNS } from '../columns/users.columns';
 import { usersTable } from '../schema';
-import type { UserCreate } from '../types/users.types';
+import type { UserCreate, UserUpdate } from '../types/users.types';
 
 export class UsersQueries {
   static async getUsers() {
@@ -41,5 +41,9 @@ export class UsersQueries {
       .prepare('getUserWithPets');
 
     return await query.execute({ id });
+  }
+
+  static async updateUser(id: string, user: UserUpdate) {
+    await db.update(usersTable).set(user).where(eq(usersTable.id, id));
   }
 }
