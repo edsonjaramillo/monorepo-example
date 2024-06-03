@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules"
   },
