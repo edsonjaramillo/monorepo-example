@@ -4,6 +4,7 @@
   "module": "index.ts",
   "scripts": {
     "build": "rm -rf dist && tsc",
+    "clean_node_modules": "rm -rf node_modules",
     "db:generate": "env-cmd -f ./.env.local drizzle-kit generate",
     "db:migrate": "env-cmd -f ./.env.local tsx src/db/migrate.ts",
     "db:push": "env-cmd -f ./.env.local drizzle-kit push",

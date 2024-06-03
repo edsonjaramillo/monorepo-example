@@ -5,7 +5,7 @@
   "scripts": {
     "build": "nx run-many --target=build",
     "clean": "nx run-many --target=clean",
-    "clean_node_modules": "nx run-many --target=clean_node_modules",
+    "clean_node_modules": "nx run-many --target=clean_node_modules && rm -rf node_modules",
     "dev": "nx run-many --target=dev",
     "dev:server": "pnpm --filter server dev",
     "dev:web": "pnpm --filter web dev"
