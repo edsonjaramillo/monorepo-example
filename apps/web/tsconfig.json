@@ -1,7 +1,12 @@
 {
   "extends": "../../packages/config/tsconfig/nextjs.json",
   "compilerOptions": {
-    "plugins": [{ "name": "next" }]
+    "plugins": [{ "name": "next" }],
+    "baseUrl": ".",
+    "paths": {
+      "@/web/*": ["./src/*"],
+      "~/ui/*": ["../../packages/ui/src/*"]
+    }
   },
   "include": [
     "../packages/**/*.{ts,tsx}",
