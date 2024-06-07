@@ -1,0 +1,16 @@
+{
+  "name": "validation",
+  "version": "1.0.0",
+  "author": "Edson Antonio Jaramillo Balderrama",
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "clean": "rm -rf dist",
+    "clean_node_modules": "rm -rf node_modules"
+  },
+  "dependencies": {
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "5.4.5"
+  }
+}
