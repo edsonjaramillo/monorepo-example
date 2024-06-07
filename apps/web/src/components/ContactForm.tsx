@@ -12,14 +12,10 @@ import { Input, InputGroup, Textarea } from '~/ui/atoms/Input';
 import { Label } from '~/ui/atoms/Label';
 import { Text } from '~/ui/atoms/Text';
 
-const contactFormSchema = z.object({
-  name: z.string().min(2).max(50),
-  phoneNumber: z.string().min(10).max(15),
-  message: z.string().min(10).max(500),
-});
+import { zContactFormSchema } from '~/validation/misc/contact.validation';
 
 const toastId = 'contact-form-toast';
-type FormSchema = z.infer<typeof contactFormSchema>;
+type FormSchema = z.infer<typeof zContactFormSchema>;
 
 async function onSubmit(_: FormSchema) {
   toast.info('Sending message...', { id: toastId, duration: Infinity });
@@ -32,7 +28,7 @@ function onInvalid(errors: FieldErrors<FormSchema>) {
 }
 
 export function ContactForm() {
-  const methods = useForm<FormSchema>({ resolver: zodResolver(contactFormSchema) });
+  const methods = useForm<FormSchema>({ resolver: zodResolver(zContactFormSchema) });
   const { formState, handleSubmit } = methods;
   const { isSubmitting } = formState;
   return (
@@ -50,6 +46,10 @@ export function ContactForm() {
           <InputGroup>
             <Label field="name">Name</Label>
             <Input field="name" type="text" autoComplete="name" required />
+          </InputGroup>
+          <InputGroup>
+            <Label field="email">Email</Label>
+            <Input field="email" type="email" autoComplete="email" required />
           </InputGroup>
           <InputGroup>
             <Label field="phoneNumber">Phone Number</Label>

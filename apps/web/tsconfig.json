@@ -5,7 +5,8 @@
     "baseUrl": ".",
     "paths": {
       "@/web/*": ["./src/*"],
-      "~/ui/*": ["../../packages/ui/src/*"]
+      "~/ui/*": ["../../packages/ui/src/*"],
+      "~/validation/*": ["../../packages/validation/src/*"]
     }
   },
   "include": [
