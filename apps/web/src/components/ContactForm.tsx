@@ -33,7 +33,8 @@ function onInvalid(errors: FieldErrors<FormSchema>) {
 
 export function ContactForm() {
   const methods = useForm<FormSchema>({ resolver: zodResolver(contactFormSchema) });
-  const { isSubmitting } = methods.formState;
+  const { formState, handleSubmit } = methods;
+  const { isSubmitting } = formState;
   return (
     <div className="py-8">
       <div className="mb-8 space-y-1">
@@ -45,7 +46,7 @@ export function ContactForm() {
         </Text>
       </div>
       <FormProvider {...methods}>
-        <Form onSubmit={methods.handleSubmit(onSubmit, onInvalid)}>
+        <Form onSubmit={handleSubmit(onSubmit, onInvalid)}>
           <InputGroup>
             <Label field="name">Name</Label>
             <Input field="name" type="text" autoComplete="name" required />
