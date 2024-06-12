@@ -1,20 +1,20 @@
 import { eq, sql } from 'drizzle-orm';
 
 import { db } from '../client';
-import { DEFAULT_PETS_COLUMNS } from '../columns/pets.columns';
+import { PETS_COLUMNS } from '../columns/pets.columns';
 import { petsTable } from '../schema';
 import type { PetCreate } from '../types/pets.types';
 
 export class PetsQueries {
   static async getPets() {
-    return await db.query.petsTable.findMany({ columns: DEFAULT_PETS_COLUMNS });
+    return await db.query.petsTable.findMany({ columns: PETS_COLUMNS });
   }
 
   static async getPetById(id: string) {
     const query = db.query.petsTable
       .findFirst({
         where: eq(petsTable.id, sql.placeholder('id')),
-        columns: DEFAULT_PETS_COLUMNS,
+        columns: PETS_COLUMNS,
       })
       .prepare('getPetById');
 
@@ -25,7 +25,7 @@ export class PetsQueries {
     const query = db.query.petsTable
       .findMany({
         where: eq(petsTable.ownerId, sql.placeholder('ownerId')),
-        columns: DEFAULT_PETS_COLUMNS,
+        columns: PETS_COLUMNS,
       })
       .prepare('getPetsByOwnerId');
 

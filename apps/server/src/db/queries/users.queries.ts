@@ -1,21 +1,21 @@
 import { eq, sql } from 'drizzle-orm';
 
 import { db } from '../client';
-import { DEFAULT_PETS_COLUMNS } from '../columns/pets.columns';
-import { DEFAULT_USERS_COLUMNS } from '../columns/users.columns';
+import { PETS_COLUMNS } from '../columns/pets.columns';
+import { USERS_COLUMNS } from '../columns/users.columns';
 import { usersTable } from '../schema';
 import type { UserCreate, UserUpdate } from '../types/users.types';
 
 export class UsersQueries {
   static async getUsers() {
-    return await db.query.usersTable.findMany({ columns: DEFAULT_USERS_COLUMNS });
+    return await db.query.usersTable.findMany({ columns: USERS_COLUMNS });
   }
 
   static async getUserById(id: string) {
     const query = db.query.usersTable
       .findFirst({
         where: eq(usersTable.id, sql.placeholder('id')),
-        columns: DEFAULT_USERS_COLUMNS,
+        columns: USERS_COLUMNS,
       })
       .prepare('getUserById');
 
@@ -35,8 +35,8 @@ export class UsersQueries {
     const query = db.query.usersTable
       .findFirst({
         where: eq(usersTable.id, sql.placeholder('id')),
-        columns: DEFAULT_USERS_COLUMNS,
-        with: { pets: { columns: DEFAULT_PETS_COLUMNS } },
+        columns: USERS_COLUMNS,
+        with: { pets: { columns: PETS_COLUMNS } },
       })
       .prepare('getUserWithPets');
 

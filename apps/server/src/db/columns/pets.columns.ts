@@ -1,7 +1,7 @@
 import { petsTable } from '../schema';
 import type { ColumnsSelector } from './shared';
 
-export const DEFAULT_PETS_COLUMNS = {
+export const PETS_COLUMNS = {
   id: true,
   name: true,
   ownerId: true,

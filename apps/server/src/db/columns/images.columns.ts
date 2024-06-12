@@ -1,7 +1,7 @@
 import { imagesTable } from '../schema';
 import type { ColumnsSelector } from './shared';
 
-export const DEFAULT_CORE_IMAGE_COLUMNS = {
+export const CORE_IMAGE_COLUMNS = {
   id: true,
   folder: true,
   filename: true,
@@ -10,12 +10,12 @@ export const DEFAULT_CORE_IMAGE_COLUMNS = {
   width: true,
 } satisfies ColumnsSelector<typeof imagesTable.$inferSelect>;
 
-export const DEFAULT_USER_IMAGE_COLUMNS = {
+export const USER_IMAGE_COLUMNS = {
   userId: true,
-  ...DEFAULT_CORE_IMAGE_COLUMNS,
+  ...CORE_IMAGE_COLUMNS,
 } satisfies ColumnsSelector<typeof imagesTable.$inferSelect>;
 
-export const DEFAULT_PET_IMAGE_COLUMNS = {
+export const PET_IMAGE_COLUMNS = {
   petId: true,
-  ...DEFAULT_CORE_IMAGE_COLUMNS,
+  ...CORE_IMAGE_COLUMNS,
 } satisfies ColumnsSelector<typeof imagesTable.$inferSelect>;

@@ -2,9 +2,9 @@ import { asc, eq } from 'drizzle-orm';
 
 import { db } from '../client';
 import {
-  DEFAULT_CORE_IMAGE_COLUMNS,
-  DEFAULT_PET_IMAGE_COLUMNS,
-  DEFAULT_USER_IMAGE_COLUMNS,
+  CORE_IMAGE_COLUMNS,
+  PET_IMAGE_COLUMNS,
+  USER_IMAGE_COLUMNS,
 } from '../columns/images.columns';
 import { imagesTable } from '../schema';
 import type { ImageAssetCreate, ImageAssetFolders, ImageAssetUpdate } from '../types/images.types';
@@ -12,7 +12,7 @@ import type { ImageAssetCreate, ImageAssetFolders, ImageAssetUpdate } from '../t
 export class ImagesQueries {
   static async getImages() {
     return await db.query.imagesTable.findMany({
-      columns: DEFAULT_CORE_IMAGE_COLUMNS,
+      columns: CORE_IMAGE_COLUMNS,
       orderBy: asc(imagesTable.createdAt),
     });
   }
@@ -20,7 +20,7 @@ export class ImagesQueries {
   static async getImagesByPrefix(folder: ImageAssetFolders) {
     return await db.query.imagesTable.findMany({
       where: eq(imagesTable.folder, folder),
-      columns: DEFAULT_CORE_IMAGE_COLUMNS,
+      columns: CORE_IMAGE_COLUMNS,
       orderBy: asc(imagesTable.createdAt),
     });
   }
