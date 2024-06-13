@@ -5,23 +5,14 @@
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules",
     "dev": "env-cmd -f .env.local tsx watch index.ts --noEmit",
-    "dev:db:generate": "env-cmd -f .env.local drizzle-kit generate",
-    "dev:db:migrate": "env-cmd -f .env.local tsx src/dev:db/migrate.ts",
-    "dev:db:push": "env-cmd -f .env.local drizzle-kit push",
-    "dev:db:studio": "env-cmd -f .env.local drizzle-kit studio",
     "dev:start": "node --env-file=.env.local dist/index.js",
-    "production:db:generate": "env-cmd -f .env.production drizzle-kit generate",
-    "production:db:migrate": "env-cmd -f .env.production tsx src/production:db/migrate.ts",
-    "production:db:push": "env-cmd -f .env.production drizzle-kit push",
-    "production:db:studio": "env-cmd -f .env.production drizzle-kit studio",
     "production:start": "node dist/index.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.33.0",
     "@hono/node-server": "1.11.1",
-    "drizzle-orm": "0.30.10",
+    "db": "workspace:*",
     "hono": "4.3.2",
-    "postgres": "3.4.4",
     "sharp": "0.33.4",
     "uuidv7": "1.0.0",
     "validation": "workspace:*",
@@ -29,7 +20,6 @@
   },
   "devDependencies": {
     "@types/node": "20.12.12",
-    "drizzle-kit": "0.21.4",
     "env-cmd": "10.1.0",
     "tsx": "4.11.0",
     "typescript": "5.4.5"
