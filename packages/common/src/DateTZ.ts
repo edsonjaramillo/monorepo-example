@@ -29,7 +29,15 @@ export function DateTZ(date?: string | number | Date | Dayjs) {
  */
 export function DateTZFromInput(localTime: string) {
   // Extract the hour and minute from the datetime string
-  const [hour, minutes] = localTime.split('T')[1].split(':');
+  const time = localTime.split('T')[1];
+  if (!time) {
+    throw new Error('Invalid datetime string');
+  }
+
+  const [hour, minutes] = time.split(':');
+  if (!hour || !minutes) {
+    throw new Error('Invalid datetime string');
+  }
 
   // Convert the datetime string to a Day.js object in the specified timezone, and set the hour and minute
   return DateTZ(localTime).hour(+hour).minute(+minutes);
