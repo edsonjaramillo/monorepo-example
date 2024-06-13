@@ -13,9 +13,12 @@ import { backblaze } from '../utils/backblaze/Backblaze';
 import { placeholder } from '../utils/image/Placeholder';
 
 export const imagesRouter = new Hono();
+
 const imageQueries = new ImagesQueries(db);
 
-imagesRouter.get('/upload', async (c) => {
+const CONVERTED_IMAGE_TYPE = 'webp';
+
+imagesRouter.post('/upload', async (c) => {
   const { data, success } = zUploadImageFormSchema.safeParse(await c.req.parseBody());
   if (!success) {
     throw Error('Invalid form data');
@@ -24,8 +27,7 @@ imagesRouter.get('/upload', async (c) => {
   const { image, folder } = data;
 
   const id = uuidv7();
-  const convertedImageType = 'webp';
-  const filename = id + '.' + convertedImageType;
+  const filename = id + '.' + CONVERTED_IMAGE_TYPE;
 
   const originalImageBuffer = sharp(await image.arrayBuffer());
   const { width, height } = await originalImageBuffer.metadata();
@@ -33,7 +35,7 @@ imagesRouter.get('/upload', async (c) => {
     throw Error('Failed to get image metadata');
   }
 
-  const webpBuffer = await originalImageBuffer.toFormat(convertedImageType).toBuffer();
+  const webpBuffer = await originalImageBuffer.toFormat(CONVERTED_IMAGE_TYPE).toBuffer();
 
   const uploadSuccessful = await backblaze.uploadFile(filename, webpBuffer);
   if (!uploadSuccessful) {

@@ -1,14 +1,15 @@
 import sharp from 'sharp';
 
+const SCALE = 16;
+
 class Placeholder {
   async imageToBase64(url: string, width: number, height: number) {
-    const scale = 16;
     const isLandscape = width > height;
     // make sure aspect ratio is always positive and whole number
     const aspectRatio = isLandscape ? Math.round(width / height) : Math.round(height / width);
 
-    const scaledWidth = isLandscape ? scale * aspectRatio : scale;
-    const scaledHeight = isLandscape ? scale : scale * aspectRatio;
+    const scaledWidth = isLandscape ? SCALE * aspectRatio : SCALE;
+    const scaledHeight = isLandscape ? SCALE : SCALE * aspectRatio;
 
     const image = await this.downloadImage(url);
     const buffer = await sharp(image)
