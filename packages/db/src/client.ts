@@ -1,11 +1,12 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
-import { serverEnv } from '../server.env';
+import { NodeEnv } from 'validation/src/env.validation';
+
 import * as schema from './schema';
 
-function maxPoolCountByEnviroment() {
-  switch (serverEnv.NODE_ENV) {
+function maxPoolCountByEnviroment(env: NodeEnv) {
+  switch (env) {
     case 'development':
       return 1;
     case 'production':
@@ -15,13 +16,15 @@ function maxPoolCountByEnviroment() {
     case 'test':
       return 1;
     default:
-      console.error(`Unknown NODE_ENV: ${serverEnv.NODE_ENV}`);
+      console.error(`Unknown NODE_ENV: ${env}`);
       return 1;
   }
 }
 
-export const connection = postgres(serverEnv.DATABASE_URL, {
-  max: maxPoolCountByEnviroment(),
-});
-
-export const db = drizzle(connection, { schema });
+export type DB = ReturnType<typeof drizzle<typeof schema>>;
+export function createDBConnection(connectionString: string, env: NodeEnv) {
+  const connection = postgres(connectionString, {
+    max: maxPoolCountByEnviroment(env),
+  });
+  return drizzle(connection, { schema });
+}

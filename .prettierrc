@@ -4,7 +4,7 @@
   "singleQuote": true,
   "semi": true,
   "bracketSameLine": true,
-  "importOrder": ["~/ui", "~/validation", "@/web", "^\\."],
+  "importOrder": ["^db", "^common", "^ui", "^validation", "@/web", "^\\."],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
   "tailwindConfig": "./packages/config/tailwind.config.js",

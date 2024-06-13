@@ -1,18 +1,23 @@
 import { eq, sql } from 'drizzle-orm';
 
-import { db } from '../client';
+import type { DB } from '../client';
 import { PETS_COLUMNS } from '../columns/pets.columns';
 import { USERS_COLUMNS } from '../columns/users.columns';
 import { usersTable } from '../schema';
 import type { UserCreate, UserUpdate } from '../types/users.types';
 
 export class UsersQueries {
-  static async getUsers() {
-    return await db.query.usersTable.findMany({ columns: USERS_COLUMNS });
+  private db: DB;
+  constructor(db: DB) {
+    this.db = db;
   }
 
-  static async getUserById(id: string) {
-    const query = db.query.usersTable
+  async getUsers() {
+    return await this.db.query.usersTable.findMany({ columns: USERS_COLUMNS });
+  }
+
+  async getUserById(id: string) {
+    const query = this.db.query.usersTable
       .findFirst({
         where: eq(usersTable.id, sql.placeholder('id')),
         columns: USERS_COLUMNS,
@@ -22,8 +27,8 @@ export class UsersQueries {
     return await query.execute({ id });
   }
 
-  static async createUser(user: UserCreate) {
-    const query = db
+  async createUser(user: UserCreate) {
+    const query = this.db
       .insert(usersTable)
       .values({ name: sql.placeholder('name') })
       .prepare('createUser');
@@ -31,8 +36,8 @@ export class UsersQueries {
     return await query.execute({ name: user.name });
   }
 
-  static async getUserWithPets(id: string) {
-    const query = db.query.usersTable
+  async getUserWithPets(id: string) {
+    const query = this.db.query.usersTable
       .findFirst({
         where: eq(usersTable.id, sql.placeholder('id')),
         columns: USERS_COLUMNS,
@@ -43,7 +48,7 @@ export class UsersQueries {
     return await query.execute({ id });
   }
 
-  static async updateUser(id: string, user: UserUpdate) {
-    await db.update(usersTable).set(user).where(eq(usersTable.id, id));
+  async updateUser(id: string, user: UserUpdate) {
+    await this.db.update(usersTable).set(user).where(eq(usersTable.id, id));
   }
 }

@@ -1,12 +1,15 @@
 import { Hono } from 'hono';
 
-import { UsersQueries } from '../db/queries/users.queries';
+import { UsersQueries } from 'db/src/queries/users.queries';
+
+import { db } from '../db';
 import { JSend } from '../utils/JSend';
 
 export const usersRouter = new Hono();
+const usersQueries = new UsersQueries(db);
 
 usersRouter.get('/', async (c) => {
-  const users = await UsersQueries.getUsers();
+  const users = await usersQueries.getUsers();
 
   return c.json(JSend.success(users, 'Users fetched successfully'));
 });
@@ -14,7 +17,7 @@ usersRouter.get('/', async (c) => {
 usersRouter.get('/:id', async (c) => {
   const id = c.req.param('id');
 
-  const user = await UsersQueries.getUserById(id);
+  const user = await usersQueries.getUserById(id);
 
   if (!user) {
     return c.json(JSend.error('User not found'), 404);
@@ -26,7 +29,7 @@ usersRouter.get('/:id', async (c) => {
 usersRouter.get('/:id/pets', async (c) => {
   const id = c.req.param('id');
 
-  const user = await UsersQueries.getUserWithPets(id);
+  const user = await usersQueries.getUserWithPets(id);
 
   if (!user) {
     return c.json(JSend.error('User not found'), 404);

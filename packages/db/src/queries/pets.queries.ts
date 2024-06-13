@@ -1,17 +1,22 @@
 import { eq, sql } from 'drizzle-orm';
 
-import { db } from '../client';
+import type { DB } from '../client';
 import { PETS_COLUMNS } from '../columns/pets.columns';
 import { petsTable } from '../schema';
 import type { PetCreate } from '../types/pets.types';
 
 export class PetsQueries {
-  static async getPets() {
-    return await db.query.petsTable.findMany({ columns: PETS_COLUMNS });
+  private db: DB;
+  constructor(db: DB) {
+    this.db = db;
   }
 
-  static async getPetById(id: string) {
-    const query = db.query.petsTable
+  async getPets() {
+    return await this.db.query.petsTable.findMany({ columns: PETS_COLUMNS });
+  }
+
+  async getPetById(id: string) {
+    const query = this.db.query.petsTable
       .findFirst({
         where: eq(petsTable.id, sql.placeholder('id')),
         columns: PETS_COLUMNS,
@@ -21,8 +26,8 @@ export class PetsQueries {
     return query.execute({ id });
   }
 
-  static async getPetsByOwnerId(ownerId: string) {
-    const query = db.query.petsTable
+  async getPetsByOwnerId(ownerId: string) {
+    const query = this.db.query.petsTable
       .findMany({
         where: eq(petsTable.ownerId, sql.placeholder('ownerId')),
         columns: PETS_COLUMNS,
@@ -32,8 +37,8 @@ export class PetsQueries {
     return query.execute({ ownerId });
   }
 
-  static async createPet(user: PetCreate) {
-    const query = db
+  async createPet(user: PetCreate) {
+    const query = this.db
       .insert(petsTable)
       .values({ name: sql.placeholder('name') })
       .prepare('createPet');
