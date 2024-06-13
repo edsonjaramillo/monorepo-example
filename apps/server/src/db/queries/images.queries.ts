@@ -1,11 +1,7 @@
 import { asc, eq } from 'drizzle-orm';
 
 import { db } from '../client';
-import {
-  CORE_IMAGE_COLUMNS,
-  PET_IMAGE_COLUMNS,
-  USER_IMAGE_COLUMNS,
-} from '../columns/images.columns';
+import { CORE_IMAGE_COLUMNS } from '../columns/images.columns';
 import { imagesTable } from '../schema';
 import type { ImageAssetCreate, ImageAssetFolders, ImageAssetUpdate } from '../types/images.types';
 
@@ -17,7 +13,7 @@ export class ImagesQueries {
     });
   }
 
-  static async getImagesByPrefix(folder: ImageAssetFolders) {
+  static async getImagesByFolder(folder: ImageAssetFolders) {
     return await db.query.imagesTable.findMany({
       where: eq(imagesTable.folder, folder),
       columns: CORE_IMAGE_COLUMNS,

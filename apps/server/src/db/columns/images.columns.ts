@@ -6,6 +6,7 @@ export const CORE_IMAGE_COLUMNS = {
   folder: true,
   filename: true,
   url: true,
+  blurDataUrl: true,
   height: true,
   width: true,
 } satisfies ColumnsSelector<typeof imagesTable.$inferSelect>;

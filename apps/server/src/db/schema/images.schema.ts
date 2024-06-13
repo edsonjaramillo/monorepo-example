@@ -14,6 +14,7 @@ const coreImageFields = {
   url: varchar('url', { length: 255 }).notNull(),
   width: smallint('width').notNull(),
   height: smallint('height').notNull(),
+  blurDataUrl: varchar('blur_data_url', { length: 1000 }).notNull(),
   createdAt,
   updatedAt,
 } as const;
