@@ -1,11 +1,16 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig((options) => {
-  const isESM = options.format?.includes('esm') || false;
   return {
-    entry: ['index.ts'],
-    outDir: isESM ? 'dist' : 'dist/cjs',
-    clean: isESM ? true : false,
+    entry: [
+      'index.ts',
+      'columns/index.ts',
+      'schema/index.ts',
+      'queries/index.ts',
+      'types/index.ts',
+    ],
+    outDir: 'dist',
+    clean: true,
     dts: true,
     sourcemap: true,
     splitting: false,
