@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "nx run server:build --verbose --skip-nx-cache",
-    "clean": "nx run-many --target=clean",
-    "clean_node_modules": "nx run-many --target=clean_node_modules && rm -rf node_modules",
-    "dev": "nx run-many --target=dev",
     "dev:server": "pnpm --filter server dev",
     "dev:web": "pnpm --filter web dev",
     "docker:clean:db": "docker volume rm monorepo-example_postgres_data",
@@ -14,6 +10,11 @@
     "docker:compose:down": "docker compose -f \"docker/docker-compose.yaml\" down",
     "docker:compose:up": "docker compose -f \"docker/docker-compose.yaml\" up -d --build",
     "format": "prettier --write . --cache --ignore-path .prettierignore --config .prettierrc",
+    "nx:build": "nx run-many --target=build",
+    "nx:clean": "nx run-many --target=clean && rm -rf .nx",
+    "nx:clean_node_modules": "nx run-many --target=clean_node_modules && rm -rf node_modules",
+    "nx:dev": "nx run-many --target=dev",
+    "nx:graph": "nx graph",
     "scripts:dependency:audit": "tsx scripts/dependencyAudit.ts"
   },
   "dependencies": {
