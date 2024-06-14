@@ -1,1 +1,1 @@
-export * from './src/DateTZ';
+export * from './datetime/DateTZ';

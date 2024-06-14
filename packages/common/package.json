@@ -2,6 +2,13 @@
   "name": "common",
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
+  "exports": {
+    "./datetime": {
+      "import": "./dist/datetime/index.mjs",
+      "require": "./dist/cjs/datetime/index.js",
+      "types": "./dist/datetime/index.d.ts"
+    }
+  },
   "main": "dist/index.mjs",
   "module": "dist/cjs/index.js",
   "source": "src/index.ts",
