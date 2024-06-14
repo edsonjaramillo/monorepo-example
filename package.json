@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "nx run-many --target=build",
+    "build": "nx run server:build --verbose --skip-nx-cache",
     "clean": "nx run-many --target=clean",
     "clean_node_modules": "nx run-many --target=clean_node_modules && rm -rf node_modules",
     "dev": "nx run-many --target=dev",
@@ -17,12 +17,14 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.3.0",
+    "@types/node": "20.14.2",
     "nx": "19.1.1",
     "postcss": "8.4.38",
     "postcss-load-config": "6.0.1",
     "prettier": "3.3.0",
     "prettier-plugin-tailwindcss": "0.6.1",
     "tailwindcss": "3.4.3",
+    "tsup": "8.1.0",
     "typescript": "5.4.5"
   }
 }
