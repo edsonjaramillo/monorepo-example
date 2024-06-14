@@ -1,6 +1,6 @@
-import { Responsive } from '~/ui/atoms/Responsive';
+import { ContactForm } from '@/components/ContactForm';
 
-import { ContactForm } from '@/web/components/ContactForm';
+import { Responsive } from 'ui/atoms';
 
 export default function ContactPage() {
   return (

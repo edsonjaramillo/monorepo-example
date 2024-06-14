@@ -6,13 +6,9 @@ import type { FieldErrors } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { Button } from '~/ui/atoms/Button';
-import { Form } from '~/ui/atoms/Form';
-import { Input, InputGroup, Textarea } from '~/ui/atoms/Input';
-import { Label } from '~/ui/atoms/Label';
-import { Text } from '~/ui/atoms/Text';
+import { Button, Form, Input, InputGroup, Label, Text, Textarea } from 'ui/atoms';
 
-import { zContactFormSchema } from '~/validation/misc/contact.validation';
+import { zContactFormSchema } from 'validation/forms';
 
 const toastId = 'contact-form-toast';
 type FormSchema = z.infer<typeof zContactFormSchema>;
