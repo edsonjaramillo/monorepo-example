@@ -2,7 +2,8 @@ import { Hono } from 'hono';
 import sharp from 'sharp';
 import { uuidv7 } from 'uuidv7';
 
-import { type ImageAssetFolders, ImagesQueries } from 'db';
+import { ImagesQueries } from 'db/queries';
+import type { ImageAssetFolders } from 'db/types';
 
 import { zUploadImageFormSchema } from 'validation';
 
