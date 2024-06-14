@@ -1,4 +1,5 @@
-// 'use client';
+'use client';
+
 import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
 import { useFormContext } from 'react-hook-form';
