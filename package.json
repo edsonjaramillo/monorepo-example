@@ -11,6 +11,7 @@
     "docker:compose:up": "docker compose -f \"docker/docker-compose.yaml\" up -d --build",
     "format": "prettier --write . --cache --ignore-path .prettierignore --config .prettierrc",
     "nx:build": "nx run-many --target=build",
+    "nx:build:server": "nx run server:build --verbose",
     "nx:clean": "nx run-many --target=clean && rm -rf .nx",
     "nx:clean_node_modules": "nx run-many --target=clean_node_modules && rm -rf node_modules",
     "nx:dev": "nx run-many --target=dev",
