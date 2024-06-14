@@ -2,8 +2,17 @@
   "name": "validation",
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
+  "main": "dist/index.mjs",
+  "module": "dist/cjs/index.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "rm -rf dist && tsc",
+    "build": "pnpm build:esm && pnpm build:cjs",
+    "build:cjs": "tsup --format cjs",
+    "build:esm": "tsup --format esm",
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules"
   },
@@ -12,6 +21,7 @@
   },
   "devDependencies": {
     "@types/node": "20.12.12",
+    "tsup": "8.1.0",
     "typescript": "5.4.5"
   }
 }

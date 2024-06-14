@@ -2,8 +2,14 @@
   "name": "common",
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
+  "main": "dist/index.mjs",
+  "module": "dist/cjs/index.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist && tsc",
+    "build": "pnpm build:esm && pnpm build:cjs",
+    "build:cjs": "tsup --format cjs",
+    "build:esm": "tsup --format esm",
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules"
   },
