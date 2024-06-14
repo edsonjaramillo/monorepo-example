@@ -20,7 +20,7 @@
     "dev:db:push": "env-cmd -f .env.local drizzle-kit push",
     "dev:db:studio": "env-cmd -f .env.local drizzle-kit studio",
     "production:db:generate": "env-cmd -f .env.production drizzle-kit generate",
-    "production:db:migrate": "env-cmd -f .env.production tsx src/production:db/migrate.ts",
+    "production:db:migrate": "env-cmd -f .env.production drizzle-kit migrate",
     "production:db:push": "env-cmd -f .env.production drizzle-kit push",
     "production:db:studio": "env-cmd -f .env.production drizzle-kit studio"
   },
@@ -32,12 +32,11 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@types/node": "20.12.12",
+    "@types/node": "20.14.2",
     "drizzle-kit": "0.21.4",
     "env-cmd": "10.1.0",
     "esbuild": "0.21.5",
     "tsup": "8.1.0",
-    "tsx": "4.11.0",
     "typescript": "5.4.5"
   }
 }

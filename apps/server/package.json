@@ -20,7 +20,7 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@types/node": "20.12.12",
+    "@types/node": "20.14.2",
     "env-cmd": "10.1.0",
     "tsup": "8.1.0",
     "typescript": "5.4.5"
