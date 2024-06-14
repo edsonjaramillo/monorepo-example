@@ -1,6 +1,6 @@
 import z from 'zod';
 
-import { zEmail, zPhoneNumber, zString } from '../shared.validation';
+import { zEmail, zPhoneNumber, zString } from '../core';
 
 export const zContactFormSchema = z.object({
   name: zString.min(3, 'Name must be at least 3 characters'),

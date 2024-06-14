@@ -2,17 +2,32 @@
   "name": "validation",
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./env": {
+      "import": "./dist/env/index.mjs",
+      "types": "./dist/env.d.ts"
+    },
+    "./core": {
+      "import": "./dist/core/index.mjs",
+      "types": "./dist/core.d.ts"
+    },
+    "./forms": {
+      "import": "./dist/forms/index.mjs",
+      "types": "./dist/forms.d.ts"
+    }
+  },
   "main": "dist/index.mjs",
-  "module": "dist/cjs/index.js",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "pnpm build:esm && pnpm build:cjs",
-    "build:cjs": "tsup --format cjs",
-    "build:esm": "tsup --format esm",
+    "build": "tsup",
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules"
   },
