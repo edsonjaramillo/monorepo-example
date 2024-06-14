@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { NODE_ENV } from 'validation/src/env.validation';
+import { NODE_ENV } from 'validation';
 
 const serverEnvSchema = z.object({
   NODE_ENV: z.enum(NODE_ENV),

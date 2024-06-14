@@ -2,10 +2,9 @@ import { Hono } from 'hono';
 import sharp from 'sharp';
 import { uuidv7 } from 'uuidv7';
 
-import { ImagesQueries } from 'db/src/queries/images.queries';
-import type { ImageAssetFolders } from 'db/src/types/images.types';
+import { type ImageAssetFolders, ImagesQueries } from 'db';
 
-import { zUploadImageFormSchema } from 'validation/src/misc/images.validation';
+import { zUploadImageFormSchema } from 'validation';
 
 import { db } from '../db';
 import { JSend } from '../utils/JSend';

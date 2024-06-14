@@ -1,5 +1,6 @@
-import { createDBConnection } from 'db/src/client';
+import type { DB } from 'db';
+import { createDBConnection } from 'db';
 
 import { serverEnv } from './server.env';
 
-export const db = createDBConnection(serverEnv.DATABASE_URL, serverEnv.NODE_ENV);
+export const db: DB = createDBConnection(serverEnv.DATABASE_URL, serverEnv.NODE_ENV);
