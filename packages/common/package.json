@@ -14,9 +14,7 @@
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "pnpm build:esm && pnpm build:cjs",
-    "build:cjs": "tsup --format cjs",
-    "build:esm": "tsup --format esm",
+    "build": "tsup",
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules"
   },

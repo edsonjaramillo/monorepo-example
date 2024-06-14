@@ -31,8 +31,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "pnpm build:esm",
-    "build:esm": "tsup --format esm",
+    "build": "tsup",
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules",
     "dev:db:generate": "env-cmd -f .env.local drizzle-kit generate",

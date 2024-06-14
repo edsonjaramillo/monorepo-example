@@ -2,7 +2,7 @@
   "name": "server",
   "type": "module",
   "scripts": {
-    "build": "tsup --format esm",
+    "build": "tsup",
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules",
     "dev": "env-cmd -f .env.local tsx watch src/index.ts --noEmit",
