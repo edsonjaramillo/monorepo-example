@@ -1,6 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  transpilePackages: ['ui', 'validation'],
-};
+const nextConfig = {};
 
 export default nextConfig;
