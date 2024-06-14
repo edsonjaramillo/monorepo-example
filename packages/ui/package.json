@@ -2,8 +2,29 @@
   "name": "ui",
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./atoms": {
+      "import": "./dist/atoms/index.mjs",
+      "types": "./dist/atoms/index.d.ts"
+    },
+    "./templates": {
+      "import": "./dist/templates/index.mjs",
+      "types": "./dist/templates/index.d.ts"
+    },
+    "./lib": {
+      "import": "./dist/lib/index.mjs",
+      "types": "./dist/lib/index.d.ts"
+    }
+  },
+  "main": "dist/index.mjs",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist && tsc",
+    "build": "tsup",
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules"
   },
@@ -23,6 +44,7 @@
     "@types/react-dom": "18.3.0",
     "postcss": "8.4.38",
     "tailwindcss": "3.4.3",
+    "tsup": "8.1.0",
     "typescript": "5.4.5"
   }
 }
