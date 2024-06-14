@@ -17,6 +17,8 @@
     "dayjs": "1.11.11"
   },
   "devDependencies": {
+    "@types/node": "20.14.2",
+    "tsup": "8.1.0",
     "typescript": "5.4.5"
   }
 }
