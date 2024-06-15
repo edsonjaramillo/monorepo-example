@@ -6,7 +6,7 @@
     "lib": ["es5", "es2015", "es2016", "esnext", "dom", "dom.iterable"],
     "types": ["node"],
     "module": "es2015",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "outDir": "dist",
