@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
   "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    },
     "./datetime": {
       "import": "./dist/datetime/index.mjs",
-      "require": "./dist/cjs/datetime/index.js",
       "types": "./dist/datetime/index.d.ts"
     }
   },
   "main": "dist/index.mjs",
-  "module": "dist/cjs/index.js",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "scripts": {
