@@ -1,6 +1,6 @@
 import { DateTZ } from 'common/datetime';
 
-import { Text } from 'ui';
+import { Button, Text } from 'ui/atoms';
 
 export default function HomePage() {
   const todayMidnight = DateTZ()
@@ -11,5 +11,12 @@ export default function HomePage() {
 
   const dateStr = todayMidnight.format('YYYY-MM-DD HH:mm:ss');
 
-  return <Text as="h1">{dateStr}</Text>;
+  return (
+    <>
+      <Text as="h1" size="cta">
+        {dateStr}
+      </Text>
+      <Button type="button">Click me</Button>
+    </>
+  );
 }
