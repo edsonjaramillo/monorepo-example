@@ -1,10 +1,10 @@
-import { type VariantProps, cva } from 'class-variance-authority';
+import { type VariantProps, tv } from 'tailwind-variants';
 
 import { cn } from '../lib/cn';
 
 export type As = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
 
-export const textVariants = cva('', {
+export const textVariants = tv({
   variants: {
     size: {
       cta: 'text-cta',
@@ -19,19 +19,19 @@ export const textVariants = cva('', {
       small: 'text-small',
     },
     color: {
-      standard: 'text-grayscale-standard',
+      standard: 'border border-primary-600 text-grayscale-standard',
       neutral: 'text-grayscale-neutral',
       inverse: 'text-grayscale-inverse',
       primary: 'text-primary',
       'primary-base': 'text-primary-600',
     },
     underline: { true: 'underline underline-offset-4' },
+    defaultVariants: { size: 'base', color: 'standard' },
   },
-  defaultVariants: { size: 'base', color: 'standard' },
 });
-
-export type TextProps = React.ComponentProps<'div'> &
-  VariantProps<typeof textVariants> & { as: As };
+type TextCore = React.ComponentProps<'div'>;
+type TextVariants = VariantProps<typeof textVariants>;
+export type TextProps = TextCore & TextVariants & { as: As };
 
 export function Text({ as, children, className, underline, size, color, ...props }: TextProps) {
   const classes = cn(textVariants({ color, underline, size }), className);

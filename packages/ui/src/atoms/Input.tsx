@@ -1,16 +1,22 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
-import type { VariantProps } from 'class-variance-authority';
 import { useFormContext } from 'react-hook-form';
 import type { FieldError, Merge, RegisterOptions } from 'react-hook-form';
+import { type VariantProps, tv } from 'tailwind-variants';
 
 import { cn } from '../lib/cn';
 import { Text } from './Text';
 
-// Main Components
+export const coreVariants = tv({
+  base: 'w-full rounded border border-grayscale-300 bg-transparent px-3 py-2 text-small text-grayscale-neutral shadow',
+  variants: {
+    disabled: {
+      true: 'cursor-not-allowed bg-grayscale-200 text-grayscale-400',
+    },
+  },
+});
 
-// Input
+export const inputVariants = tv({ extend: coreVariants, base: 'h-9' });
 
 type InputProps = React.ComponentProps<'input'> & {
   field: string;
@@ -18,12 +24,6 @@ type InputProps = React.ComponentProps<'input'> & {
   helpMessage?: string;
   registerOptions?: RegisterOptions;
 };
-
-const coreCls = cn(
-  'w-full rounded border border-grayscale-300 bg-transparent px-3 py-2 text-small text-grayscale-neutral shadow',
-);
-const disabledCls = cn('cursor-not-allowed bg-grayscale-200 text-grayscale-400');
-const inputCls = cn(coreCls, 'h-9');
 
 export function Input({
   field,
@@ -36,11 +36,12 @@ export function Input({
 }: InputProps) {
   const { register, formState } = useFormContext();
   const error = formState.errors[field];
+  const cls = cn(inputVariants({ disabled }), className);
   return (
     <>
       <input
         id={`${field}-input`}
-        className={cn(inputCls, className, disabled && disabledCls)}
+        className={cls}
         aria-describedby={helpMessage && `${field}-help`}
         aria-errormessage={error && `${field}-error`}
         aria-invalid={!!error}
@@ -55,14 +56,16 @@ export function Input({
   );
 }
 
+export const textareaVariants = tv({
+  extend: coreVariants,
+  base: 'resize-y',
+});
+
 type TextareaProps = React.ComponentProps<'textarea'> & {
   field: string;
   helpMessage?: string;
   registerOptions?: RegisterOptions;
 };
-
-// Textarea
-const textareaCls = cn(coreCls, 'resize-y');
 
 export function Textarea({
   field,
@@ -75,11 +78,12 @@ export function Textarea({
 }: TextareaProps) {
   const { register, formState } = useFormContext();
   const error = formState.errors[field];
+  const cls = cn(textareaVariants({ disabled }), className);
   return (
     <>
       <textarea
         id={`${field}-input`}
-        className={cn(textareaCls, className, disabled && disabledCls)}
+        className={cls}
         aria-describedby={helpMessage && `${field}-help`}
         aria-errormessage={error && `${field}-error`}
         aria-invalid={!!error}
@@ -107,12 +111,15 @@ export function InputGroup({ children, className, ...props }: InputGroupProps) {
   );
 }
 
-export const formColumnsVariants = cva('grid gap-6', {
+export const formColumnsVariants = tv({
+  base: 'grid gap-6',
   variants: { columns: { '1': 'grid-cols-1', '2': 'grid-cols-2', '3': 'grid-cols-3' } },
   defaultVariants: { columns: '1' },
 });
 
-type InputColumnsProps = React.ComponentProps<'div'> & VariantProps<typeof formColumnsVariants>;
+type InputColumnsCore = React.ComponentProps<'div'>;
+type InputColumnsVariants = VariantProps<typeof formColumnsVariants>;
+type InputColumnsProps = InputColumnsCore & InputColumnsVariants;
 export function InputColumns({ children, className, columns, ...props }: InputColumnsProps) {
   return (
     <div className={cn(formColumnsVariants({ columns }), className)} {...props}>

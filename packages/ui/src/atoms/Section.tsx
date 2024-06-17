@@ -1,12 +1,12 @@
-import type { VariantProps } from 'class-variance-authority';
-import { cva } from 'class-variance-authority';
+import { type VariantProps, tv } from 'tailwind-variants';
 
 import { cn } from '../lib/cn';
 import { Responsive } from './Responsive';
 import { Text } from './Text';
 import type { As } from './Text';
 
-export const sectionVariants = cva('scroll-mt-12 py-16', {
+export const sectionVariants = tv({
+  base: 'scroll-mt-12 py-16',
   variants: { background: { standard: 'bg-grayscale-50', primary: 'bg-primary-50' } },
   defaultVariants: { background: 'standard' },
 });
