@@ -8,6 +8,6 @@
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
   "tailwindConfig": "./packages/config/tailwind.config.js",
-  "tailwindAttributes": ["cva", "cn"],
-  "tailwindFunctions": ["cva", "cn"]
+  "tailwindAttributes": ["cva", "cn", "tv"],
+  "tailwindFunctions": ["cva", "cn", "tv"]
 }
