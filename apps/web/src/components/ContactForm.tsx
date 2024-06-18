@@ -6,7 +6,7 @@ import type { FieldErrors } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { zContactFormSchema } from 'validation/forms';
+import { zContactFormSchema } from 'validation';
 
 import { Button, Form, Input, InputGroup, Label, Text, Textarea } from 'ui/atoms';
 

@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
-import type { NodeEnv } from 'validation/env';
+import type { NodeEnv } from 'validation';
 
 import * as schema from './schema';
 

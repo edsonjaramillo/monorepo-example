@@ -1,4 +1,4 @@
-import { DateTZ } from 'common/datetime';
+import { DateTZ } from 'common';
 
 import { Button, Text } from 'ui/atoms';
 

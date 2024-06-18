@@ -5,7 +5,7 @@ import { uuidv7 } from 'uuidv7';
 import { ImagesQueries } from 'db';
 import type { ImageAssetFolders } from 'db';
 
-import { zUploadImageFormSchema } from 'validation/forms';
+import { zUploadImageFormSchema } from 'validation';
 
 import { db } from '../db';
 import { JSend } from '../utils/JSend';
