@@ -18,7 +18,10 @@
     "nx:dev": "nx run-many --target=dev",
     "nx:dev:start": "nx run-many --target=dev:start",
     "nx:graph": "nx graph",
-    "scripts:dependency:audit": "tsx scripts/dependencyAudit.ts"
+    "scripts:dependency:audit": "tsx scripts/dependencyAudit.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "glob": "10.4.1"
@@ -26,10 +29,13 @@
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.3.0",
     "@types/node": "20.14.2",
+    "@vitest/coverage-v8": "1.6.0",
+    "@vitest/ui": "1.6.0",
     "nx": "19.1.1",
     "prettier": "3.3.0",
     "prettier-plugin-tailwindcss": "0.6.1",
     "tsx": "4.15.4",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "vitest": "1.6.0"
   }
 }
