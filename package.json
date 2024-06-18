@@ -16,6 +16,7 @@
     "nx:clean": "nx run-many --target=clean && rm -rf .nx",
     "nx:clean_node_modules": "nx run-many --target=clean_node_modules && rm -rf node_modules",
     "nx:dev": "nx run-many --target=dev",
+    "nx:dev:start": "nx run-many --target=dev:start",
     "nx:graph": "nx graph",
     "scripts:dependency:audit": "tsx scripts/dependencyAudit.ts"
   },
