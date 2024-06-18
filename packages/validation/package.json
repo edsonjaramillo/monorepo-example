@@ -2,27 +2,9 @@
   "name": "validation",
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    },
-    "./env": {
-      "import": "./dist/env/index.mjs",
-      "types": "./dist/env.d.ts"
-    },
-    "./core": {
-      "import": "./dist/core/index.mjs",
-      "types": "./dist/core.d.ts"
-    },
-    "./forms": {
-      "import": "./dist/forms/index.mjs",
-      "types": "./dist/forms.d.ts"
-    }
-  },
   "main": "dist/index.mjs",
   "source": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.mts",
   "files": [
     "dist"
   ],

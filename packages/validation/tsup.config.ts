@@ -1,11 +1,19 @@
 import { defineConfig } from 'tsup';
 
-export default defineConfig({
-  entry: ['index.ts', 'forms/index.ts', 'core/index.ts', 'env/index.ts'],
-  format: 'esm',
-  outDir: 'dist',
-  clean: true,
-  dts: true,
-  sourcemap: true,
-  splitting: false,
+const isProduction = process.env.NODE_ENV === 'production';
+
+export default defineConfig((options) => {
+  const watchMode = options.watch;
+  return {
+    entry: ['src/index.ts'],
+    format: 'esm',
+    target: 'es6',
+    outDir: 'dist',
+    clean: true,
+    dts: true,
+    minify: isProduction,
+    splitting: isProduction,
+    watch: !isProduction && watchMode,
+    sourcemap: !isProduction,
+  };
 });
