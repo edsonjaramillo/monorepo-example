@@ -1,16 +1,19 @@
 import { defineConfig } from 'tsup';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export default defineConfig((options) => {
+  const watchMode = options.watch;
   return {
-    entry: ['src/**/index.{ts,tsx}'],
+    entry: ['src/index.ts'],
     format: 'esm',
     target: 'es6',
-    bundle: true,
-    dts: true,
     outDir: 'dist',
-    sourcemap: true,
     clean: true,
-    watch: options.watch,
-    splitting: !options.watch,
+    dts: true,
+    minify: isProduction,
+    splitting: isProduction,
+    watch: !isProduction && watchMode,
+    sourcemap: !isProduction,
   };
 });
