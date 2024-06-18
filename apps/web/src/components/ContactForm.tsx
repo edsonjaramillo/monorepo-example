@@ -8,7 +8,7 @@ import { z } from 'zod';
 
 import { zContactFormSchema } from 'validation';
 
-import { Button, Form, Input, InputGroup, Label, Text, Textarea } from 'ui/atoms';
+import { Button, Form, Input, InputGroup, Label, Text, Textarea } from 'ui';
 
 const toastId = 'contact-form-toast';
 type FormSchema = z.infer<typeof zContactFormSchema>;

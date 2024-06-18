@@ -1,4 +1,4 @@
-import { Responsive } from 'ui/atoms';
+import { Responsive } from 'ui';
 
 import { ContactForm } from '@/components/ContactForm';
 
