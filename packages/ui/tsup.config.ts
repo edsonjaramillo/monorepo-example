@@ -7,7 +7,7 @@ export default defineConfig((options) => {
   return {
     entry: ['src/index.ts'],
     format: 'esm',
-    target: 'es6',
+    target: 'esnext',
     outDir: 'dist',
     clean: true,
     dts: true,
