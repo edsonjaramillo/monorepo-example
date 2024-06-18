@@ -2,19 +2,9 @@
   "name": "common",
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    },
-    "./datetime": {
-      "import": "./dist/datetime/index.mjs",
-      "types": "./dist/datetime/index.d.ts"
-    }
-  },
   "main": "dist/index.mjs",
   "source": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.mts",
   "scripts": {
     "build": "tsup",
     "clean": "rm -rf dist",
