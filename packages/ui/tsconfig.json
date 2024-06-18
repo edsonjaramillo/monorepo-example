@@ -1,26 +1,23 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "declaration": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowJs": true,
     "esModuleInterop": true,
-    "lib": ["es5", "es2015", "es2016", "esnext", "dom", "dom.iterable"],
-    "types": ["node"],
-    "module": "ES6",
-    "moduleResolution": "Bundler",
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "outDir": "dist",
+    "incremental": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "sourceMap": true,
-    "jsx": "react-jsx",
-    "strict": true,
-    "target": "ES6",
-    "skipLibCheck": true
+    ]
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
