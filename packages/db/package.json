@@ -2,31 +2,9 @@
   "name": "db",
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    },
-    "./columns": {
-      "import": "./dist/columns/index.mjs",
-      "types": "./dist/columns/index.d.ts"
-    },
-    "./queries": {
-      "import": "./dist/queries/index.mjs",
-      "types": "./dist/queries/index.d.ts"
-    },
-    "./types": {
-      "import": "./dist/types/index.mjs",
-      "types": "./dist/types/index.d.ts"
-    },
-    "./schema": {
-      "import": "./dist/schema/index.mjs",
-      "types": "./dist/schema/index.d.ts"
-    }
-  },
   "main": "dist/index.mjs",
   "source": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.mts",
   "files": [
     "dist"
   ],
