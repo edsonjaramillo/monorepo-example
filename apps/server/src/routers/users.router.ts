@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 
-import { UsersQueries } from 'db/queries';
+import { UsersQueries } from 'db';
 
 import { db } from '../db';
 import { JSend } from '../utils/JSend';
