@@ -6,6 +6,11 @@
       "outputs": ["{options.outputPath}"],
       "cache": true
     },
+    "test": {
+      "dependsOn": ["^test"],
+      "outputs": ["{options.outputPath}"],
+      "cache": true
+    },
     "dev": {
       "dependsOn": [],
       "cache": false
