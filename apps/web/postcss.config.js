@@ -1,1 +1,2 @@
-module.exports = require('../../../packages/config/postcss.config');
+/** @type {import('postcss-load-config').Config}*/
+module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };
