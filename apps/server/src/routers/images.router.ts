@@ -6,14 +6,14 @@ import { type ImageAssetFolders, ImagesQueries } from 'db';
 
 import { zUploadImageFormSchema } from 'validation';
 
-import { db } from '../db';
+import { database } from '../db';
 import { JSend } from '../utils/JSend';
 import { backblaze } from '../utils/backblaze/Backblaze';
 import { placeholder } from '../utils/image/Placeholder';
 
 export const imagesRouter = new Hono();
 
-const imageQueries = new ImagesQueries(db);
+const imageQueries = new ImagesQueries(database);
 
 const CONVERTED_IMAGE_TYPE = 'webp';
 
