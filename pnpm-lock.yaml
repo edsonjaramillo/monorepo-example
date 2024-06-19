@@ -34,8 +34,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0
       prettier-plugin-tailwindcss:
-        specifier: 0.6.1
-        version: 0.6.1(@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.3.0))(prettier@3.3.0)
+        specifier: 0.6.5
+        version: 0.6.5(@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.3.0))(prettier@3.3.0)
       tailwindcss:
         specifier: 3.4.4
         version: 3.4.4(ts-node@10.9.2(@swc/core@1.5.29)(@types/node@20.14.2)(typescript@5.4.5))
@@ -2911,8 +2911,8 @@ packages:
     resolution: {integrity: sha512-IbyN+9KslkqcXa8AO9fxpk97PA4pzewvpi2B3Dwy9u4zpV32QicaEdgmF3eSQUzdRk7ttDHQejNgAEr4XoeH4A==}
     engines: {node: '>=12'}
 
-  prettier-plugin-tailwindcss@0.6.1:
-    resolution: {integrity: sha512-AnbeYZu0WGj+QgKciUgdMnRxrqcxltleZPgdwfA5104BHM3siBLONN/HLW1yS2HvzSNkzpQ/JAj+LN0jcJO+0w==}
+  prettier-plugin-tailwindcss@0.6.5:
+    resolution: {integrity: sha512-axfeOArc/RiGHjOIy9HytehlC0ZLeMaqY09mm8YCkMzznKiDkwFzOpBvtuhuv3xG5qB73+Mj7OCe2j/L1ryfuQ==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -6298,7 +6298,7 @@ snapshots:
 
   postgres@3.4.4: {}
 
-  prettier-plugin-tailwindcss@0.6.1(@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.3.0))(prettier@3.3.0):
+  prettier-plugin-tailwindcss@0.6.5(@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.3.0))(prettier@3.3.0):
     dependencies:
       prettier: 3.3.0
     optionalDependencies:
