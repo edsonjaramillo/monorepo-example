@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsup",
     "clean": "rm -rf dist",
-    "clean_node_modules": "rm -rf node_modules"
+    "clean_node_modules": "rm -rf node_modules",
+    "test": "vitest run"
   },
   "dependencies": {
     "dayjs": "1.11.11"
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@types/node": "20.14.2",
     "tsup": "8.1.0",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "vitest": "1.6.0"
   }
 }
