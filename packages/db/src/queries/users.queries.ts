@@ -4,7 +4,7 @@ import type { Database } from '../client';
 import { PETS_COLUMNS } from '../columns/pets.columns';
 import { USERS_COLUMNS } from '../columns/users.columns';
 import { usersTable } from '../schema';
-import type { UserCreate, UserUpdate } from '../types/users.types';
+import type { User, UserCreate, UserUpdate, UserWithPets } from '../types/users.types';
 
 export class UsersQueries {
   private readonly db: Database;
@@ -12,11 +12,11 @@ export class UsersQueries {
     this.db = database;
   }
 
-  async getUsers() {
+  async getUsers(): Promise<User[]> {
     return this.db.query.usersTable.findMany({ columns: USERS_COLUMNS });
   }
 
-  async getUserById(id: string) {
+  async getUserById(id: string): Promise<User | undefined> {
     const query = this.db.query.usersTable
       .findFirst({
         where: eq(usersTable.id, sql.placeholder('id')),
@@ -33,10 +33,10 @@ export class UsersQueries {
       .values({ name: sql.placeholder('name') })
       .prepare('createUser');
 
-    return query.execute({ name: user.name });
+    await query.execute({ name: user.name });
   }
 
-  async getUserWithPets(id: string) {
+  async getUserWithPets(id: string): Promise<UserWithPets | undefined> {
     const query = this.db.query.usersTable
       .findFirst({
         where: eq(usersTable.id, sql.placeholder('id')),
