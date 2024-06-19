@@ -25,15 +25,16 @@ class Backblaze {
     this.bucketName = init.bucketName;
   }
 
-  async uploadFile(name: string, buffer: Buffer) {
+  async uploadFile(name: string, buffer: Uint8Array) {
     const command = new PutObjectCommand({ Bucket: this.bucketName, Key: name, Body: buffer });
     try {
       const response = await s3.send(command);
       if (response.$metadata.httpStatusCode === 200) {
         return true;
       }
+
       return false;
-    } catch (error) {
+    } catch {
       return false;
     }
   }

@@ -1,7 +1,6 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
-import type { FieldError, Merge, RegisterOptions } from 'react-hook-form';
+import { type FieldError, type Merge, type RegisterOptions, useFormContext } from 'react-hook-form';
 import { type VariantProps, tv } from 'tailwind-variants';
 
 import { cn } from '../lib/cn';
@@ -18,7 +17,7 @@ export const coreVariants = tv({
 
 export const inputVariants = tv({ extend: coreVariants, base: 'h-9' });
 
-type InputProps = React.ComponentProps<'input'> & {
+type InputProperties = React.ComponentProps<'input'> & {
   field: string;
   type: React.ComponentProps<'input'>['type'];
   helpMessage?: string;
@@ -32,8 +31,8 @@ export function Input({
   disabled,
   registerOptions,
   required,
-  ...props
-}: InputProps) {
+  ...properties
+}: InputProperties) {
   const { register, formState } = useFormContext();
   const error = formState.errors[field];
   const cls = cn(inputVariants({ disabled }), className);
@@ -44,11 +43,11 @@ export function Input({
         className={cls}
         aria-describedby={helpMessage && `${field}-help`}
         aria-errormessage={error && `${field}-error`}
-        aria-invalid={!!error}
+        aria-invalid={Boolean(error)}
         aria-labelledby={`${field}-label`}
         disabled={disabled}
         {...register(field, { required, ...registerOptions })}
-        {...props}
+        {...properties}
       />
       {helpMessage && <InputHelp field={field}>{helpMessage}</InputHelp>}
       {error && <InputError field={field} error={error} />}
@@ -61,7 +60,7 @@ export const textareaVariants = tv({
   base: 'resize-y',
 });
 
-type TextareaProps = React.ComponentProps<'textarea'> & {
+type TextareaProperties = React.ComponentProps<'textarea'> & {
   field: string;
   helpMessage?: string;
   registerOptions?: RegisterOptions;
@@ -74,8 +73,8 @@ export function Textarea({
   disabled,
   registerOptions,
   required,
-  ...props
-}: TextareaProps) {
+  ...properties
+}: TextareaProperties) {
   const { register, formState } = useFormContext();
   const error = formState.errors[field];
   const cls = cn(textareaVariants({ disabled }), className);
@@ -86,12 +85,12 @@ export function Textarea({
         className={cls}
         aria-describedby={helpMessage && `${field}-help`}
         aria-errormessage={error && `${field}-error`}
-        aria-invalid={!!error}
+        aria-invalid={Boolean(error)}
         aria-labelledby={`${field}-label`}
         disabled={disabled}
         rows={10}
         {...register(field, { required, ...registerOptions })}
-        {...props}
+        {...properties}
       />
       {helpMessage && <InputHelp field={field}>{helpMessage}</InputHelp>}
       {error && <InputError field={field} error={error} />}
@@ -102,10 +101,10 @@ export function Textarea({
 // Extra components
 
 // InputGroup
-type InputGroupProps = React.ComponentProps<'div'>;
-export function InputGroup({ children, className, ...props }: InputGroupProps) {
+type InputGroupProperties = React.ComponentProps<'div'>;
+export function InputGroup({ children, className, ...properties }: InputGroupProperties) {
   return (
-    <div className={cn('space-y-2', className)} {...props}>
+    <div className={cn('space-y-2', className)} {...properties}>
       {children}
     </div>
   );
@@ -119,18 +118,23 @@ export const formColumnsVariants = tv({
 
 type InputColumnsCore = React.ComponentProps<'div'>;
 type InputColumnsVariants = VariantProps<typeof formColumnsVariants>;
-type InputColumnsProps = InputColumnsCore & InputColumnsVariants;
-export function InputColumns({ children, className, columns, ...props }: InputColumnsProps) {
+type InputColumnsProperties = InputColumnsCore & InputColumnsVariants;
+export function InputColumns({
+  children,
+  className,
+  columns,
+  ...properties
+}: InputColumnsProperties) {
   return (
-    <div className={cn(formColumnsVariants({ columns }), className)} {...props}>
+    <div className={cn(formColumnsVariants({ columns }), className)} {...properties}>
       {children}
     </div>
   );
 }
 
 // Input Help
-type InputHelp = React.ComponentProps<'p'> & { field: string };
-function InputHelp({ children, field }: InputHelp) {
+type InputHelpProperties = React.ComponentProps<'p'> & { field: string };
+function InputHelp({ children, field }: InputHelpProperties) {
   return (
     <Text as="p" size="small" color="neutral" id={`${field}-help`}>
       {children}
@@ -140,8 +144,8 @@ function InputHelp({ children, field }: InputHelp) {
 
 type CustomFieldError = Merge<FieldError, { message: string }>;
 // Input Error
-type InputError = React.ComponentProps<'p'> & { field: string; error: CustomFieldError };
-function InputError({ className, error, field }: InputError) {
+type InputErrorProperties = React.ComponentProps<'p'> & { field: string; error: CustomFieldError };
+function InputError({ className, error, field }: InputErrorProperties) {
   return (
     <Text
       as="p"

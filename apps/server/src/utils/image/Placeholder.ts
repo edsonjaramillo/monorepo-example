@@ -5,7 +5,7 @@ const SCALE = 16;
 class Placeholder {
   async imageToBase64(url: string, width: number, height: number) {
     const isLandscape = width > height;
-    // make sure aspect ratio is always positive and whole number
+    // Make sure aspect ratio is always positive and whole number
     const aspectRatio = isLandscape ? Math.round(width / height) : Math.round(height / width);
 
     const scaledWidth = isLandscape ? SCALE * aspectRatio : SCALE;

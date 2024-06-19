@@ -11,7 +11,7 @@ export const seperatorVariants = tv({
   defaultVariants: { orientation: 'horizontal', marginless: false },
 });
 
-type SeperatorProps = React.ComponentProps<'div'> &
+type SeperatorProperties = React.ComponentProps<'div'> &
   VariantProps<typeof seperatorVariants> & {
     decorative?: boolean;
   };
@@ -21,13 +21,13 @@ export function Seperator({
   decorative = true,
   marginless,
   orientation,
-  ...props
-}: SeperatorProps) {
+  ...properties
+}: SeperatorProperties) {
   return (
     <div
       aria-hidden={decorative}
       className={cn(seperatorVariants({ marginless, orientation }), className)}
-      {...props}
+      {...properties}
     />
   );
 }

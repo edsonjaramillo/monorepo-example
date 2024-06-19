@@ -7,21 +7,25 @@ import * as schema from './schema';
 
 function maxPoolCountByEnviroment(env: NodeEnv) {
   switch (env) {
-    case 'development':
+    case 'development': {
       return 1;
-    case 'production':
+    }
+
+    case 'production': {
       return undefined;
-    case 'staging':
+    }
+
+    case 'staging': {
       return undefined;
-    case 'test':
+    }
+
+    case 'test': {
       return 1;
-    default:
-      console.error(`Unknown NODE_ENV: ${env}`);
-      return 1;
+    }
   }
 }
 
-export type DB = ReturnType<typeof drizzle<typeof schema>>;
+export type Database = ReturnType<typeof drizzle<typeof schema>>;
 export function createDBConnection(connectionString: string, env: NodeEnv) {
   const connection = postgres(connectionString, {
     max: maxPoolCountByEnviroment(env),

@@ -2,11 +2,11 @@ import { Hono } from 'hono';
 
 import { UsersQueries } from 'db';
 
-import { db } from '../db';
+import { database } from '../db';
 import { JSend } from '../utils/JSend';
 
 export const usersRouter = new Hono();
-const usersQueries = new UsersQueries(db);
+const usersQueries = new UsersQueries(database);
 
 usersRouter.get('/', async (c) => {
   const users = await usersQueries.getUsers();

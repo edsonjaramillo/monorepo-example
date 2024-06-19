@@ -12,11 +12,11 @@ describe('Basic functionality', () => {
   });
 
   test('Expiration.getHours', () => {
-    expect(Expiration.getHours(4)).toBe(14400);
+    expect(Expiration.getHours(4)).toBe(14_400);
   });
 
   test('Expiration.getDays', () => {
-    expect(Expiration.getDays(3)).toBe(259200);
+    expect(Expiration.getDays(3)).toBe(259_200);
   });
 });
 

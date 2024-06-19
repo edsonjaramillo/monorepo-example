@@ -73,7 +73,7 @@ module.exports = {
       width: {
         responsive: `min(90%,${responsiveWidth}rem)`,
         'half-responsive': `min(90%,${halfResponsiveWidth}rem)`,
-        'split-form': `min(90%,27rem)`,
+        'split-form': 'min(90%,27rem)',
       },
       blur: { '4xl': '84px' },
     },

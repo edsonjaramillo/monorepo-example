@@ -1,8 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FormProvider, useForm } from 'react-hook-form';
-import type { FieldErrors } from 'react-hook-form';
+import { type FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -14,7 +13,7 @@ const toastId = 'contact-form-toast';
 type FormSchema = z.infer<typeof zContactFormSchema>;
 
 async function onSubmit(_: FormSchema) {
-  toast.info('Sending message...', { id: toastId, duration: Infinity });
+  toast.info('Sending message...', { id: toastId, duration: Number.POSITIVE_INFINITY });
   await new Promise((resolve) => setTimeout(resolve, 3000));
   toast.success('Message sent!', { id: toastId });
 }

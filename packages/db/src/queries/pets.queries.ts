@@ -1,18 +1,18 @@
 import { eq, sql } from 'drizzle-orm';
 
-import type { DB } from '../client';
+import type { Database } from '../client';
 import { PETS_COLUMNS } from '../columns/pets.columns';
 import { petsTable } from '../schema';
 import type { PetCreate } from '../types/pets.types';
 
 export class PetsQueries {
-  private db: DB;
-  constructor(db: DB) {
-    this.db = db;
+  private readonly db: Database;
+  constructor(database: Database) {
+    this.db = database;
   }
 
   async getPets() {
-    return await this.db.query.petsTable.findMany({ columns: PETS_COLUMNS });
+    return this.db.query.petsTable.findMany({ columns: PETS_COLUMNS });
   }
 
   async getPetById(id: string) {

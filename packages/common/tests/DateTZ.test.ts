@@ -35,7 +35,7 @@ describe('DateTZ', () => {
   });
 
   test('DateTZ - number', () => {
-    expect(DateTZ(1704131940000).format('YYYY-MM-DD')).toBe('2024-01-01');
+    expect(DateTZ(1_704_131_940_000).format('YYYY-MM-DD')).toBe('2024-01-01');
   });
 });
 

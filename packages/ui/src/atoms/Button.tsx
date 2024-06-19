@@ -19,7 +19,7 @@ const buttonVariants = tv({
 type ButtonCore = React.ComponentProps<'button'>;
 type ButtonVariants = VariantProps<typeof buttonVariants>;
 
-type ButtonProps = ButtonCore &
+type ButtonProperties = ButtonCore &
   ButtonVariants & {
     type: ButtonCore['type'];
     iconStart?: React.ReactNode;
@@ -34,11 +34,11 @@ export function Button({
   iconEnd,
   disabled,
   type,
-  ...props
-}: ButtonProps) {
+  ...properties
+}: ButtonProperties) {
   const cls = cn(buttonVariants({ color, disabled }), className);
   return (
-    <button type={type} className={cls} disabled={disabled} {...props}>
+    <button type={type} className={cls} disabled={disabled} {...properties}>
       {iconStart}
       {children}
       {iconEnd}

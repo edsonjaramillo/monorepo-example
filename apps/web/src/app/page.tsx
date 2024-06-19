@@ -4,12 +4,12 @@ import { Button, Text } from 'ui';
 
 export default function HomePage() {
   const todayMidnight = DateTZ();
-  const dateStr = todayMidnight.format('YYYY-MM-DD HH:mm:ss');
+  const dateString = todayMidnight.format('YYYY-MM-DD HH:mm:ss');
 
   return (
     <>
       <Text as="h1" size="cta">
-        {dateStr}
+        {dateString}
       </Text>
       <Button type="button">Click me</Button>
     </>

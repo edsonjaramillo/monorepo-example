@@ -26,9 +26,7 @@ export const imagesTable = pgTable(
     userId: varchar('owner_id', { length: 255 }),
     petId: varchar('pet_id', { length: 255 }),
   },
-  (table) => {
-    return { prefixIdx: index('prefix_idx').on(table.folder) };
-  },
+  (table) => ({ prefixIdx: index('prefix_idx').on(table.folder) }),
 );
 
 export const imagesRelations = relations(imagesTable, ({ one }) => ({

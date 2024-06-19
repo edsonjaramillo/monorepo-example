@@ -31,64 +31,81 @@ export const textVariants = tv({
 });
 type TextCore = React.ComponentProps<'div'>;
 type TextVariants = VariantProps<typeof textVariants>;
-export type TextProps = TextCore & TextVariants & { as: As };
+export type TextProperties = TextCore & TextVariants & { as: As };
 
-export function Text({ as, children, className, underline, size, color, ...props }: TextProps) {
+export function Text({
+  as,
+  children,
+  className,
+  underline,
+  size,
+  color,
+  ...properties
+}: TextProperties) {
   const classes = cn(textVariants({ color, underline, size }), className);
   switch (as) {
-    case 'h1':
+    case 'h1': {
       return (
-        <h1 className={classes} {...props}>
+        <h1 className={classes} {...properties}>
           {children}
         </h1>
       );
-    case 'h2':
+    }
+
+    case 'h2': {
       return (
-        <h2 className={classes} {...props}>
+        <h2 className={classes} {...properties}>
           {children}
         </h2>
       );
-    case 'h3':
+    }
+
+    case 'h3': {
       return (
-        <h3 className={classes} {...props}>
+        <h3 className={classes} {...properties}>
           {children}
         </h3>
       );
-    case 'h4':
+    }
+
+    case 'h4': {
       return (
-        <h4 className={classes} {...props}>
+        <h4 className={classes} {...properties}>
           {children}
         </h4>
       );
-    case 'h5':
+    }
+
+    case 'h5': {
       return (
-        <h5 className={classes} {...props}>
+        <h5 className={classes} {...properties}>
           {children}
         </h5>
       );
-    case 'h6':
+    }
+
+    case 'h6': {
       return (
-        <h6 className={classes} {...props}>
+        <h6 className={classes} {...properties}>
           {children}
         </h6>
       );
-    case 'p':
+    }
+
+    case 'p': {
       return (
-        <p className={classes} {...props}>
+        <p className={classes} {...properties}>
           {children}
         </p>
       );
-    case 'span':
+    }
+
+    case 'span': {
       return (
-        <span className={classes} {...props}>
+        <span className={classes} {...properties}>
           {children}
         </span>
       );
-    default:
-      return (
-        <p className={classes} {...props}>
-          {children}
-        </p>
-      );
+    }
   }
 }

@@ -20,8 +20,7 @@ export function DateTZ(date?: string | number | Date | Dayjs) {
   return dayjs(date).tz(TZ);
 }
 
-const validRegex =
-  /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):([0-5][0-9])$/;
+const validRegex = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12]\d|3[01])T([01]\d|2[0-3]):([0-5]\d)$/;
 /**
  * This function converts a datetime string to a Day.js object in a specific timezone, and sets the hour and minute.
  *
@@ -41,7 +40,7 @@ export function DateTZFromInput(localTime: string) {
   const [hour, minutes] = time.split(':');
 
   // Convert the datetime string to a Day.js object in the specified timezone, and set the hour and minute
-  return DateTZ(localTime).hour(+hour).minute(+minutes);
+  return DateTZ(localTime).hour(Number(hour)).minute(Number(minutes));
 }
 
 const options: Intl.DateTimeFormatOptions = {

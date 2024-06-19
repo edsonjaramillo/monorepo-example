@@ -1,5 +1,5 @@
-import fs from 'fs/promises';
 import { glob } from 'glob';
+import fs from 'node:fs/promises';
 
 // Main function
 async function main() {
@@ -7,11 +7,15 @@ async function main() {
 
   const packageJsons = await getPackageJson();
   for (const packageJson of packageJsons) {
-    const json = JSON.parse(await fs.readFile(packageJson, 'utf-8'));
+    const json = JSON.parse(await fs.readFile(packageJson, 'utf8'));
     const { devDependencies, dependencies } = json;
     const deps = { ...devDependencies, ...dependencies };
 
     for (const dependencyName in deps) {
+      if (!Object.hasOwn(deps, dependencyName)) {
+        continue;
+      }
+
       const version = deps[dependencyName];
       if (!depsMap.has(dependencyName)) {
         depsMap.set(dependencyName, version);
@@ -25,7 +29,7 @@ async function main() {
   }
 }
 
-// function use glob to get all package.json files but ignore node_modules
+// Function use glob to get all package.json files but ignore node_modules
 async function getPackageJson() {
   const packageJsons = await glob('**/package.json', {
     ignore: ['**/node_modules/**'],
@@ -34,4 +38,4 @@ async function getPackageJson() {
   return packageJsons;
 }
 
-main();
+await main();

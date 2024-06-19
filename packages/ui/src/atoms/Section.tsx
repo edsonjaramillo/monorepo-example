@@ -2,8 +2,7 @@ import { type VariantProps, tv } from 'tailwind-variants';
 
 import { cn } from '../lib/cn';
 import { Responsive } from './Responsive';
-import { Text } from './Text';
-import type { As } from './Text';
+import { type As, Text } from './Text';
 
 export const sectionVariants = tv({
   base: 'scroll-mt-12 py-16',
@@ -11,7 +10,7 @@ export const sectionVariants = tv({
   defaultVariants: { background: 'standard' },
 });
 
-type SectionProps = React.ComponentProps<'section'> &
+type SectionProperties = React.ComponentProps<'section'> &
   VariantProps<typeof sectionVariants> & {
     id: string;
     headerAs: As;
@@ -27,11 +26,11 @@ export function Section({
   children,
   className,
   id,
-  ...props
-}: SectionProps) {
+  ...properties
+}: SectionProperties) {
   const sectionClass = cn(sectionVariants({ background }), className);
   return (
-    <section id={id} className={sectionClass} {...props}>
+    <section id={id} className={sectionClass} {...properties}>
       <Responsive>
         <div className="space-y-3 text-balance pb-12 text-center">
           <Text as={headerAs} size="4xl" className="font-bold">

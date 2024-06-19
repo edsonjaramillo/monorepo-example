@@ -1,9 +1,9 @@
 import { cn } from '../lib/cn';
 
-type FormProps = React.ComponentProps<'form'>;
-export function Form({ children, className, ...props }: FormProps) {
+type FormProperties = React.ComponentProps<'form'>;
+export function Form({ children, className, ...properties }: FormProperties) {
   return (
-    <form className={cn('space-y-4 accent-primary', className)} noValidate {...props}>
+    <form className={cn('space-y-4 accent-primary', className)} noValidate {...properties}>
       {children}
     </form>
   );

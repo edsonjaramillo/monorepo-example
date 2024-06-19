@@ -2,8 +2,7 @@ import { Hono } from 'hono';
 import sharp from 'sharp';
 import { uuidv7 } from 'uuidv7';
 
-import { ImagesQueries } from 'db';
-import type { ImageAssetFolders } from 'db';
+import { type ImageAssetFolders, ImagesQueries } from 'db';
 
 import { zUploadImageFormSchema } from 'validation';
 
@@ -21,7 +20,7 @@ const CONVERTED_IMAGE_TYPE = 'webp';
 imagesRouter.post('/upload', async (c) => {
   const { data, success } = zUploadImageFormSchema.safeParse(await c.req.parseBody());
   if (!success) {
-    throw Error('Invalid form data');
+    throw new Error('Invalid form data');
   }
 
   const { image, folder } = data;
@@ -32,14 +31,14 @@ imagesRouter.post('/upload', async (c) => {
   const originalImageBuffer = sharp(await image.arrayBuffer());
   const { width, height } = await originalImageBuffer.metadata();
   if (!width || !height) {
-    throw Error('Failed to get image metadata');
+    throw new Error('Failed to get image metadata');
   }
 
   const webpBuffer = await originalImageBuffer.toFormat(CONVERTED_IMAGE_TYPE).toBuffer();
 
   const uploadSuccessful = await backblaze.uploadFile(filename, webpBuffer);
   if (!uploadSuccessful) {
-    throw Error('Failed to upload file to backblaze');
+    throw new Error('Failed to upload file to backblaze');
   }
 
   const url = backblaze.getUploadUrl(folder, filename);

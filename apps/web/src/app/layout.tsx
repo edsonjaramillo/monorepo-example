@@ -7,9 +7,9 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = { title: 'Web App', description: 'Monorepo Web App' };
 
-type RootLayoutProps = Readonly<{ children: React.ReactNode }>;
+type RootLayoutProperties = Readonly<{ children: React.ReactNode }>;
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProperties) {
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>

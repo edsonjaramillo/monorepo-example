@@ -28,7 +28,7 @@ export class Expiration {
       throw new Error('Days cannot be negative');
     }
 
-    return days * 86400;
+    return days * 86_400;
   }
 
   static getWeeks(weeks: number) {
@@ -36,6 +36,6 @@ export class Expiration {
       throw new Error('Weeks cannot be negative');
     }
 
-    return weeks * 604800;
+    return weeks * 604_800;
   }
 }

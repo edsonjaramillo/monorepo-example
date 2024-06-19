@@ -7,15 +7,15 @@ import { textVariants } from './Text';
 
 const textClass = cn(textVariants({ size: 'small' }), 'block font-medium');
 
-type LabelProps = React.ComponentProps<'label'> & { field: string };
-export function Label({ className, children, field, ...props }: LabelProps) {
+type LabelProperties = React.ComponentProps<'label'> & { field: string };
+export function Label({ className, children, field, ...properties }: LabelProperties) {
   const { formState } = useFormContext();
   return (
     <label
       id={`${field}-label`}
       htmlFor={`${field}-input`}
       className={cn(textClass, formState.errors[field] && 'text-error', className)}
-      {...props}>
+      {...properties}>
       {children}
     </label>
   );

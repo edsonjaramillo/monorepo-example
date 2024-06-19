@@ -1,10 +1,10 @@
 import { cn } from '../lib/cn';
 
-type SkeletonProps = React.ComponentProps<'div'>;
+type SkeletonProperties = React.ComponentProps<'div'>;
 
-export function Skeleton({ className, children, ...props }: SkeletonProps) {
+export function Skeleton({ className, children, ...properties }: SkeletonProperties) {
   return (
-    <div className={cn('animate-pulse rounded bg-grayscale-200', className)} {...props}>
+    <div className={cn('animate-pulse rounded bg-grayscale-200', className)} {...properties}>
       {children}
     </div>
   );

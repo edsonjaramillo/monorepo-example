@@ -2,11 +2,10 @@
 
 import React, { useRef, useState } from 'react';
 
-import type { As } from '../atoms/Text';
-import { Text } from '../atoms/Text';
+import { type As, Text } from '../atoms/Text';
 import { cn } from '../lib/cn';
 
-type AccordionProps = React.ComponentProps<'div'> & AccordionType;
+type AccordionProperties = React.ComponentProps<'div'> & AccordionType;
 
 type Core = { header: string; headerAs?: As };
 type WithChildren = Core & { children: React.ReactNode };
@@ -39,18 +38,20 @@ export function Accordion({
   content,
   children,
   className,
-  ...props
-}: AccordionProps) {
+  ...properties
+}: AccordionProperties) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const scrollHeight = (contentRef.current?.scrollHeight || 0) + 16;
+  const contentReference = useRef<HTMLDivElement>(null);
+  const scrollHeight = (contentReference.current?.scrollHeight ?? 0) + 16;
 
   return (
-    <div className={cn('overflow-hidden border-b border-grayscale-300', className)} {...props}>
+    <div className={cn('overflow-hidden border-b border-grayscale-300', className)} {...properties}>
       <button
         aria-expanded={isOpen}
         className="group/accordion flex w-full items-center justify-between py-4"
-        onClick={() => setIsOpen(!isOpen)}>
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}>
         <Text
           as={headerAs}
           className="font-medium underline-offset-4 transition-all duration-base group-hover/accordion:underline">
@@ -60,7 +61,7 @@ export function Accordion({
       </button>
       <div
         className={cn('transition-all duration-base', isOpen && 'pb-4')}
-        ref={contentRef}
+        ref={contentReference}
         style={{ height: isOpen ? scrollHeight : 0 }}>
         {!children && (
           <Text as="p" size="small" className="text-pretty">
@@ -73,8 +74,8 @@ export function Accordion({
   );
 }
 
-type IconProps = React.ComponentProps<'svg'> & { isOpen: boolean };
-function Icon({ className, isOpen, ...props }: IconProps) {
+type IconProperties = React.ComponentProps<'svg'> & { isOpen: boolean };
+function Icon({ className, isOpen, ...properties }: IconProperties) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +88,7 @@ function Icon({ className, isOpen, ...props }: IconProps) {
         isOpen && 'rotate-180',
         className,
       )}
-      {...props}>
+      {...properties}>
       <path d="m19.5 8.25-7.5 7.5-7.5-7.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );

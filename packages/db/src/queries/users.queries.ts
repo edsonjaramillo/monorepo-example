@@ -1,19 +1,19 @@
 import { eq, sql } from 'drizzle-orm';
 
-import type { DB } from '../client';
+import type { Database } from '../client';
 import { PETS_COLUMNS } from '../columns/pets.columns';
 import { USERS_COLUMNS } from '../columns/users.columns';
 import { usersTable } from '../schema';
 import type { UserCreate, UserUpdate } from '../types/users.types';
 
 export class UsersQueries {
-  private db: DB;
-  constructor(db: DB) {
-    this.db = db;
+  private readonly db: Database;
+  constructor(database: Database) {
+    this.db = database;
   }
 
   async getUsers() {
-    return await this.db.query.usersTable.findMany({ columns: USERS_COLUMNS });
+    return this.db.query.usersTable.findMany({ columns: USERS_COLUMNS });
   }
 
   async getUserById(id: string) {
@@ -24,7 +24,7 @@ export class UsersQueries {
       })
       .prepare('getUserById');
 
-    return await query.execute({ id });
+    return query.execute({ id });
   }
 
   async createUser(user: UserCreate) {
@@ -33,7 +33,7 @@ export class UsersQueries {
       .values({ name: sql.placeholder('name') })
       .prepare('createUser');
 
-    return await query.execute({ name: user.name });
+    return query.execute({ name: user.name });
   }
 
   async getUserWithPets(id: string) {
@@ -45,7 +45,7 @@ export class UsersQueries {
       })
       .prepare('getUserWithPets');
 
-    return await query.execute({ id });
+    return query.execute({ id });
   }
 
   async updateUser(id: string, user: UserUpdate) {
