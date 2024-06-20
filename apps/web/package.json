@@ -8,7 +8,6 @@
     "clean_node_modules": "rm -rf node_modules",
     "dev": "next dev --turbo",
     "dev:start": "next start",
-    "lint": "next lint",
     "start": "next start"
   },
   "dependencies": {
