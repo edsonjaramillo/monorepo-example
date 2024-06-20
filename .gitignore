@@ -23,9 +23,10 @@ yarn-error.log*
 .env.production
 
 # environment
-.env.local
-.env.development
 .env
+.env.development
+.env.docker
+.env.local
 
 # hidden
 .DS_Store
