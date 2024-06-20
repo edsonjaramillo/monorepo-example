@@ -12,6 +12,7 @@
     "build": "tsup",
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules",
+    "dev": "tsup --watch",
     "dev:db:generate": "env-cmd -f .env.local drizzle-kit generate",
     "dev:db:migrate": "env-cmd -f .env.local tsx src/dev:db/migrate.ts",
     "dev:db:push": "env-cmd -f .env.local drizzle-kit push",

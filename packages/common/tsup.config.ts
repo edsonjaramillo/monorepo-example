@@ -9,7 +9,7 @@ export default defineConfig((options) => {
     format: 'esm',
     target: 'esnext',
     outDir: 'dist',
-    clean: true,
+    clean: watchMode ? false : true,
     dts: true,
     minify: isProduction,
     splitting: isProduction,

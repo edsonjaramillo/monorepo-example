@@ -9,6 +9,7 @@
     "build": "tsup",
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules",
+    "dev": "tsup --watch",
     "test": "vitest run"
   },
   "dependencies": {
