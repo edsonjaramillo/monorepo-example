@@ -7,7 +7,7 @@
   "importOrder": ["^db", "^validation", "^common", "^ui", "^@/", "^\\."],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
-  "tailwindConfig": "./configs/tailwind.config.js",
-  "tailwindAttributes": ["cva", "cn", "tv"],
-  "tailwindFunctions": ["cva", "cn", "tv"]
+  "tailwindConfig": "./packages/configs/tailwind.config.js",
+  "tailwindAttributes": ["cn", "tv"],
+  "tailwindFunctions": ["cn", "tv"]
 }
