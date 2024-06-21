@@ -6,8 +6,9 @@ import { type ImageAssetFolders, ImagesQueries } from 'db';
 
 import { zUploadImageFormSchema } from 'validation';
 
+import { JSend } from 'common';
+
 import { database } from '../db';
-import { JSend } from '../utils/JSend';
 import { backblaze } from '../utils/backblaze/Backblaze';
 import { placeholder } from '../utils/image/Placeholder';
 
