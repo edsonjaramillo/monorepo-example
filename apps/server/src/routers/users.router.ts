@@ -15,7 +15,7 @@ usersRouter.get('/', async (c) => {
 });
 
 usersRouter.get('/:id', async (c) => {
-  const id = c.req.param('id');
+  const { id } = c.req.param();
 
   const user = await usersQueries.getUserById(id);
 
@@ -27,7 +27,7 @@ usersRouter.get('/:id', async (c) => {
 });
 
 usersRouter.get('/:id/pets', async (c) => {
-  const id = c.req.param('id');
+  const { id } = c.req.param();
 
   const user = await usersQueries.getUserWithPets(id);
 
