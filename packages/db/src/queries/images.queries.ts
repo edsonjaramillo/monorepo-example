@@ -1,3 +1,4 @@
+import { Redis } from 'cache';
 import { asc, eq } from 'drizzle-orm';
 
 import { Database } from '../client';
@@ -12,8 +13,10 @@ import type {
 
 export class ImagesQueries {
   private readonly db: Database;
-  constructor(database: Database) {
+  private readonly cache: Redis;
+  constructor(database: Database, redis: Redis) {
     this.db = database;
+    this.cache = redis;
   }
 
   async getImages(): Promise<ImageAsset[]> {
@@ -24,11 +27,20 @@ export class ImagesQueries {
   }
 
   async getImagesByFolder(folder: ImageAssetFolders): Promise<ImageAsset[]> {
-    return this.db.query.imagesTable.findMany({
+    const cachedImages = await this.cache.get<ImageAsset[]>(`images:${folder}`);
+    if (cachedImages) {
+      return cachedImages;
+    }
+
+    const images = await this.db.query.imagesTable.findMany({
       where: eq(imagesTable.folder, folder),
       columns: CORE_IMAGE_COLUMNS,
       orderBy: asc(imagesTable.createdAt),
     });
+
+    await this.cache.set(`images:${folder}`, images);
+
+    return images;
   }
 
   async createImage(folder: ImageAssetFolders, data: ImageAssetCreate) {

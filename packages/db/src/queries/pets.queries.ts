@@ -1,3 +1,4 @@
+import { Redis } from 'cache';
 import { eq, sql } from 'drizzle-orm';
 
 import type { Database } from '../client';
@@ -7,8 +8,10 @@ import type { PetCreate, Pets } from '../types/pets.types';
 
 export class PetsQueries {
   private readonly db: Database;
-  constructor(database: Database) {
+  private readonly cache: Redis;
+  constructor(database: Database, redis: Redis) {
     this.db = database;
+    this.cache = redis;
   }
 
   async getPets(): Promise<Pets[]> {
@@ -16,6 +19,11 @@ export class PetsQueries {
   }
 
   async getPetById(id: string): Promise<Pets | undefined> {
+    const cachedPet = await this.cache.get<Pets>(`pet:${id}`);
+    if (cachedPet) {
+      return cachedPet;
+    }
+
     const query = this.db.query.petsTable
       .findFirst({
         where: eq(petsTable.id, sql.placeholder('id')),

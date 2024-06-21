@@ -1,3 +1,4 @@
+import { Redis } from 'cache';
 import { eq, sql } from 'drizzle-orm';
 
 import type { Database } from '../client';
@@ -8,8 +9,11 @@ import type { User, UserCreate, UserUpdate, UserWithPets } from '../types/users.
 
 export class UsersQueries {
   private readonly db: Database;
-  constructor(database: Database) {
+  private readonly cache: Redis;
+
+  constructor(database: Database, redis: Redis) {
     this.db = database;
+    this.cache = redis;
   }
 
   async getUsers(): Promise<User[]> {
@@ -17,14 +21,21 @@ export class UsersQueries {
   }
 
   async getUserById(id: string): Promise<User | undefined> {
+    const cachedUser = await this.cache.get<User>(`user:${id}`);
+    if (cachedUser) {
+      return cachedUser;
+    }
+
     const query = this.db.query.usersTable
-      .findFirst({
-        where: eq(usersTable.id, sql.placeholder('id')),
-        columns: USERS_COLUMNS,
-      })
+      .findFirst({ where: eq(usersTable.id, sql.placeholder('id')), columns: USERS_COLUMNS })
       .prepare('getUserById');
 
-    return query.execute({ id });
+    const user = await query.execute({ id });
+    if (user) {
+      await this.cache.set(`user:${id}`, user);
+    }
+
+    return user;
   }
 
   async createUser(user: UserCreate) {
