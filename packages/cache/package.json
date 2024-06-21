@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "common": "workspace:*",
-    "db": "workspace:*",
     "ioredis": "5.4.1",
     "validation": "workspace:*"
   },
