@@ -1,6 +1,6 @@
 import { Redis as Client } from 'ioredis';
 
-import { Logger } from 'common';
+import { Expiration, Logger } from 'common';
 
 type Data = Record<string, any>;
 
@@ -9,6 +9,8 @@ type RedisOptions = {
   debug: boolean;
   skipCache?: boolean;
 };
+
+const standardExpiration = Expiration.getHours(1);
 
 export class Redis {
   private readonly client: Client;
@@ -38,7 +40,7 @@ export class Redis {
     return JSON.parse(value) as T;
   }
 
-  async set(key: string, value: Data, expiration: number) {
+  async set(key: string, value: Data, expiration?: number) {
     if (this.skipCache) {
       return;
     }
@@ -47,7 +49,7 @@ export class Redis {
       Logger.log('YELLOW', 'CACHE SET', key);
     }
 
-    await this.client.set(key, JSON.stringify(value), 'EX', expiration);
+    await this.client.set(key, JSON.stringify(value), 'EX', expiration ?? standardExpiration);
   }
 
   async delete(key: string) {
