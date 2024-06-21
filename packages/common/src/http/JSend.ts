@@ -6,7 +6,7 @@ export type ErrorResponse = { status: 'error'; data: undefined; message: string 
 export type InfoResponse<T> = { status: 'info'; data: Data<T>; message: string };
 export type WarningResponse = { status: 'warning'; data: undefined; message: string };
 
-type JSendResponse<T = PossibleData> =
+export type JSendResponse<T = PossibleData> =
   | SuccessResponse<T>
   | ErrorResponse
   | InfoResponse<T>
