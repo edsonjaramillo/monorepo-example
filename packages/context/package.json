@@ -1,0 +1,22 @@
+{
+  "name": "context",
+  "version": "1.0.0",
+  "author": "Edson Antonio Jaramillo Balderrama",
+  "main": "dist/index.mjs",
+  "source": "src/index.ts",
+  "types": "dist/index.d.mts",
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "clean_node_modules": "rm -rf node_modules",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "zustand": "4.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.2",
+    "tsup": "8.1.0",
+    "typescript": "5.4.5"
+  }
+}
