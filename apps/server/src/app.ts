@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 
 import { Logger } from 'common';
 
@@ -8,6 +9,7 @@ import { serverEnv } from './server.env';
 
 const app = new Hono();
 
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.route('/users', usersRouter);
 app.route('/images', imagesRouter);
 
