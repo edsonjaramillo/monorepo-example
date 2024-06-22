@@ -2,17 +2,23 @@ import { Context } from 'hono';
 import { createMiddleware } from 'hono/factory';
 import type { AnyZodObject } from 'zod';
 
-import { JSend } from '../utils/JSend';
+import { JSend, Logger } from 'common';
+
+import { serverEnv } from '../server.env';
 
 type Parse = 'json' | 'query' | 'params';
+const isDevelopment = serverEnv.NODE_ENV === 'development';
 
 export function validate(schema: AnyZodObject, parse: Parse = 'json') {
   return createMiddleware(async (c, next) => {
     const data = await bodyToBeChecked(c, parse);
 
-    const { success } = schema.safeParse(data);
+    const { success, error } = schema.safeParse(data);
     if (!success) {
-      // invalid parameters or body status code
+      if (isDevelopment) {
+        Logger.error(error.errors);
+      }
+
       return c.json(JSend.error(`Invalid ${parse} data`), 400);
     }
 
