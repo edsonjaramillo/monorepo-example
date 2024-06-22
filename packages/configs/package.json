@@ -4,6 +4,6 @@
   "author": "Edson Antonio Jaramillo Balderrama",
   "type": "module",
   "files": [
-    "./tailwind.config.js"
+    "./tailwind.config.cjs"
   ]
 }
