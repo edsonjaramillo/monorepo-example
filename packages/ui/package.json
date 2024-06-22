@@ -2,7 +2,6 @@
   "name": "ui",
   "version": "1.0.0",
   "author": "Edson Antonio Jaramillo Balderrama",
-  "type": "module",
   "main": "dist/index.mjs",
   "source": "index.ts",
   "types": "dist/index.d.mts",
