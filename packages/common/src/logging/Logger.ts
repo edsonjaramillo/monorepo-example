@@ -5,7 +5,7 @@ const { CYAN, GREEN, MAGENTA, ORANGE, RED, RESET, YELLOW } = colorsText;
 
 export class Logger {
   static log(color: ColorsText, category: string, ...message: any) {
-    console.log(color, `[${category}]`, YELLOW, timestamp(), RESET, ...message);
+    console.log(colorsText[color], `[${category}]`, YELLOW, timestamp(), RESET, ...message);
   }
 
   static success(...message: any[]) {
