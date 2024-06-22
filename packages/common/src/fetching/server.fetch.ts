@@ -9,10 +9,11 @@ export class ServerFetcher {
     this.baseUrl = url;
   }
 
-  async get<T>(path: string): Promise<JSendResponse<T>> {
+  async get<T>(path: string) {
     const endpoint = `${this.baseUrl}${path}`;
     const response = await fetch(endpoint, {
-      headers: { ...cookies },
+      credentials: 'include',
+      headers: { Cookie: cookies().toString() },
     });
 
     const data = await response.json();
