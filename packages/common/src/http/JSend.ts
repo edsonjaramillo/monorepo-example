@@ -1,4 +1,4 @@
-type PossibleData = Record<string, unknown> | Array<Record<string, unknown>>;
+type PossibleData = Record<string, unknown> | Array<Record<string, unknown>> | undefined;
 type Data<T = PossibleData> = T;
 
 export type SuccessResponse<T> = { status: 'success'; data: Data<T>; message: string };
