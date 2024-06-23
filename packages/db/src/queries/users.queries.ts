@@ -3,9 +3,15 @@ import { eq, sql } from 'drizzle-orm';
 
 import type { Database } from '../client';
 import { PETS_COLUMNS } from '../columns/pets.columns';
-import { USERS_COLUMNS } from '../columns/users.columns';
+import { USERS_COLUMNS, USERS_CREDENTIALS_COLUMNS } from '../columns/users.columns';
 import { usersTable } from '../schema';
-import type { User, UserCreate, UserUpdate, UserWithPets } from '../types/users.types';
+import type {
+  User,
+  UserCreate,
+  UserCredentials,
+  UserUpdate,
+  UserWithPets,
+} from '../types/users.types';
 
 export class UsersQueries {
   private readonly db: Database;
@@ -38,10 +44,35 @@ export class UsersQueries {
     return user;
   }
 
+  async getUserCredentials(email: string): Promise<UserCredentials | undefined> {
+    const cachedCredentials = await this.cache.get<UserCredentials>(`user:${email}:credentials`);
+    if (cachedCredentials) {
+      return cachedCredentials;
+    }
+
+    const query = this.db.query.usersTable
+      .findFirst({
+        where: eq(usersTable.email, sql.placeholder('email')),
+        columns: USERS_CREDENTIALS_COLUMNS,
+      })
+      .prepare('getUserCredentials');
+
+    const user = await query.execute({ email });
+    if (!user) {
+      return undefined;
+    }
+
+    return user as UserCredentials;
+  }
+
   async createUser(user: UserCreate) {
     const query = this.db
       .insert(usersTable)
-      .values({ name: sql.placeholder('name') })
+      .values({
+        name: sql.placeholder('name'),
+        email: sql.placeholder('email'),
+        password: sql.placeholder('password'),
+      })
       .prepare('createUser');
 
     await query.execute({ name: user.name });
