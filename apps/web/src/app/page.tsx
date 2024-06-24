@@ -1,23 +1,23 @@
-import type { User } from 'db';
+import Link from 'next/link';
 
 import { DateTZ } from 'common';
 
-import { Button, Text } from 'ui';
-
-import { serverFetcher } from '../utils/clients';
+import { Text } from 'ui';
 
 export default async function HomePage() {
   const now = DateTZ();
   const dateString = now.format('YYYY-MM-DD HH:mm:ss');
-  const { data } = await serverFetcher.get<User[]>('/users');
 
   return (
     <>
       <Text as="h1" size="cta">
         {dateString}
       </Text>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      <Button type="button">Click me</Button>
+
+      <div className="flex gap-4">
+        <Link href="/signin">Sign in</Link>
+        <Link href="/signup">Sign up</Link>
+      </div>
     </>
   );
 }
