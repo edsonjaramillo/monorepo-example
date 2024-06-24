@@ -1,17 +1,16 @@
 import { create } from 'zustand';
 
-type SessionToken = { token: string; expires: number };
+import { SessionWithUser } from 'db';
 
-type State = { session: SessionToken | undefined; test: string | undefined };
+type State = { session: SessionWithUser | undefined };
 type Actions = {
-  signin: (session: SessionToken) => void;
+  signin: (session: SessionWithUser) => void;
   signout: () => Promise<void>;
 };
 
 export function createSessionContext() {
   return create<State & Actions>((set) => ({
     session: undefined,
-    test: undefined,
     signin(session) {
       set(() => ({ session }));
     },
