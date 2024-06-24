@@ -4,7 +4,7 @@ import { uuidv7 } from 'uuidv7';
 
 import { SessionsQueries, UsersQueries } from 'db';
 
-import { LoginSchema, zLoginSchema } from 'validation';
+import { type LoginSchema, type SignupSchema, zLoginSchema, zSignupSchema } from 'validation';
 
 import { DateTZ, JSend } from 'common';
 
@@ -42,6 +42,16 @@ authRouter.post('/signin', validate(zLoginSchema), async (c) => {
 
   setCookie(c, 'session', session.id, cookieOptions(false, expiresAt));
   return c.json(JSend.success(session, 'Users fetched successfully'));
+});
+
+authRouter.post('/signup', validate(zSignupSchema), async (c) => {
+  const body = await c.req.json<SignupSchema>();
+
+  const password = await passwordManager.hash(body.password);
+
+  await usersQueries.createUser({ ...body, password });
+
+  return c.json(JSend.success(undefined, 'User created successfully'));
 });
 
 authRouter.get('/signout', async (c) => {
