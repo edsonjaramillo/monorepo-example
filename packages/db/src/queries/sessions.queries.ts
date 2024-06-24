@@ -39,12 +39,7 @@ export class SessionsQueries {
   }
 
   async createSession(session: SessionCreate) {
-    const query = this.db
-      .insert(sessionsTable)
-      .values({ userId: sql.placeholder('userId'), expiresAt: sql.placeholder('expiresAt') })
-      .prepare('createSession');
-
-    await query.execute(session);
+    await this.db.insert(sessionsTable).values(session);
   }
 
   async updateSession(id: string, session: SessionUpdate) {
