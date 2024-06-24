@@ -1,9 +1,12 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, uniqueIndex, varchar } from 'drizzle-orm/pg-core';
+import { pgEnum, pgTable, uniqueIndex, varchar } from 'drizzle-orm/pg-core';
 
 import { createdAt, id, updatedAt } from './fields';
 import { petsTable } from './pets.schema';
 import { sessionsTable } from './sessions.schema';
+
+export const roles = ['admin', 'employee', 'customer'] as const;
+export const rolesEnum = pgEnum('roles', roles);
 
 export const usersTable = pgTable(
   'users',
@@ -12,6 +15,7 @@ export const usersTable = pgTable(
     name: varchar('name', { length: 255 }).notNull(),
     email: varchar('email', { length: 255 }).notNull().unique(),
     password: varchar('password', { length: 255 }).notNull(),
+    role: rolesEnum('role').default('customer').notNull(),
     createdAt,
     updatedAt,
   },
