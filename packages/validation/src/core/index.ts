@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const zString = z.string().trim();
+export const zString = z.string().min(1, 'Field cannot be empty').trim();
 
 export const zPhoneNumber = zString
   .min(10, 'Phone number must be at least 10 digits')
