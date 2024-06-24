@@ -4,7 +4,7 @@ import { uuidv7 } from 'uuidv7';
 
 import { SessionsQueries, UsersQueries } from 'db';
 
-import { type LoginSchema, type SignupSchema, zLoginSchema, zSignupSchema } from 'validation';
+import { type SignInSchema, type SignupSchema, zSignInSchema, zSignupSchema } from 'validation';
 
 import { DateTZ, JSend } from 'common';
 
@@ -18,8 +18,8 @@ export const authRouter = new Hono();
 const usersQueries = new UsersQueries(database, cache);
 const sessionsQueries = new SessionsQueries(database, cache);
 
-authRouter.post('/signin', validate(zLoginSchema), async (c) => {
-  const body = await c.req.json<LoginSchema>();
+authRouter.post('/signin', validate(zSignInSchema), async (c) => {
+  const body = await c.req.json<SignInSchema>();
 
   const credentials = await usersQueries.getUserCredentials(body.email);
   if (!credentials) {

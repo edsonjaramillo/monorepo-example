@@ -2,12 +2,12 @@ import { z } from 'zod';
 
 import { zString } from '../core';
 
-export const zLoginSchema = z.object({
+export const zSignInSchema = z.object({
   email: zString,
   password: zString,
 });
 
-export type LoginSchema = z.infer<typeof zLoginSchema>;
+export type SignInSchema = z.infer<typeof zSignInSchema>;
 
 export const zSignupSchema = z.object({
   name: zString,
