@@ -4,12 +4,12 @@ import { DateTZ } from 'common';
 
 import { Button, Text } from 'ui';
 
-import { fetcher } from '../utils/clients';
+import { serverFetcher } from '../utils/clients';
 
 export default async function HomePage() {
   const now = DateTZ();
   const dateString = now.format('YYYY-MM-DD HH:mm:ss');
-  const { data } = await fetcher.get<User[]>('/users');
+  const { data } = await serverFetcher.get<User[]>('/users');
 
   return (
     <>
