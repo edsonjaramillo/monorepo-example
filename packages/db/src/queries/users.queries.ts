@@ -75,7 +75,7 @@ export class UsersQueries {
       })
       .prepare('createUser');
 
-    await query.execute({ name: user.name });
+    await query.execute(user);
   }
 
   async getUserWithPets(id: string): Promise<UserWithPets | undefined> {
