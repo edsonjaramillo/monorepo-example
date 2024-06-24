@@ -1,3 +1,4 @@
-import { ServerFetcher } from 'common';
+import { ClientFetcher, ServerFetcher } from 'common';
 
-export const fetcher = new ServerFetcher('http://localhost:8080');
+export const clientFetcher = new ClientFetcher('http://localhost:8080');
+export const serverFetcher = new ServerFetcher('http://localhost:8080');
