@@ -3,6 +3,7 @@ import { cors } from 'hono/cors';
 
 import { Logger } from 'common';
 
+import { onError } from './middlware/onError';
 import { authRouter } from './routers/auth.router';
 import { imagesRouter } from './routers/images.router';
 import { usersRouter } from './routers/users.router';
@@ -14,6 +15,8 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.route('/users', usersRouter);
 app.route('/images', imagesRouter);
 app.route('/auth', authRouter);
+
+app.onError(onError());
 
 Logger.info('Server is running on port', serverEnv.PORT);
 
