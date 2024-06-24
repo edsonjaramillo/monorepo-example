@@ -38,8 +38,7 @@ export function SignupForm() {
       <FormProvider {...methods}>
         <Form
           onSubmit={handleSubmit(async (formData: FormSchema) => {
-            toast.info('Signing up...', { id: toastId, duration: Number.POSITIVE_INFINITY });
-
+            toast.info('Signing up...', { id: toastId });
             const response = await clientFetcher.post('/auth/signup', formData);
             if (response.status === 'success') {
               router.push('/signin');
