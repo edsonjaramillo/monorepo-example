@@ -1,6 +1,13 @@
 /** @type {import('xo').Options} */
 module.exports = {
-  ignores: ['dist', 'node_modules', 'postcss.config.js', 'tailwind.config.cjs', 'tsup.config.ts'],
+  ignores: [
+    'dist',
+    'next.config.mjs',
+    'node_modules',
+    'postcss.config.js',
+    'tailwind.config.cjs',
+    'tsup.config.ts',
+  ],
   extensions: ['ts', 'tsx'],
   rules: {
     '@typescript-eslint/consistent-type-imports': 'off',
