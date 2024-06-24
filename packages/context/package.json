@@ -12,6 +12,7 @@
     "dev": "tsup --watch"
   },
   "dependencies": {
+    "db": "workspace:*",
     "zustand": "4.5.2"
   },
   "devDependencies": {

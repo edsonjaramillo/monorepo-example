@@ -222,6 +222,9 @@ importers:
 
   packages/context:
     dependencies:
+      db:
+        specifier: workspace:*
+        version: link:../db
       zustand:
         specifier: 4.5.2
         version: 4.5.2(@types/react@18.3.3)(react@18.3.1)
