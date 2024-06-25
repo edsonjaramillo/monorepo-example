@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { type FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -17,15 +18,20 @@ import { clientFetcher } from '../utils/clients';
 const toastId = 'signin-form-toast';
 type FormSchema = z.infer<typeof zSignInSchema>;
 
-function onInvalid(errors: FieldErrors<FormSchema>) {
+function onInvalid(_: FieldErrors<FormSchema>) {
   toast.error('Please fix the errors in the form.', { id: toastId });
 }
 
 export function SignInForm() {
+  const { signin, session } = useSession();
+  const router = useRouter();
+  if (session) {
+    router.push('/');
+  }
+
   const methods = useForm<FormSchema>({ resolver: zodResolver(zSignInSchema) });
   const { formState, handleSubmit } = methods;
   const { isSubmitting } = formState;
-  const { signin } = useSession();
 
   return (
     <div className="py-8">
