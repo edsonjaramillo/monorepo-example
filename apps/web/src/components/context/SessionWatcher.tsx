@@ -19,7 +19,7 @@ export function SessionWatcher() {
         return;
       }
 
-      const response = await clientFetcher.get<SessionWithUser>('/auth/auto-signin');
+      const response = await clientFetcher.get<SessionWithUser>('/user/auth/auto-signin');
       if (response.status === 'success') {
         signin(response.data);
         return;
