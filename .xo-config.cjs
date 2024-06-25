@@ -2,6 +2,7 @@
 module.exports = {
   ignores: [
     'dist',
+    'hono.d.ts',
     'next.config.mjs',
     'node_modules',
     'postcss.config.js',
