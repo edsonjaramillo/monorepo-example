@@ -13,14 +13,14 @@
     "clean": "rm -rf dist",
     "clean_node_modules": "rm -rf node_modules",
     "dev": "tsup --watch",
-    "dev:db:generate": "env-cmd -f .env.local drizzle-kit generate",
-    "dev:db:migrate": "env-cmd -f .env.local tsx src/dev:db/migrate.ts",
-    "dev:db:push": "env-cmd -f .env.local drizzle-kit push",
-    "dev:db:studio": "env-cmd -f .env.local drizzle-kit studio",
-    "production:db:generate": "env-cmd -f .env.production drizzle-kit generate",
-    "production:db:migrate": "env-cmd -f .env.production drizzle-kit migrate",
-    "production:db:push": "env-cmd -f .env.production drizzle-kit push",
-    "production:db:studio": "env-cmd -f .env.production drizzle-kit studio"
+    "dev:generate": "env-cmd -f .env.local drizzle-kit generate",
+    "dev:migrate": "env-cmd -f .env.local tsx src/dev:db/migrate.ts",
+    "dev:push": "env-cmd -f .env.local drizzle-kit push",
+    "dev:studio": "env-cmd -f .env.local drizzle-kit studio",
+    "production:generate": "env-cmd -f .env.production drizzle-kit generate",
+    "production:migrate": "env-cmd -f .env.production drizzle-kit migrate",
+    "production:push": "env-cmd -f .env.production drizzle-kit push",
+    "production:studio": "env-cmd -f .env.production drizzle-kit studio"
   },
   "dependencies": {
     "cache": "workspace:*",
