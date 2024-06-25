@@ -2,19 +2,17 @@ import { Hono } from 'hono';
 import sharp from 'sharp';
 import { uuidv7 } from 'uuidv7';
 
-import { type ImageAssetFolders, ImagesQueries } from 'db';
+import { type ImageAssetFolders } from 'db';
 
 import { zUploadImageFormSchema } from 'validation';
 
 import { JSend } from 'common';
 
-import { database } from '../db';
 import { backblaze } from '../utils/backblaze/Backblaze';
 import { placeholder } from '../utils/image/Placeholder';
+import { imagesQueries } from '../utils/query.clients';
 
 export const imagesRouter = new Hono();
-
-const imageQueries = new ImagesQueries(database);
 
 const CONVERTED_IMAGE_TYPE = 'webp';
 
@@ -46,13 +44,13 @@ imagesRouter.post('/upload', async (c) => {
 
   const blurDataUrl = await placeholder.imageToBase64(url, width, height);
 
-  await imageQueries.createImage(folder, { id, filename, height, width, url, blurDataUrl });
+  await imagesQueries.createImage(folder, { id, filename, height, width, url, blurDataUrl });
 
   return c.json(JSend.success({}, 'File uploaded successfully'));
 });
 
 imagesRouter.get('/:id', async (c) => {
   const id = c.req.param('id') as ImageAssetFolders;
-  const images = await imageQueries.getImagesByFolder(id);
+  const images = await imagesQueries.getImagesByFolder(id);
   return c.json(JSend.success(images, 'Images fetched successfully'));
 });

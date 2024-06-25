@@ -1,13 +1,10 @@
 import { Hono } from 'hono';
 
-import { UsersQueries } from 'db';
-
 import { JSend } from 'common';
 
-import { cache, database } from '../db';
+import { usersQueries } from '../utils/query.clients';
 
 export const usersRouter = new Hono();
-const usersQueries = new UsersQueries(database, cache);
 
 usersRouter.get('/', async (c) => {
   const users = await usersQueries.getUsers();
