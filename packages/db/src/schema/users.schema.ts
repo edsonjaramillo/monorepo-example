@@ -5,7 +5,8 @@ import { createdAt, id, updatedAt } from './fields';
 import { petsTable } from './pets.schema';
 import { sessionsTable } from './sessions.schema';
 
-export const roles = ['admin', 'employee', 'customer'] as const;
+export const roles = ['admin', 'employee', 'user'] as const;
+export type UserRoles = (typeof roles)[number];
 export const rolesEnum = pgEnum('roles', roles);
 
 export const usersTable = pgTable(
@@ -15,7 +16,7 @@ export const usersTable = pgTable(
     name: varchar('name', { length: 255 }).notNull(),
     email: varchar('email', { length: 255 }).notNull().unique(),
     password: varchar('password', { length: 255 }).notNull(),
-    role: rolesEnum('role').default('customer').notNull(),
+    role: rolesEnum('role').default('user').notNull(),
     createdAt,
     updatedAt,
   },
