@@ -2,23 +2,28 @@ import { Hono } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 import { uuidv7 } from 'uuidv7';
 
-import { SessionsQueries, UsersQueries } from 'db';
-
 import { type SignInSchema, type SignupSchema, zSignInSchema, zSignupSchema } from 'validation';
 
 import { DateTZ, JSend } from 'common';
 
-import { cache, database } from '../db';
 import { validate } from '../middlware/validate';
 import { passwordManager } from '../utils/PasswordManager';
 import { cookieOptions } from '../utils/cookies';
+import { sessionsQueries, usersQueries } from '../utils/query.clients';
 
-export const authRouter = new Hono();
+export const publicAuthRouter = new Hono();
 
-const usersQueries = new UsersQueries(database, cache);
-const sessionsQueries = new SessionsQueries(database, cache);
+publicAuthRouter.post('/signup', validate(zSignupSchema), async (c) => {
+  const body = await c.req.json<SignupSchema>();
 
-authRouter.post('/signin', validate(zSignInSchema), async (c) => {
+  const password = await passwordManager.hash(body.password);
+
+  await usersQueries.createUser({ ...body, password });
+
+  return c.json(JSend.success(undefined, 'User created successfully'));
+});
+
+publicAuthRouter.post('/signin', validate(zSignInSchema), async (c) => {
   const body = await c.req.json<SignInSchema>();
 
   const credentials = await usersQueries.getUserCredentials(body.email);
@@ -44,31 +49,18 @@ authRouter.post('/signin', validate(zSignInSchema), async (c) => {
   return c.json(JSend.success(session, 'Users fetched successfully'));
 });
 
-authRouter.get('/auto-signin', async (c) => {
-  const sessionId = getCookie(c, 'session');
-  if (!sessionId) {
-    return c.json(JSend.error('Invalid session'));
-  }
+export const userAuthRouter = new Hono();
 
-  const session = await sessionsQueries.getSessionById(sessionId);
+userAuthRouter.get('/auto-signin', async (c) => {
+  const session = c.get('session');
   if (!session) {
-    return c.json(JSend.error('Invalid session'));
+    return c.json(JSend.error('Invalid session'), 400);
   }
 
   return c.json(JSend.success(session, 'Session refreshed successfully'));
 });
 
-authRouter.post('/signup', validate(zSignupSchema), async (c) => {
-  const body = await c.req.json<SignupSchema>();
-
-  const password = await passwordManager.hash(body.password);
-
-  await usersQueries.createUser({ ...body, password });
-
-  return c.json(JSend.success(undefined, 'User created successfully'));
-});
-
-authRouter.get('/signout', async (c) => {
+userAuthRouter.get('/signout', async (c) => {
   const sessionId = getCookie(c, 'session');
   if (!sessionId) {
     return c.json(JSend.error('Invalid session'));
