@@ -17,20 +17,17 @@ export class SessionsQueries {
   }
 
   async getSessionById(id: string): Promise<SessionWithUser | undefined> {
-    const cachedSession = await this.cache.get<SessionWithUser>(`user:${id}`);
+    const cachedSession = await this.cache.get<SessionWithUser>(`session:${id}`);
     if (cachedSession) {
       return cachedSession;
     }
 
-    const query = this.db.query.sessionsTable
-      .findFirst({
-        where: eq(sessionsTable.id, sql.placeholder('id')),
-        columns: SESSIONS_COLUMNS,
-        with: { user: { columns: USERS_SESSION_COLUMNS } },
-      })
-      .prepare('getSessionById');
+    const session = await this.db.query.sessionsTable.findFirst({
+      where: eq(sessionsTable.id, id),
+      columns: SESSIONS_COLUMNS,
+      with: { user: { columns: USERS_SESSION_COLUMNS } },
+    });
 
-    const session = await query.execute({ id });
     if (session) {
       await this.cache.set(`session:${id}`, session);
     }
