@@ -44,6 +44,20 @@ authRouter.post('/signin', validate(zSignInSchema), async (c) => {
   return c.json(JSend.success(session, 'Users fetched successfully'));
 });
 
+authRouter.get('/auto-signin', async (c) => {
+  const sessionId = getCookie(c, 'session');
+  if (!sessionId) {
+    return c.json(JSend.error('Invalid session'));
+  }
+
+  const session = await sessionsQueries.getSessionById(sessionId);
+  if (!session) {
+    return c.json(JSend.error('Invalid session'));
+  }
+
+  return c.json(JSend.success(session, 'Session refreshed successfully'));
+});
+
 authRouter.post('/signup', validate(zSignupSchema), async (c) => {
   const body = await c.req.json<SignupSchema>();
 
