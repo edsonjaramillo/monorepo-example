@@ -2,8 +2,7 @@
 
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 
-import { useAuthPopup } from '../../lib/authPopup.context';
-import { useSession } from '../../lib/session.context';
+import { useAuthPopup, useSession } from '../../context/web.context';
 import { AuthPopup } from '../AuthDropdown';
 
 export function Avatar() {

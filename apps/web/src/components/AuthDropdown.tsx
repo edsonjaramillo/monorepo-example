@@ -5,8 +5,7 @@ import { useRef } from 'react';
 
 import { Button, Seperator, Text, buttonVariants, cn } from 'ui';
 
-import { useAuthPopup } from '../lib/authPopup.context';
-import { useSession } from '../lib/session.context';
+import { useAuthPopup, useSession } from '../context/web.context';
 
 export function AuthPopup() {
   const { session } = useSession();

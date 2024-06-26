@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 import type { SessionWithUser } from 'db';
 
-import { useSession } from '../../lib/session.context';
+import { useSession } from '../../context/web.context';
 import { clientFetcher } from '../../utils/clients';
 
 export function SessionWatcher() {
