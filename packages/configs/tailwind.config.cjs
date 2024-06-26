@@ -41,18 +41,22 @@ module.exports = {
       error: {
         DEFAULT: '#cc0000',
         accent: '#fff0f0',
+        darken: '#500000',
       },
       info: {
         DEFAULT: '#0f62be',
         accent: '#edfaff',
+        darken: '#0c2345',
       },
       success: {
         DEFAULT: '#06752c',
         accent: '#edfff2',
+        darken: '#003613',
       },
       warning: {
         DEFAULT: '#b2500b',
         accent: '#fffbeb',
+        darken: '#441904',
       },
     },
     fontFamily: { sans: ['var(--font-next)'] },
@@ -70,6 +74,10 @@ module.exports = {
     },
     transitionDuration: { base: '350ms' },
     extend: {
+      zIndex: {
+        modal: 4,
+        blur: 3,
+      },
       width: {
         responsive: `min(90%,${responsiveWidth}rem)`,
         'half-responsive': `min(90%,${halfResponsiveWidth}rem)`,
