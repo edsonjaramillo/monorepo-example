@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
+import { deleteCookie, setCookie } from 'hono/cookie';
 import { uuidv7 } from 'uuidv7';
 
 import { type SignInSchema, type SignupSchema, zSignInSchema, zSignupSchema } from 'validation';
@@ -61,11 +61,12 @@ userAuthRouter.get('/auto-signin', async (c) => {
 });
 
 userAuthRouter.get('/signout', async (c) => {
-  const sessionId = getCookie(c, 'session');
-  if (!sessionId) {
-    return c.json(JSend.error('Invalid session'));
+  const session = c.get('session');
+  if (!session) {
+    return c.json(JSend.error('Invalid session'), 400);
   }
 
-  await sessionsQueries.deleteSession(sessionId);
+  await sessionsQueries.deleteSession(session.id);
   deleteCookie(c, 'session');
+  return c.json(JSend.success(undefined, 'Successfully signed out'));
 });
