@@ -12,8 +12,4 @@ export const navigationLinks: NavigationLink[] = [
     label: 'Contact',
     href: '/contact',
   },
-  {
-    label: 'Sign Up',
-    href: '/signup',
-  },
 ];
