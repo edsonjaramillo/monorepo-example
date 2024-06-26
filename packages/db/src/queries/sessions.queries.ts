@@ -44,6 +44,7 @@ export class SessionsQueries {
   }
 
   async deleteSession(id: string) {
+    await this.cache.delete(`session:${id}`);
     await this.db.delete(sessionsTable).where(eq(sessionsTable.id, id)).execute();
   }
 }
