@@ -2,19 +2,19 @@ import { Hono } from 'hono';
 import { deleteCookie, setCookie } from 'hono/cookie';
 import { uuidv7 } from 'uuidv7';
 
-import { type SignInSchema, type SignupSchema, zSignInSchema, zSignupSchema } from 'validation';
+import { zSignInSchema, zSignupSchema } from 'validation';
 
 import { DateTZ, JSend } from 'common';
 
-import { validate } from '../middlware/validate';
+import { zValidator } from '../middlware/zValidate';
 import { passwordManager } from '../utils/PasswordManager';
 import { cookieOptions } from '../utils/cookies';
 import { sessionsQueries, usersQueries } from '../utils/query.clients';
 
 export const publicAuthRouter = new Hono();
 
-publicAuthRouter.post('/signup', validate(zSignupSchema), async (c) => {
-  const body = await c.req.json<SignupSchema>();
+publicAuthRouter.post('/signup', zValidator(zSignupSchema, 'json'), async (c) => {
+  const body = c.req.valid('json');
 
   const password = await passwordManager.hash(body.password);
 
@@ -23,8 +23,8 @@ publicAuthRouter.post('/signup', validate(zSignupSchema), async (c) => {
   return c.json(JSend.success(undefined, 'User created successfully'));
 });
 
-publicAuthRouter.post('/signin', validate(zSignInSchema), async (c) => {
-  const body = await c.req.json<SignInSchema>();
+publicAuthRouter.post('/signin', zValidator(zSignInSchema, 'json'), async (c) => {
+  const body = c.req.valid('json');
 
   const credentials = await usersQueries.getUserCredentials(body.email);
   if (!credentials) {
