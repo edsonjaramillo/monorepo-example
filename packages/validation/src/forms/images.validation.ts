@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-import { folders } from 'db';
+import { zString } from '../core';
 
 export const zUploadImageFormSchema = z.object({
-  folder: z.enum(folders),
+  folder: zString,
   image: z.instanceof(File),
 });
 
