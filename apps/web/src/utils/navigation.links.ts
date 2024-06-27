@@ -12,4 +12,8 @@ export const navigationLinks: NavigationLink[] = [
     label: 'Contact',
     href: '/contact',
   },
+  {
+    label: 'Upload',
+    href: '/upload',
+  },
 ];
