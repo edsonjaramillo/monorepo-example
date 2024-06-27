@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import { logger } from 'hono/logger';
 
 import { Logger } from 'common';
 
@@ -11,6 +12,10 @@ import { usersRouter } from './routers/users.router';
 import { serverEnv } from './server.env';
 
 const app = new Hono();
+
+if (serverEnv.NODE_ENV === 'development') {
+  app.use(logger());
+}
 
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
