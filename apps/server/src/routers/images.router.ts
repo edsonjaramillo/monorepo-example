@@ -4,11 +4,10 @@ import { uuidv7 } from 'uuidv7';
 
 import { type ImageAssetFolders, folders } from 'db';
 
-import { type UploadImageForm, zUploadImageFormSchema } from 'validation';
+import { type UploadImageForm } from 'validation';
 
 import { JSend } from 'common';
 
-import { validate } from '../middlware/validate';
 import { backblaze } from '../utils/backblaze/Backblaze';
 import { placeholder } from '../utils/image/Placeholder';
 import { imagesQueries } from '../utils/query.clients';
@@ -17,7 +16,7 @@ export const imagesRouter = new Hono();
 
 const CONVERTED_IMAGE_TYPE = 'webp';
 
-imagesRouter.post('/upload', validate(zUploadImageFormSchema, 'form'), async (c) => {
+imagesRouter.post('/upload', async (c) => {
   const body = await c.req.parseBody<UploadImageForm>();
   const { image } = body;
 
@@ -38,10 +37,7 @@ imagesRouter.post('/upload', validate(zUploadImageFormSchema, 'form'), async (c)
 
   const webpBuffer = await originalImageBuffer.toFormat(CONVERTED_IMAGE_TYPE).toBuffer();
 
-  const uploadSuccessful = await backblaze.uploadFile(filename, webpBuffer);
-  if (!uploadSuccessful) {
-    throw new Error('Failed to upload file to backblaze');
-  }
+  await backblaze.uploadFile(filename, webpBuffer);
 
   const url = backblaze.getUploadUrl(filename);
 
