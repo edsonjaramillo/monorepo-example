@@ -33,4 +33,17 @@ export class ClientFetcher {
 
     return data as JSendResponse<T>;
   }
+
+  async form<T>(path: string, formData: FormData) {
+    const endpoint = `${this.baseUrl}${path}`;
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      credentials: 'include',
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    return data as JSendResponse<T>;
+  }
 }
