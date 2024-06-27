@@ -38,16 +38,8 @@ class Backblaze {
       Body: buffer,
       CacheControl: DEFAULT_CACHE_CONTROL,
     });
-    try {
-      const response = await s3.send(command);
-      if (response.$metadata.httpStatusCode === 200) {
-        return true;
-      }
 
-      return false;
-    } catch {
-      return false;
-    }
+    await s3.send(command);
   }
 
   getUploadUrl(filename: string) {
