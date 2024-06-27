@@ -1,7 +1,13 @@
 name: 'monorepo-example'
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:
+
 services:
   postgres:
-    image: postgres
+    image: postgres:16.2
     restart: unless-stopped
     ports:
       - '5432:5432'
@@ -10,17 +16,29 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       # postgres://user:pw@localhost:5432/db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    volumes: 
+    - postgres_data:/var/lib/postgresql/data
   redis:
-    image: redis:latest
+    image: redis:7.2.5
     restart: unless-stopped
     ports:
       - '6379:6379'
-    volumes:
+    volumes: 
       - redis_data:/data
       # redis://localhost:6379
-
-volumes:
-  postgres_data:
-  redis_data:
+  minio:
+    image: bitnami/minio:2024.6.22-debian-12-r0
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes: 
+      - minio_data:/data
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+      - MINIO_DEFAULT_BUCKETS=${MINIO_DEFAULT_BUCKETS}
+      - BITNAMI_DEBUG=${BITNAMI_DEBUG}
+      # console
+      # http://localhost:9000
+      # web
+      # http://localhost:9001
