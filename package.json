@@ -7,6 +7,7 @@
     "dev:server": "pnpm --filter server dev",
     "dev:web": "pnpm --filter web dev",
     "docker:clean:db": "docker volume rm monorepo-example_postgres_data",
+    "docker:clean:minio": "docker volume rm monorepo-example_minio_data",
     "docker:clean:redis": "docker volume rm monorepo-example_redis_data",
     "docker:compose:down": "docker compose --env-file \"./docker/.env.docker\" -f \"docker/docker-compose.yaml\" down",
     "docker:compose:up": "docker compose --env-file \"./docker/.env.docker\" -f \"docker/docker-compose.yaml\" up -d --build",
