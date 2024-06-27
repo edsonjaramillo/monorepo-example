@@ -6,7 +6,7 @@ import { JSend, Logger } from 'common';
 
 import { serverEnv } from '../server.env';
 
-type Parse = 'json' | 'query' | 'params';
+type Parse = 'json' | 'query' | 'params' | 'form';
 const isDevelopment = serverEnv.NODE_ENV === 'development';
 
 export function validate(schema: AnyZodObject, parse: Parse = 'json') {
@@ -38,6 +38,10 @@ async function bodyToBeChecked(c: Context, parse: Parse) {
 
     case 'params': {
       return c.req.param();
+    }
+
+    case 'form': {
+      return c.req.parseBody();
     }
   }
 }
