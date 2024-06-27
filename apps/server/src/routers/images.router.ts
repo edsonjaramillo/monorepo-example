@@ -2,7 +2,7 @@ import { Hono } from 'hono';
 import sharp from 'sharp';
 import { uuidv7 } from 'uuidv7';
 
-import { type ImageAssetFolders } from 'db';
+import { type ImageAssetFolders, folders } from 'db';
 
 import { type UploadImageForm, zUploadImageFormSchema } from 'validation';
 
@@ -18,7 +18,14 @@ export const imagesRouter = new Hono();
 const CONVERTED_IMAGE_TYPE = 'webp';
 
 imagesRouter.post('/upload', validate(zUploadImageFormSchema, 'form'), async (c) => {
-  const { folder, image } = await c.req.parseBody<UploadImageForm>();
+  const body = await c.req.parseBody<UploadImageForm>();
+  const { image } = body;
+
+  if (!folders.includes(body.folder as ImageAssetFolders)) {
+    throw new Error('Invalid folder');
+  }
+
+  const folder = body.folder as ImageAssetFolders;
 
   const id = uuidv7();
   const filename = `${folder}/${id}.${CONVERTED_IMAGE_TYPE}`;
