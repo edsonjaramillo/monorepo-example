@@ -188,9 +188,6 @@ importers:
       ioredis:
         specifier: 5.4.1
         version: 5.4.1
-      validation:
-        specifier: workspace:*
-        version: link:../validation
     devDependencies:
       '@types/node':
         specifier: 20.14.2
@@ -265,9 +262,6 @@ importers:
       uuidv7:
         specifier: 1.0.0
         version: 1.0.0
-      validation:
-        specifier: workspace:*
-        version: link:../validation
       zod:
         specifier: 3.23.8
         version: 3.23.8
@@ -339,6 +333,9 @@ importers:
 
   packages/validation:
     dependencies:
+      db:
+        specifier: workspace:*
+        version: link:../db
       zod:
         specifier: 3.23.8
         version: 3.23.8
