@@ -1,4 +1,5 @@
 export * from './datetime';
-export * from './logging';
+export * from './env';
 export * from './fetching';
 export * from './http';
+export * from './logging';
