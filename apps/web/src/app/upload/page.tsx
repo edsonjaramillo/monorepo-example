@@ -1,11 +1,14 @@
-import { Responsive } from 'ui';
+import { HalfSplitFormShell, Responsive } from 'ui';
 
 import { UploadImageForm } from '../../components/UploadImageForm';
 
 export default function UploadPage() {
   return (
     <Responsive>
-      <UploadImageForm />
+      <HalfSplitFormShell
+        form={<UploadImageForm />}
+        image={{ src: 'https://picsum.photos/id/237/200/300', alt: 'Signup image' }}
+      />
     </Responsive>
   );
 }
