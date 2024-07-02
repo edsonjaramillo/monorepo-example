@@ -4,8 +4,10 @@ import { folders } from 'common';
 
 import { zBlob, zFile, zString } from '../core';
 
+export const zFolderEnum = z.enum(folders);
+
 export const zUploadImageFormClientSchema = z.object({
-  folder: z.enum(folders),
+  folder: zFolderEnum,
   image: zBlob,
 });
 
