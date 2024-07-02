@@ -8,3 +8,9 @@ export const zPhoneNumber = zString
   .regex(/^\+?\d+$/);
 
 export const zEmail = zString.email('Invalid email address');
+
+export const zFile = z.instanceof(File);
+
+export const zClientFile = z.object({
+  '0': z.any(),
+});

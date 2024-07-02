@@ -1,11 +1,15 @@
 import { z } from 'zod';
 
-import { zString } from '../core';
+import { zClientFile, zFile, zString } from '../core';
 
-export const zUploadImageFormSchema = z.object({
+export const zUploadImageFormClientSchema = z.object({
   folder: zString,
-  // image: z.instanceof(File),
-  image: z.any(),
+  image: zClientFile,
 });
 
-export type UploadImageForm = z.infer<typeof zUploadImageFormSchema>;
+export type UploadImageForm = z.infer<typeof zUploadImageFormClientSchema>;
+
+export const zUploadImageFormServerSchema = z.object({
+  folder: zString,
+  image: zFile,
+});
