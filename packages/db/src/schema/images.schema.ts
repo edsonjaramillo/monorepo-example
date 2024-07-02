@@ -25,7 +25,6 @@ export const imagesTable = pgTable(
   {
     ...coreImageFields,
     userId: varchar('owner_id', { length: 255 }),
-    petId: varchar('pet_id', { length: 255 }),
   },
   (table) => ({ folderIdx: index('folder_idx').on(table.folder) }),
 );

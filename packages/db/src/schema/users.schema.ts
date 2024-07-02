@@ -2,7 +2,6 @@ import { relations } from 'drizzle-orm';
 import { pgEnum, pgTable, uniqueIndex, varchar } from 'drizzle-orm/pg-core';
 
 import { createdAt, id, updatedAt } from './fields';
-import { petsTable } from './pets.schema';
 import { sessionsTable } from './sessions.schema';
 
 export const roles = ['admin', 'employee', 'user'] as const;
@@ -25,5 +24,4 @@ export const usersTable = pgTable(
 
 export const usersRelations = relations(usersTable, ({ many }) => ({
   sessions: many(sessionsTable),
-  pets: many(petsTable),
 }));

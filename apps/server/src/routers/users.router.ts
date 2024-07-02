@@ -23,15 +23,3 @@ usersRouter.get('/:id', async (c) => {
 
   return c.json(JSend.success(user, 'User fetched successfully'));
 });
-
-usersRouter.get('/:id/pets', async (c) => {
-  const { id } = c.req.param();
-
-  const user = await usersQueries.getUserWithPets(id);
-
-  if (!user) {
-    return c.json(JSend.error('User not found'), 404);
-  }
-
-  return c.json(JSend.success(user, 'User fetched successfully'));
-});

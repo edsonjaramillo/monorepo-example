@@ -2,17 +2,10 @@ import { Redis } from 'cache';
 import { eq, sql } from 'drizzle-orm';
 
 import type { Database } from '../client';
-import { PETS_COLUMNS } from '../columns/pets.columns';
 import { USERS_COLUMNS, USERS_CREDENTIALS_COLUMNS } from '../columns/users.columns';
 import { UsersKeys } from '../keys';
 import { usersTable } from '../schema';
-import type {
-  User,
-  UserCreate,
-  UserCredentials,
-  UserUpdate,
-  UserWithPets,
-} from '../types/users.types';
+import type { User, UserCreate, UserCredentials, UserUpdate } from '../types/users.types';
 
 export class UsersQueries {
   private readonly db: Database;
@@ -81,18 +74,6 @@ export class UsersQueries {
       .prepare('createUser');
 
     await query.execute(user);
-  }
-
-  async getUserWithPets(id: string): Promise<UserWithPets | undefined> {
-    const query = this.db.query.usersTable
-      .findFirst({
-        where: eq(usersTable.id, sql.placeholder('id')),
-        columns: USERS_COLUMNS,
-        with: { pets: { columns: PETS_COLUMNS } },
-      })
-      .prepare('getUserWithPets');
-
-    return query.execute({ id });
   }
 
   async updateUser(id: string, user: UserUpdate) {

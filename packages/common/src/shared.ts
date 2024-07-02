@@ -1,1 +1,1 @@
-export const folders = ['users', 'pets', 'misc'] as const;
+export const folders = ['users', 'misc'] as const;
