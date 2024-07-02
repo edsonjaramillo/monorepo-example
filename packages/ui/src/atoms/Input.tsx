@@ -197,11 +197,10 @@ export function File({
 
 type RadioProperties = React.ComponentProps<'input'> & {
   field: string;
-  label: string;
   value: string;
 };
 
-export function Radio({ field, label, value, ...properties }: RadioProperties) {
+export function Radio({ field, value, children, ...properties }: RadioProperties) {
   const { register } = useFormContext();
   const id = `${field}-${value}`;
   return (
@@ -214,7 +213,7 @@ export function Radio({ field, label, value, ...properties }: RadioProperties) {
         {...register(field)}
         {...properties}
       />
-      {label}
+      {children}
     </Label>
   );
 }
