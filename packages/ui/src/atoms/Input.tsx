@@ -4,6 +4,7 @@ import { type FieldError, type Merge, type RegisterOptions, useFormContext } fro
 import { type VariantProps, tv } from 'tailwind-variants';
 
 import { cn } from '../lib/cn';
+import { Label } from './Label';
 import { Text } from './Text';
 
 export const coreVariants = tv({
@@ -155,5 +156,65 @@ function InputError({ className, error, field }: InputErrorProperties) {
       aria-live="assertive">
       {error.message}
     </Text>
+  );
+}
+
+type FileProperties = React.ComponentProps<'input'> & {
+  field: string;
+  helpMessage?: string;
+  registerOptions?: RegisterOptions;
+};
+
+export function File({
+  field,
+  helpMessage,
+  className,
+  disabled,
+  registerOptions,
+  required,
+  ...properties
+}: FileProperties) {
+  const { register, formState } = useFormContext();
+  const error = formState.errors[field];
+
+  return (
+    <>
+      <input
+        id={`${field}-input`}
+        aria-describedby={helpMessage && `${field}-help`}
+        aria-errormessage={error && `${field}-error`}
+        aria-invalid={Boolean(error)}
+        aria-labelledby={`${field}-label`}
+        disabled={disabled}
+        type="file"
+        {...register(field, { required, ...registerOptions })}
+        {...properties}
+      />
+      {helpMessage && <InputHelp field={field}>{helpMessage}</InputHelp>}
+    </>
+  );
+}
+
+type RadioProperties = React.ComponentProps<'input'> & {
+  field: string;
+  label: string;
+  value: string;
+};
+
+export function Radio({ field, label, value, ...properties }: RadioProperties) {
+  const { register } = useFormContext();
+  const id = `${field}-${value}`;
+  return (
+    <Label field={field} htmlFor={id} className="flex items-center">
+      <input
+        id={id}
+        type="radio"
+        value={value}
+        className="mr-2"
+        {...register(field)}
+        {...properties}
+      />
+      {label}
+    </Label>
   );
 }
