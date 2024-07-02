@@ -1,5 +1,6 @@
 'use client';
 
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRef } from 'react';
 
@@ -65,6 +66,7 @@ function SignoutButton() {
       type="button"
       color="error"
       onClick={async () => {
+        Cookies.remove('session');
         await signout();
         setAuthPopup(false);
       }}>
