@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { type FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -25,9 +26,12 @@ function onInvalid(_: FieldErrors<FormSchema>) {
 export function SignInForm() {
   const { signin, session } = useSession();
   const router = useRouter();
-  if (session) {
-    router.push('/');
-  }
+
+  useEffect(() => {
+    if (session) {
+      router.push('/');
+    }
+  }, [session]);
 
   const methods = useForm<FormSchema>({ resolver: zodResolver(zSignInSchema) });
   const { formState, handleSubmit } = methods;
