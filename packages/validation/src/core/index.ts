@@ -11,6 +11,6 @@ export const zEmail = zString.email('Invalid email address');
 
 export const zFile = z.instanceof(File);
 
-export const zClientFile = z.object({
-  '0': z.any(),
+export const zBlob = z.object({
+  '0': z.instanceof(Blob),
 });
