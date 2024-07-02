@@ -24,7 +24,7 @@ app.use('/employee/*', sessionify(['admin', 'employee']));
 app.use('/admin/*', sessionify(['admin']));
 
 app.route('/users', usersRouter);
-app.route('/admin/images', employeeImagesRouter);
+app.route('/employee/images', employeeImagesRouter);
 
 app.route('/auth', publicAuthRouter);
 app.route('/user/auth', userAuthRouter);
