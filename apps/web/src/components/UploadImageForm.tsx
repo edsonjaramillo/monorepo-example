@@ -21,9 +21,10 @@ async function onSubmit(data: FormSchema) {
 
   const formData = new FormData();
   formData.append('folder', data.folder);
-  formData.append('image', await data.image[0].text());
+  // @ts-expect-error - image is a Blob but zod validation does not support it
+  formData.append('image', data.image[0]);
 
-  const response = await clientFetcher.form('/employees/images/upload', formData);
+  const response = await clientFetcher.form('/employee/images/upload', formData);
 
   if (response.status === 'success') {
     toast.success('Image uploaded!', { id: toastId });
