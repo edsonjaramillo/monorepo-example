@@ -21,9 +21,9 @@ async function onSubmit(data: FormSchema) {
 
   const formData = new FormData();
   formData.append('folder', data.folder);
-  formData.append('image', data.image[0]);
+  formData.append('image', await data.image[0].text());
 
-  const response = await clientFetcher.form('/images/upload', formData);
+  const response = await clientFetcher.form('/employees/images/upload', formData);
 
   if (response.status === 'success') {
     toast.success('Image uploaded!', { id: toastId });
