@@ -15,6 +15,7 @@
     "dev": "tsup --watch"
   },
   "dependencies": {
+    "common": "workspace:*",
     "zod": "3.23.8"
   },
   "devDependencies": {

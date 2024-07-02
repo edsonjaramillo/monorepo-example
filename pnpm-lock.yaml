@@ -339,6 +339,9 @@ importers:
 
   packages/validation:
     dependencies:
+      common:
+        specifier: workspace:*
+        version: link:../common
       zod:
         specifier: 3.23.8
         version: 3.23.8

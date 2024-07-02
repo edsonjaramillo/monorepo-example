@@ -1,5 +1,7 @@
+import { folders } from 'common';
+
 import type { CORE_IMAGE_COLUMNS } from '../columns/images.columns';
-import { folders, imagesTable } from '../schema';
+import { imagesTable } from '../schema';
 
 export type ImageAsset = Pick<typeof imagesTable.$inferSelect, keyof typeof CORE_IMAGE_COLUMNS>;
 

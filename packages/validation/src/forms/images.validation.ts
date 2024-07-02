@@ -1,9 +1,11 @@
 import { z } from 'zod';
 
+import { folders } from 'common';
+
 import { zClientFile, zFile, zString } from '../core';
 
 export const zUploadImageFormClientSchema = z.object({
-  folder: zString,
+  folder: z.enum(folders),
   image: zClientFile,
 });
 

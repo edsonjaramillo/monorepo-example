@@ -1,10 +1,11 @@
 import { relations } from 'drizzle-orm';
 import { index, pgEnum, pgTable, smallint, varchar } from 'drizzle-orm/pg-core';
 
+import { folders } from 'common';
+
 import { createdAt, id, updatedAt } from './fields';
 import { usersTable } from './users.schema';
 
-export const folders = ['misc', 'users', 'pets'] as const;
 export const foldersEnum = pgEnum('folder', folders);
 
 const coreImageFields = {
