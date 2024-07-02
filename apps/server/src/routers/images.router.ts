@@ -1,10 +1,12 @@
+import heicConvert from 'heic-convert';
 import { Hono } from 'hono';
 import sharp from 'sharp';
 import { uuidv7 } from 'uuidv7';
+import { z } from 'zod';
 
 import { type ImageAssetFolders, folders } from 'db';
 
-import { type UploadImageForm } from 'validation';
+import { zUploadImageFormServerSchema } from 'validation';
 
 import { JSend } from 'common';
 
@@ -16,20 +18,31 @@ export const imagesRouter = new Hono();
 
 const CONVERTED_IMAGE_TYPE = 'webp';
 
-imagesRouter.post('/upload', async (c) => {
-  const body = await c.req.parseBody<UploadImageForm>();
-  const { image } = body;
+/** 10MB in integer form */
+const MAX_IMAGE_SIZE = 10_485_760;
 
-  if (!folders.includes(body.folder as ImageAssetFolders)) {
-    throw new Error('Invalid folder');
+imagesRouter.post('/upload', async (c) => {
+  const body = await c.req.parseBody();
+
+  const { success: validFormData, data: formData } = zUploadImageFormServerSchema.safeParse(body);
+  if (!validFormData) {
+    throw new Error('Invalid form data');
   }
 
-  const folder = body.folder as ImageAssetFolders;
+  // if the size of the image is greater than 10MB then throw an error
+  if (formData.image.size > MAX_IMAGE_SIZE) {
+    throw new Error('Image size is greater than 10MB');
+  }
+
+  const { success: isValidFolder, data: folder } = z.enum(folders).safeParse(formData.folder);
+  if (!isValidFolder) {
+    throw new Error('Invalid folder');
+  }
 
   const id = uuidv7();
   const filename = `${folder}/${id}.${CONVERTED_IMAGE_TYPE}`;
 
-  const originalImageBuffer = sharp(await image.arrayBuffer());
+  const originalImageBuffer = await getBuffer(formData.image);
   const { width, height } = await originalImageBuffer.metadata();
   if (!width || !height) {
     throw new Error('Failed to get image metadata');
@@ -53,3 +66,19 @@ imagesRouter.get('/:id', async (c) => {
   const images = await imagesQueries.getImagesByFolder(id);
   return c.json(JSend.success(images, 'Images fetched successfully'));
 });
+
+async function getBuffer(image: File) {
+  const isHeic = image.type === 'image/heic';
+
+  if (isHeic) {
+    const buffer = await heicConvert({
+      format: 'JPEG',
+      buffer: new Uint8Array(await image.arrayBuffer()),
+      quality: 1,
+    });
+
+    return sharp(buffer);
+  }
+
+  return sharp(await image.arrayBuffer());
+}
