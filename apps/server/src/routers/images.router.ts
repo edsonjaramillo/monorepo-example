@@ -4,11 +4,11 @@ import sharp from 'sharp';
 import { uuidv7 } from 'uuidv7';
 import { z } from 'zod';
 
-import { type ImageAssetFolders, folders } from 'db';
+import { type ImageAssetFolders } from 'db';
 
 import { zUploadImageFormServerSchema } from 'validation';
 
-import { JSend } from 'common';
+import { JSend, folders } from 'common';
 
 import { backblaze } from '../utils/backblaze/Backblaze';
 import { placeholder } from '../utils/image/Placeholder';
