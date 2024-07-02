@@ -7,7 +7,7 @@ export default function UploadPage() {
     <Responsive>
       <HalfSplitFormShell
         form={<UploadImageForm />}
-        image={{ src: 'https://picsum.photos/id/237/200/300', alt: 'Signup image' }}
+        image={{ src: 'https://picsum.photos/id/237/200/300', alt: 'Signup image', priority: true }}
       />
     </Responsive>
   );
