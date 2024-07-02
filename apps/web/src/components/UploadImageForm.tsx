@@ -5,23 +5,24 @@ import { type FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { zUploadImageFormSchema } from 'validation';
+import { zUploadImageFormClientSchema } from 'validation';
 
-import { Button, Form, Input, InputGroup, Label, Text } from 'ui';
+import { StringUtils } from 'common';
+
+import { Button, File, Form, InputGroup, Label, Radio, Text } from 'ui';
 
 import { clientFetcher } from '../utils/clients';
 
 const toastId = 'upload-form-toast';
-type FormSchema = z.infer<typeof zUploadImageFormSchema>;
+type FormSchema = z.infer<typeof zUploadImageFormClientSchema>;
 
 async function onSubmit(data: FormSchema) {
-  toast.info('Sending message...', { id: toastId });
+  toast.info('Uploading...', { id: toastId });
 
   const formData = new FormData();
   formData.append('folder', data.folder);
   formData.append('image', data.image[0]);
 
-  //   form data
   const response = await clientFetcher.form('/images/upload', formData);
 
   if (response.status === 'success') {
@@ -37,12 +38,11 @@ function onInvalid(errors: FieldErrors<FormSchema>) {
 }
 
 export function UploadImageForm() {
-  const methods = useForm<FormSchema>({ resolver: zodResolver(zUploadImageFormSchema) });
-  const { formState, handleSubmit, watch, register } = methods;
+  const methods = useForm<FormSchema>({ resolver: zodResolver(zUploadImageFormClientSchema) });
+  const { formState, handleSubmit } = methods;
   const { isSubmitting } = formState;
   return (
     <div className="py-8">
-      <pre>{JSON.stringify(watch(), null, 2)}</pre>
       <div className="mb-8 space-y-1">
         <Text as="h2" size="4xl" className="font-bold">
           Upload Image
@@ -51,12 +51,26 @@ export function UploadImageForm() {
       <FormProvider {...methods}>
         <Form onSubmit={handleSubmit(onSubmit, onInvalid)}>
           <InputGroup>
-            <Label field="folder">Folder</Label>
-            <Input field="folder" type="folder" required />
+            <Text as="label">Folder</Text>
+            <div className="flex flex-col gap-3">
+              <Radio
+                field="folder"
+                value="misc"
+                label={StringUtils.capitalize('misc')}
+                defaultChecked
+              />
+              <Radio field="folder" value="users" label={StringUtils.capitalize('users')} />
+              <Radio field="folder" value="pets" label={StringUtils.capitalize('pets')} />
+            </div>
           </InputGroup>
           <InputGroup>
             <Label field="image">Image</Label>
-            <input type="file" required {...register('image', { required: 'Image is required' })} />
+            <File
+              field="image"
+              accept="image/*,.heic"
+              helpMessage="Supported formats: JPG, PNG, WEBP and HEIC. Maximum file size: 10MB."
+              required
+            />
           </InputGroup>
           <Button type="submit" className="ml-auto" disabled={isSubmitting}>
             {isSubmitting ? 'Uploading...' : 'Upload Image'}
