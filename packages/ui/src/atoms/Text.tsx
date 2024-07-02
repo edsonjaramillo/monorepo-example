@@ -1,8 +1,9 @@
 import { type VariantProps, tv } from 'tailwind-variants';
 
 import { cn } from '../lib/cn';
+import { labelCls } from './Label';
 
-export type As = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+export type As = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'label';
 
 export const textVariants = tv({
   variants: {
@@ -106,6 +107,10 @@ export function Text({
           {children}
         </span>
       );
+    }
+
+    case 'label': {
+      return <label className={labelCls}>{children}</label>;
     }
   }
 }
