@@ -16,6 +16,7 @@
     "cache": "workspace:*",
     "common": "workspace:*",
     "db": "workspace:*",
+    "heic-convert": "2.1.0",
     "hono": "4.3.2",
     "sharp": "0.33.4",
     "uuidv7": "1.0.0",
@@ -23,6 +24,7 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
+    "@types/heic-convert": "1.2.3",
     "@types/node": "20.14.2",
     "env-cmd": "10.1.0",
     "tsup": "8.1.0",
