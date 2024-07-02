@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 import { zUploadImageFormClientSchema } from 'validation';
 
-import { StringUtils } from 'common';
+import { StringUtils, folders } from 'common';
 
 import { Button, File, Form, InputGroup, Label, Radio, Text } from 'ui';
 
@@ -53,14 +53,14 @@ export function UploadImageForm() {
           <InputGroup>
             <Text as="label">Folder</Text>
             <div className="flex flex-col gap-3">
-              <Radio
-                field="folder"
-                value="misc"
-                label={StringUtils.capitalize('misc')}
-                defaultChecked
-              />
-              <Radio field="folder" value="users" label={StringUtils.capitalize('users')} />
-              <Radio field="folder" value="pets" label={StringUtils.capitalize('pets')} />
+              {folders.map((folder, index) => {
+                const isFirst = index === 0;
+                return (
+                  <Radio key={folder} field="folder" value={folder} defaultChecked={isFirst}>
+                    {StringUtils.capitalize(folder)}
+                  </Radio>
+                );
+              })}
             </div>
           </InputGroup>
           <InputGroup>
