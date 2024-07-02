@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 import type { Database } from '../client';
 import { SESSIONS_COLUMNS } from '../columns/sessions.columns';
 import { USERS_SESSION_COLUMNS } from '../columns/users.columns';
+import { SessionsKeys } from '../keys';
 import { sessionsTable } from '../schema';
 import { SessionCreate, SessionUpdate, SessionWithUser } from '../types';
 
@@ -17,7 +18,8 @@ export class SessionsQueries {
   }
 
   async getSessionById(id: string): Promise<SessionWithUser | undefined> {
-    const cachedSession = await this.cache.get<SessionWithUser>(`session:${id}`);
+    const cacheKey = SessionsKeys.byId(id);
+    const cachedSession = await this.cache.get<SessionWithUser>(cacheKey);
     if (cachedSession) {
       return cachedSession;
     }
@@ -29,7 +31,7 @@ export class SessionsQueries {
     });
 
     if (session) {
-      await this.cache.set(`session:${id}`, session);
+      await this.cache.set(cacheKey, session);
     }
 
     return session;
@@ -40,11 +42,12 @@ export class SessionsQueries {
   }
 
   async updateSession(id: string, session: SessionUpdate) {
+    await this.cache.delete(SessionsKeys.byId(id));
     await this.db.update(sessionsTable).set(session).where(eq(sessionsTable.id, id)).execute();
   }
 
   async deleteSession(id: string) {
-    await this.cache.delete(`session:${id}`);
+    await this.cache.delete(SessionsKeys.byId(id));
     await this.db.delete(sessionsTable).where(eq(sessionsTable.id, id)).execute();
   }
 }

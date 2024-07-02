@@ -4,6 +4,7 @@ import { eq, sql } from 'drizzle-orm';
 import type { Database } from '../client';
 import { PETS_COLUMNS } from '../columns/pets.columns';
 import { USERS_COLUMNS, USERS_CREDENTIALS_COLUMNS } from '../columns/users.columns';
+import { UsersKeys } from '../keys';
 import { usersTable } from '../schema';
 import type {
   User,
@@ -27,7 +28,8 @@ export class UsersQueries {
   }
 
   async getUserById(id: string): Promise<User | undefined> {
-    const cachedUser = await this.cache.get<User>(`user:${id}`);
+    const cachedUserKey = UsersKeys.byId(id);
+    const cachedUser = await this.cache.get<User>(cachedUserKey);
     if (cachedUser) {
       return cachedUser;
     }
@@ -38,14 +40,15 @@ export class UsersQueries {
 
     const user = await query.execute({ id });
     if (user) {
-      await this.cache.set(`user:${id}`, user);
+      await this.cache.set(cachedUserKey, user);
     }
 
     return user;
   }
 
   async getUserCredentials(email: string): Promise<UserCredentials | undefined> {
-    const cachedCredentials = await this.cache.get<UserCredentials>(`user:${email}:credentials`);
+    const cachedCredentialsKey = UsersKeys.credentials(email);
+    const cachedCredentials = await this.cache.get<UserCredentials>(cachedCredentialsKey);
     if (cachedCredentials) {
       return cachedCredentials;
     }
@@ -61,6 +64,8 @@ export class UsersQueries {
     if (!user) {
       return undefined;
     }
+
+    await this.cache.set(cachedCredentialsKey, user);
 
     return user as UserCredentials;
   }
