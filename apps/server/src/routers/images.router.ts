@@ -4,24 +4,23 @@ import sharp from 'sharp';
 import { uuidv7 } from 'uuidv7';
 import { z } from 'zod';
 
-import { type ImageAssetFolders } from 'db';
-
-import { zUploadImageFormServerSchema } from 'validation';
+import { zFolderEnum, zUploadImageFormServerSchema } from 'validation';
 
 import { JSend, folders } from 'common';
 
+import { zValidator } from '../middlware/zValidate';
 import { backblaze } from '../utils/backblaze/Backblaze';
 import { placeholder } from '../utils/image/Placeholder';
 import { imagesQueries } from '../utils/query.clients';
-
-export const imagesRouter = new Hono();
 
 const CONVERTED_IMAGE_TYPE = 'webp';
 
 /** 10MB in integer form */
 const MAX_IMAGE_SIZE = 10_485_760;
 
-imagesRouter.post('/upload', async (c) => {
+export const employeeImagesRouter = new Hono();
+
+employeeImagesRouter.post('/upload', async (c) => {
   const body = await c.req.parseBody();
 
   const { success: validFormData, data: formData } = zUploadImageFormServerSchema.safeParse(body);
@@ -61,9 +60,13 @@ imagesRouter.post('/upload', async (c) => {
   return c.json(JSend.success(undefined, 'File uploaded successfully'));
 });
 
-imagesRouter.get('/:id', async (c) => {
-  const id = c.req.param('id') as ImageAssetFolders;
-  const images = await imagesQueries.getImagesByFolder(id);
+const zGetImagesByFolder = z.object({
+  folder: zFolderEnum,
+});
+
+employeeImagesRouter.get('/:folder', zValidator(zGetImagesByFolder, 'param'), async (c) => {
+  const { folder } = c.req.valid('param');
+  const images = await imagesQueries.getImagesByFolder(folder);
   return c.json(JSend.success(images, 'Images fetched successfully'));
 });
 

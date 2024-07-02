@@ -7,7 +7,7 @@ import { Logger } from 'common';
 import { onError } from './middlware/onError';
 import { sessionify } from './middlware/sessionify';
 import { publicAuthRouter, userAuthRouter } from './routers/auth.router';
-import { imagesRouter } from './routers/images.router';
+import { employeeImagesRouter } from './routers/images.router';
 import { usersRouter } from './routers/users.router';
 import { serverEnv } from './server.env';
 
@@ -24,7 +24,7 @@ app.use('/employee/*', sessionify(['admin', 'employee']));
 app.use('/admin/*', sessionify(['admin']));
 
 app.route('/users', usersRouter);
-app.route('/images', imagesRouter);
+app.route('/admin/images', employeeImagesRouter);
 
 app.route('/auth', publicAuthRouter);
 app.route('/user/auth', userAuthRouter);
