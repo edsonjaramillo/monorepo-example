@@ -24,7 +24,9 @@ type DesktopLinksProperties = { link: NavigationLink };
 function DesktopLink({ link }: DesktopLinksProperties) {
   return (
     <li>
-      <Link href={link.href}>{link.label}</Link>
+      <Link href={link.href} prefetch={link.prefetch}>
+        {link.label}
+      </Link>
     </li>
   );
 }
