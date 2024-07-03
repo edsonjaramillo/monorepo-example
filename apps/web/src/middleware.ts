@@ -1,8 +1,9 @@
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 import type { SessionWithUser } from 'db';
 
-import { serverFetcher } from '../utils/clients';
+import { serverFetcher } from './utils/clients';
 
 export async function middleware(request: NextRequest) {
   const origin = request.nextUrl.origin;
@@ -21,7 +22,11 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(unathorizedURL);
     }
 
-    const { data: session, status } = await serverFetcher.get<SessionWithUser>('/user/auth/verify');
+    const { data: session, status } = await serverFetcher.get<SessionWithUser>(
+      '/user/auth/verify',
+      cookies(),
+    );
+
     if (status !== 'success') {
       return NextResponse.redirect(unathorizedURL);
     }
