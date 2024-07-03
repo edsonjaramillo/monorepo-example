@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers.js';
+import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
 import type { JSendResponse } from '../http/JSend';
 
@@ -9,11 +9,11 @@ export class ServerFetcher {
     this.baseUrl = url;
   }
 
-  async get<T>(path: string) {
+  async get<T>(path: string, cookies?: ReadonlyRequestCookies) {
     const endpoint = `${this.baseUrl}${path}`;
     const response = await fetch(endpoint, {
       credentials: 'include',
-      headers: { Cookie: cookies().toString() },
+      ...(cookies && { headers: { Cookie: cookies.toString() } }),
     });
 
     const data = await response.json();
