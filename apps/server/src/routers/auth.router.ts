@@ -66,12 +66,7 @@ userAuthRouter.get('/verify', async (c) => {
     return c.json(JSend.error('Invalid session'), 400);
   }
 
-  const sessionData = await sessionsQueries.getSessionById(session.id);
-  if (!sessionData) {
-    return c.json(JSend.error('Invalid session'), 400);
-  }
-
-  return c.json(JSend.success(sessionData, 'Session verified successfully'));
+  return c.json(JSend.success(session, 'Session verified successfully'));
 });
 
 userAuthRouter.get('/signout', async (c) => {
