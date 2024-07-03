@@ -14,6 +14,6 @@ export const navigationLinks: NavigationLink[] = [
   },
   {
     label: 'Upload',
-    href: '/upload',
+    href: '/admin/upload',
   },
 ];

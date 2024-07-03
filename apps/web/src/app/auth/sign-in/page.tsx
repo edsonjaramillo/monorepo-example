@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { HalfSplitFormShell } from 'ui';
 
-import { SignInForm } from '../../components/SignInForm';
+import { SignInForm } from '../../../components/SignInForm';
 
 export default function SignInPage() {
   return (

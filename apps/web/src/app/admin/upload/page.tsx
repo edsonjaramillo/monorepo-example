@@ -1,6 +1,6 @@
 import { HalfSplitFormShell, Responsive } from 'ui';
 
-import { UploadImageForm } from '../../components/UploadImageForm';
+import { UploadImageForm } from '../../../components/UploadImageForm';
 
 export default function UploadPage() {
   return (

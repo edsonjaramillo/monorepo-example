@@ -80,7 +80,7 @@ function SignInLink() {
 
   return (
     <Link
-      href="/signin"
+      href="/auth/sign-in"
       className={buttonVariants({ color: 'success', width: 'full' })}
       onClick={() => {
         setAuthPopup(false);
@@ -94,7 +94,7 @@ function CreateAccountLink() {
   const { setAuthPopup } = useAuthPopup();
   return (
     <Link
-      href="/signup"
+      href="/auth/sign-up"
       className={buttonVariants({ color: 'primary', width: 'full' })}
       onClick={() => {
         setAuthPopup(false);

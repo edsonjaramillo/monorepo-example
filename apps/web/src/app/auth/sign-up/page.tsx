@@ -1,6 +1,6 @@
 import { HalfSplitFormShell } from 'ui';
 
-import { SignupForm } from '../../components/SignUpForm';
+import { SignupForm } from '../../../components/SignUpForm';
 
 export default function SignUpPage() {
   return (
