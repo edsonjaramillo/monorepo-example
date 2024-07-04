@@ -234,6 +234,9 @@ importers:
 
   packages/context:
     dependencies:
+      common:
+        specifier: workspace:*
+        version: link:../common
       db:
         specifier: workspace:*
         version: link:../db
