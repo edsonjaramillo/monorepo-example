@@ -57,7 +57,7 @@ export class Redis {
       return;
     }
 
-    await this.client.del(key);
+    await this.client.unlink(key);
     if (this.debugMode) {
       Logger.log('RED', 'CACHE DEL', key);
     }
@@ -69,21 +69,21 @@ export class Redis {
     }
 
     const pipeline = this.client.pipeline();
+
     for (const pattern of patterns) {
-      const scan = await this.client.scan(0, 'MATCH', pattern);
-      const keys = scan[1];
+      const stream = this.client.scanStream({
+        match: pattern,
+      });
 
-      if (keys.length === 0) {
-        continue;
-      }
+      stream.on('data', (keys) => {
+        for (const key of keys) {
+          if (this.debugMode) {
+            Logger.log('RED', 'CACHE DEL', key);
+          }
 
-      for (const key of keys) {
-        if (this.debugMode) {
-          Logger.log('RED', 'CACHE DEL', key);
+          pipeline.unlink(key);
         }
-
-        pipeline.del(key);
-      }
+      });
     }
 
     await pipeline.exec();
