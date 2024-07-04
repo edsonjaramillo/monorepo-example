@@ -5,8 +5,9 @@ import type { Folders } from 'common';
 
 import { Database } from '../client';
 import { CORE_IMAGE_COLUMNS } from '../columns/images.columns';
+import { ImagesKeys } from '../keys';
 import { imagesTable } from '../schema';
-import type { ImageAsset, ImageAssetCreate, ImageAssetUpdate } from '../types/images.types';
+import type { ImageAsset, ImageAssetCreate } from '../types/images.types';
 
 export class ImagesQueries {
   private readonly db: Database;
@@ -17,14 +18,26 @@ export class ImagesQueries {
   }
 
   async getImages(): Promise<ImageAsset[]> {
-    return this.db.query.imagesTable.findMany({
+    const cachedImagesKey = ImagesKeys.all();
+    const cachedImages = await this.cache.get<ImageAsset[]>(cachedImagesKey);
+    if (cachedImages) {
+      return cachedImages;
+    }
+
+    const images = await this.db.query.imagesTable.findMany({
       columns: CORE_IMAGE_COLUMNS,
       orderBy: desc(imagesTable.createdAt),
     });
+
+    await this.cache.set(cachedImagesKey, images);
+
+    return images;
   }
 
   async getImagesByFolder(folder: Folders): Promise<ImageAsset[]> {
-    const cachedImages = await this.cache.get<ImageAsset[]>(`images:${folder}`);
+    const cachedImagesKey = ImagesKeys.byFolder(folder);
+
+    const cachedImages = await this.cache.get<ImageAsset[]>(cachedImagesKey);
     if (cachedImages) {
       return cachedImages;
     }
@@ -35,16 +48,13 @@ export class ImagesQueries {
       orderBy: desc(imagesTable.createdAt),
     });
 
-    await this.cache.set(`images:${folder}`, images);
+    await this.cache.set(cachedImagesKey, images);
 
     return images;
   }
 
   async createImage(folder: Folders, data: ImageAssetCreate) {
+    await this.cache.cleanPatterns(ImagesKeys.onUpdate());
     await this.db.insert(imagesTable).values({ ...data, folder });
-  }
-
-  async updateImage(id: string, data: ImageAssetUpdate) {
-    await this.db.update(imagesTable).set(data).where(eq(imagesTable.id, id));
   }
 }
