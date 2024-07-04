@@ -1,15 +1,12 @@
 import { Redis } from 'cache';
-import { asc, eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
+
+import type { Folders } from 'common';
 
 import { Database } from '../client';
 import { CORE_IMAGE_COLUMNS } from '../columns/images.columns';
 import { imagesTable } from '../schema';
-import type {
-  ImageAsset,
-  ImageAssetCreate,
-  ImageAssetFolders,
-  ImageAssetUpdate,
-} from '../types/images.types';
+import type { ImageAsset, ImageAssetCreate, ImageAssetUpdate } from '../types/images.types';
 
 export class ImagesQueries {
   private readonly db: Database;
@@ -22,11 +19,11 @@ export class ImagesQueries {
   async getImages(): Promise<ImageAsset[]> {
     return this.db.query.imagesTable.findMany({
       columns: CORE_IMAGE_COLUMNS,
-      orderBy: asc(imagesTable.createdAt),
+      orderBy: desc(imagesTable.createdAt),
     });
   }
 
-  async getImagesByFolder(folder: ImageAssetFolders): Promise<ImageAsset[]> {
+  async getImagesByFolder(folder: Folders): Promise<ImageAsset[]> {
     const cachedImages = await this.cache.get<ImageAsset[]>(`images:${folder}`);
     if (cachedImages) {
       return cachedImages;
@@ -35,7 +32,7 @@ export class ImagesQueries {
     const images = await this.db.query.imagesTable.findMany({
       where: eq(imagesTable.folder, folder),
       columns: CORE_IMAGE_COLUMNS,
-      orderBy: asc(imagesTable.createdAt),
+      orderBy: desc(imagesTable.createdAt),
     });
 
     await this.cache.set(`images:${folder}`, images);
@@ -43,7 +40,7 @@ export class ImagesQueries {
     return images;
   }
 
-  async createImage(folder: ImageAssetFolders, data: ImageAssetCreate) {
+  async createImage(folder: Folders, data: ImageAssetCreate) {
     await this.db.insert(imagesTable).values({ ...data, folder });
   }
 
