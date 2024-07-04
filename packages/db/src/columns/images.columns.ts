@@ -9,6 +9,7 @@ export const CORE_IMAGE_COLUMNS = {
   blurDataUrl: true,
   height: true,
   width: true,
+  createdAt: true,
 } satisfies ColumnsSelector<typeof imagesTable.$inferSelect>;
 
 export const USER_IMAGE_COLUMNS = {
