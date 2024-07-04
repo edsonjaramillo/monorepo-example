@@ -36,5 +36,6 @@ module.exports = {
     'unicorn/filename-case': 'off',
     'unicorn/no-hex-escape': 'off',
     'unicorn/no-static-only-class': 'off',
+    'unicorn/prefer-native-coercion-functions': 'off',
   },
 };
