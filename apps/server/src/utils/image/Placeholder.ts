@@ -2,7 +2,7 @@ import sharp from 'sharp';
 
 const SCALE = 16;
 
-class Placeholder {
+export const Placeholder = {
   async imageToBase64(url: string, width: number, height: number) {
     const isLandscape = width > height;
     // Make sure aspect ratio is always positive and whole number
@@ -19,13 +19,11 @@ class Placeholder {
 
     const base64 = buffer.toString('base64');
     return `data:image/jpeg;base64,${base64}`;
-  }
+  },
 
   async downloadImage(url: string) {
     const response = await fetch(url);
     const buffer = await response.arrayBuffer();
     return new Uint8Array(buffer);
-  }
-}
-
-export const placeholder = new Placeholder();
+  },
+};

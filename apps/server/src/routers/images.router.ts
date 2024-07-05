@@ -10,7 +10,7 @@ import { JSend, folders } from 'common';
 
 import { zValidator } from '../middlware/zValidate';
 import { backblaze } from '../utils/backblaze/Backblaze';
-import { placeholder } from '../utils/image/Placeholder';
+import { Placeholder } from '../utils/image/Placeholder';
 import { imagesQueries } from '../utils/query.clients';
 
 const CONVERTED_IMAGE_TYPE = 'webp';
@@ -53,7 +53,7 @@ employeeImagesRouter.post('/upload', async (c) => {
 
   const url = backblaze.getUploadUrl(filename);
 
-  const blurDataUrl = await placeholder.imageToBase64(url, width, height);
+  const blurDataUrl = await Placeholder.imageToBase64(url, width, height);
 
   await imagesQueries.createImage(folder, { id, filename, height, width, url, blurDataUrl });
 
