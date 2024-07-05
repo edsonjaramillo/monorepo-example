@@ -14,3 +14,7 @@ export const zFile = z.instanceof(File);
 export const zBlob = z.object({
   '0': z.instanceof(Blob),
 });
+
+export const zStringToBoolean = zString
+  .regex(/^(true|false)$/i)
+  .transform((value) => value === 'true');
