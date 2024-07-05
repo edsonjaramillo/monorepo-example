@@ -1,6 +1,6 @@
-import { Redis } from 'cache';
-
 import { type Database, createDBConnection } from 'db';
+
+import { Redis } from 'cache';
 
 import { serverEnv } from './server.env';
 

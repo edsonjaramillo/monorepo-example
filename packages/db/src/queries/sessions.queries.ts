@@ -1,5 +1,6 @@
-import { Redis } from 'cache';
 import { eq } from 'drizzle-orm';
+
+import { Redis } from 'cache';
 
 import type { Database } from '../client';
 import { SESSIONS_COLUMNS } from '../columns/sessions.columns';

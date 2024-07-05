@@ -1,5 +1,6 @@
-import { Redis } from 'cache';
 import { desc, eq } from 'drizzle-orm';
+
+import { Redis } from 'cache';
 
 import type { Folders } from 'common';
 
