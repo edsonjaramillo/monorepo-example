@@ -3,7 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "esModuleInterop": true,
-    "lib": ["es5", "es2015", "es2016", "esnext"],
+    "lib": ["es5", "es2015", "es2016", "ES2022"],
     "types": ["node"],
     "module": "ES6",
     "moduleResolution": "node",

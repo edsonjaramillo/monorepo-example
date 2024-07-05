@@ -7,7 +7,7 @@ export default defineConfig((options) => {
   return {
     entry: ['src/index.ts'],
     format: 'esm',
-    target: 'esnext',
+    target: 'es2022',
     outDir: 'dist',
     clean: watchMode ? false : true,
     dts: true,
