@@ -2,7 +2,7 @@ import { Redis } from 'ioredis';
 
 import { Expiration, Logger } from 'common';
 
-type Data = Record<string, unknown>;
+type Data = Record<string, unknown> | Array<Record<string, unknown>>;
 
 type CacheClientOptions = {
   url: string;
