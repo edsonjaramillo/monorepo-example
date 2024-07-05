@@ -1,10 +1,10 @@
-import { Redis as Client } from 'ioredis';
+import { Redis } from 'ioredis';
 
 import { Expiration, Logger } from 'common';
 
 type Data = Record<string, any>;
 
-type RedisOptions = {
+type CacheClientOptions = {
   url: string;
   debug: boolean;
   skipCache?: boolean;
@@ -12,13 +12,13 @@ type RedisOptions = {
 
 const standardExpiration = Expiration.getHours(1);
 
-export class Redis {
-  private readonly client: Client;
+export class CacheClient {
+  private readonly client: Redis;
   private readonly debugMode: boolean;
   private readonly skipCache: boolean;
 
-  constructor(options: RedisOptions) {
-    this.client = new Client(options.url);
+  constructor(options: CacheClientOptions) {
+    this.client = new Redis(options.url);
     this.debugMode = options.debug ?? false;
     this.skipCache = options.skipCache ?? false;
   }

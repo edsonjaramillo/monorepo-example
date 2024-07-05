@@ -1,6 +1,6 @@
 import { count, eq } from 'drizzle-orm';
 
-import { Redis } from 'cache';
+import { CacheClient } from 'cache';
 
 import type { Database } from '../client';
 import { USERS_COLUMNS, USERS_CREDENTIALS_COLUMNS } from '../columns/users.columns';
@@ -16,12 +16,12 @@ import type {
 } from '../types/users.types';
 
 export class UsersQueries {
-  private readonly db: Database;
-  private readonly cache: Redis;
+  private readonly database: Database;
+  private readonly cache: CacheClient;
 
-  constructor(database: Database, redis: Redis) {
-    this.db = database;
-    this.cache = redis;
+  constructor(database_: Database, cache_: CacheClient) {
+    this.database = database_;
+    this.cache = cache_;
   }
 
   async getUsers(limit: number, offset: number): Promise<User[]> {
@@ -31,7 +31,7 @@ export class UsersQueries {
       return cachedUsers;
     }
 
-    const users = await this.db.query.usersTable.findMany({
+    const users = await this.database.query.usersTable.findMany({
       limit,
       offset,
       columns: USERS_COLUMNS,
@@ -49,7 +49,7 @@ export class UsersQueries {
       return cachedCountSeasonRecords;
     }
 
-    const [{ amountOfRows }] = await this.db
+    const [{ amountOfRows }] = await this.database
       .select({ amountOfRows: count(usersTable.id) })
       .from(usersTable)
       .execute();
@@ -66,14 +66,16 @@ export class UsersQueries {
       return cachedUser;
     }
 
-    const user = await this.db.query.usersTable.findFirst({
+    const user = await this.database.query.usersTable.findFirst({
       where: eq(usersTable.id, id),
       columns: USERS_COLUMNS,
     });
 
-    if (user) {
-      await this.cache.set(cachedUserKey, user);
+    if (!user) {
+      return undefined;
     }
+
+    await this.cache.set(cachedUserKey, user);
 
     return user;
   }
@@ -85,7 +87,7 @@ export class UsersQueries {
       return cachedCredentials;
     }
 
-    const user = await this.db.query.usersTable.findFirst({
+    const user = await this.database.query.usersTable.findFirst({
       where: eq(usersTable.email, email),
       columns: USERS_CREDENTIALS_COLUMNS,
     });
@@ -101,15 +103,15 @@ export class UsersQueries {
 
   async createUser(user: UserCreate) {
     await this.cache.cleanPatterns(UsersKeys.onCreate());
-    await this.db.insert(usersTable).values(user);
+    await this.database.insert(usersTable).values(user);
   }
 
   async updateUser(id: string, email: string, user: UserUpdate) {
     await this.cache.cleanPatterns(UsersKeys.onUpdate(id, email));
-    await this.db.update(usersTable).set(user).where(eq(usersTable.id, id));
+    await this.database.update(usersTable).set(user).where(eq(usersTable.id, id));
   }
 
   async selfUpdateUser(id: string, user: UserSelfUpdate) {
-    await this.db.update(usersTable).set(user).where(eq(usersTable.id, id));
+    await this.database.update(usersTable).set(user).where(eq(usersTable.id, id));
   }
 }

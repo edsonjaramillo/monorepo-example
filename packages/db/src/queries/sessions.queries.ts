@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 
-import { Redis } from 'cache';
+import { CacheClient } from 'cache';
 
 import type { Database } from '../client';
 import { SESSIONS_COLUMNS } from '../columns/sessions.columns';
@@ -10,12 +10,12 @@ import { sessionsTable } from '../schema';
 import { SessionCreate, SessionUpdate, SessionWithUser } from '../types';
 
 export class SessionsQueries {
-  private readonly db: Database;
-  private readonly cache: Redis;
+  private readonly database: Database;
+  private readonly cache: CacheClient;
 
-  constructor(database: Database, redis: Redis) {
-    this.db = database;
-    this.cache = redis;
+  constructor(database_: Database, cache_: CacheClient) {
+    this.database = database_;
+    this.cache = cache_;
   }
 
   async getSessionById(id: string): Promise<SessionWithUser | undefined> {
@@ -25,7 +25,7 @@ export class SessionsQueries {
       return cachedSession;
     }
 
-    const session = await this.db.query.sessionsTable.findFirst({
+    const session = await this.database.query.sessionsTable.findFirst({
       where: eq(sessionsTable.id, id),
       columns: SESSIONS_COLUMNS,
       with: { user: { columns: USERS_SESSION_COLUMNS } },
@@ -39,16 +39,20 @@ export class SessionsQueries {
   }
 
   async createSession(session: SessionCreate) {
-    await this.db.insert(sessionsTable).values(session);
+    await this.database.insert(sessionsTable).values(session);
   }
 
   async updateSession(id: string, session: SessionUpdate) {
     await this.cache.delete(SessionsKeys.byId(id));
-    await this.db.update(sessionsTable).set(session).where(eq(sessionsTable.id, id)).execute();
+    await this.database
+      .update(sessionsTable)
+      .set(session)
+      .where(eq(sessionsTable.id, id))
+      .execute();
   }
 
   async deleteSession(id: string) {
     await this.cache.delete(SessionsKeys.byId(id));
-    await this.db.delete(sessionsTable).where(eq(sessionsTable.id, id)).execute();
+    await this.database.delete(sessionsTable).where(eq(sessionsTable.id, id)).execute();
   }
 }

@@ -1,6 +1,6 @@
 import { desc, eq } from 'drizzle-orm';
 
-import { Redis } from 'cache';
+import { CacheClient } from 'cache';
 
 import type { Folders } from 'common';
 
@@ -11,11 +11,11 @@ import { imagesTable } from '../schema';
 import type { ImageAsset, ImageAssetCreate } from '../types/images.types';
 
 export class ImagesQueries {
-  private readonly db: Database;
-  private readonly cache: Redis;
-  constructor(database: Database, redis: Redis) {
-    this.db = database;
-    this.cache = redis;
+  private readonly database: Database;
+  private readonly cache: CacheClient;
+  constructor(database_: Database, cache_: CacheClient) {
+    this.database = database_;
+    this.cache = cache_;
   }
 
   async getImages(limit: number, offset: number): Promise<ImageAsset[]> {
@@ -25,7 +25,7 @@ export class ImagesQueries {
       return cachedImages;
     }
 
-    const images = await this.db.query.imagesTable.findMany({
+    const images = await this.database.query.imagesTable.findMany({
       columns: CORE_IMAGE_COLUMNS,
       orderBy: desc(imagesTable.createdAt),
     });
@@ -43,7 +43,7 @@ export class ImagesQueries {
       return cachedImages;
     }
 
-    const images = await this.db.query.imagesTable.findMany({
+    const images = await this.database.query.imagesTable.findMany({
       where: eq(imagesTable.folder, folder),
       columns: CORE_IMAGE_COLUMNS,
       orderBy: desc(imagesTable.createdAt),
@@ -56,6 +56,6 @@ export class ImagesQueries {
 
   async createImage(folder: Folders, data: ImageAssetCreate) {
     await this.cache.cleanPatterns(ImagesKeys.onUpdate());
-    await this.db.insert(imagesTable).values({ ...data, folder });
+    await this.database.insert(imagesTable).values({ ...data, folder });
   }
 }
