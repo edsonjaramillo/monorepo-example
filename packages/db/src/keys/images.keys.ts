@@ -1,6 +1,6 @@
 export const ImagesKeys = {
-  all() {
-    return 'images';
+  bulk(limit: number, offset: number) {
+    return `images:bulk:l:${limit}:o:${offset}`;
   },
 
   byId(id: string) {
@@ -11,8 +11,16 @@ export const ImagesKeys = {
     return `images:folder:${folder}`;
   },
 
+  count() {
+    return 'images:count';
+  },
+
+  onCreate() {
+    return ['images:bulk:*', 'images:folder:*'];
+  },
+
   onUpdate() {
-    return ['images', 'images:folder:*'];
+    return ['images:bulk:*', 'images:folder:*'];
   },
 
   onDelete(id: string) {
