@@ -31,9 +31,11 @@ export class SessionsQueries {
       with: { user: { columns: USERS_SESSION_COLUMNS } },
     });
 
-    if (session) {
-      await this.cache.set(cacheKey, session);
+    if (!session) {
+      return undefined;
     }
+
+    await this.cache.set(cacheKey, session);
 
     return session;
   }
