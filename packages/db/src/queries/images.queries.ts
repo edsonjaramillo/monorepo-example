@@ -4,8 +4,8 @@ import { CacheClient } from 'cache';
 
 import type { Folders } from 'common';
 
-import { Database } from '../client';
 import { CORE_IMAGE_COLUMNS } from '../columns/images.columns';
+import type { Database } from '../database.client';
 import { ImagesKeys } from '../keys';
 import { imagesTable } from '../schema';
 import type { ImageAsset, ImageAssetCreate } from '../types/images.types';

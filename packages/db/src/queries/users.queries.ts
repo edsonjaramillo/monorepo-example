@@ -2,8 +2,8 @@ import { count, eq } from 'drizzle-orm';
 
 import { CacheClient } from 'cache';
 
-import type { Database } from '../client';
 import { USERS_COLUMNS, USERS_CREDENTIALS_COLUMNS } from '../columns/users.columns';
+import { Database } from '../database.client';
 import { UsersKeys } from '../keys';
 import { usersTable } from '../schema';
 import type { RowCount } from '../types/shared.types';

@@ -1,5 +1,5 @@
-export * from './client';
 export * from './columns';
+export * from './database.client';
 export * from './keys';
 export * from './queries';
 export * from './schema';

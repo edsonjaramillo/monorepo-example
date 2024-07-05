@@ -27,8 +27,6 @@ function maxPoolCountByEnviroment(env: NodeEnv) {
 
 export type Database = ReturnType<typeof drizzle<typeof schema>>;
 export function createDBConnection(connectionString: string, env: NodeEnv) {
-  const connection = postgres(connectionString, {
-    max: maxPoolCountByEnviroment(env),
-  });
+  const connection = postgres(connectionString, { max: maxPoolCountByEnviroment(env) });
   return drizzle(connection, { schema });
 }

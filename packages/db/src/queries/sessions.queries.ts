@@ -2,9 +2,9 @@ import { eq } from 'drizzle-orm';
 
 import { CacheClient } from 'cache';
 
-import type { Database } from '../client';
 import { SESSIONS_COLUMNS } from '../columns/sessions.columns';
 import { USERS_SESSION_COLUMNS } from '../columns/users.columns';
+import { Database } from '../database.client';
 import { SessionsKeys } from '../keys';
 import { sessionsTable } from '../schema';
 import { SessionCreate, SessionUpdate, SessionWithUser } from '../types';
