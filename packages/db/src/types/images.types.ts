@@ -3,5 +3,5 @@ import { imagesTable } from '../schema';
 
 export type ImageAsset = Pick<typeof imagesTable.$inferSelect, keyof typeof CORE_IMAGE_COLUMNS>;
 
-export type ImageAssetCreate = Omit<ImageAsset, 'folder'>;
+export type ImageAssetCreate = Omit<ImageAsset, 'folder' | 'createdAt'>;
 export type ImageAssetUpdate = Omit<ImageAssetCreate, 'id'>;
