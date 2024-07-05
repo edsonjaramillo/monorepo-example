@@ -1,4 +1,6 @@
 import { ClientFetcher, ServerFetcher } from 'common';
 
-export const clientFetcher = new ClientFetcher('http://localhost:8080');
-export const serverFetcher = new ServerFetcher('http://localhost:8080');
+import { webEnv } from '../web.env';
+
+export const clientFetcher = new ClientFetcher(webEnv.SERVER_URL);
+export const serverFetcher = new ServerFetcher(webEnv.SERVER_URL);
