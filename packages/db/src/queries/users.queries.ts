@@ -1,5 +1,5 @@
 import { Redis } from 'cache';
-import { count, eq, sql } from 'drizzle-orm';
+import { count, eq } from 'drizzle-orm';
 
 import type { Database } from '../client';
 import { USERS_COLUMNS, USERS_CREDENTIALS_COLUMNS } from '../columns/users.columns';
