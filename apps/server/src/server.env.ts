@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { zString } from 'validation';
+import { zString, zStringToBoolean } from 'validation';
 
 import { NODE_ENV } from 'common';
 
@@ -14,6 +14,9 @@ const serverEnvSchema = z.object({
   S3_ACCESS_KEY_ID: zString,
   S3_SECRET_ACCESS_KEY_ID: zString,
   S3_BUCKET_NAME: zString,
+  REDIS_URL: zString.regex(/^redis:\/\/.*$/),
+  REDIS_DEBUG: zStringToBoolean,
+  REDIS_SKIP_CACHE: zStringToBoolean,
 });
 
 export const serverEnv = serverEnvSchema.parse(process.env);
