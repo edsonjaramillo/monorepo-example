@@ -1,5 +1,5 @@
 import { imagesTable } from '../schema';
-import type { ColumnsSelector } from './shared';
+import type { ColumnsSelector } from './shared.columns';
 
 export const CORE_IMAGE_COLUMNS = {
   id: true,
