@@ -17,8 +17,8 @@ export class ImagesQueries {
     this.cache = redis;
   }
 
-  async getImages(): Promise<ImageAsset[]> {
-    const cachedImagesKey = ImagesKeys.all();
+  async getImages(limit: number, offset: number): Promise<ImageAsset[]> {
+    const cachedImagesKey = ImagesKeys.bulk(limit, offset);
     const cachedImages = await this.cache.get<ImageAsset[]>(cachedImagesKey);
     if (cachedImages) {
       return cachedImages;
