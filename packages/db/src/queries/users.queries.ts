@@ -1,10 +1,11 @@
 import { Redis } from 'cache';
-import { eq, sql } from 'drizzle-orm';
+import { count, eq, sql } from 'drizzle-orm';
 
 import type { Database } from '../client';
 import { USERS_COLUMNS, USERS_CREDENTIALS_COLUMNS } from '../columns/users.columns';
 import { UsersKeys } from '../keys';
 import { usersTable } from '../schema';
+import type { RowCount } from '../types/shared.types';
 import type { User, UserCreate, UserCredentials, UserUpdate } from '../types/users.types';
 
 export class UsersQueries {
@@ -16,8 +17,39 @@ export class UsersQueries {
     this.cache = redis;
   }
 
-  async getUsers(): Promise<User[]> {
-    return this.db.query.usersTable.findMany({ columns: USERS_COLUMNS });
+  async getUsers(limit: number, offset: number): Promise<User[]> {
+    const cachedUsersKey = UsersKeys.bulk(limit, offset);
+    const cachedUsers = await this.cache.get<User[]>(cachedUsersKey);
+    if (cachedUsers) {
+      return cachedUsers;
+    }
+
+    const users = await this.db.query.usersTable.findMany({
+      limit,
+      offset,
+      columns: USERS_COLUMNS,
+    });
+
+    await this.cache.set(cachedUsersKey, users);
+
+    return users;
+  }
+
+  async getUserCounts(): Promise<RowCount> {
+    const key = UsersKeys.count();
+    const cachedCountSeasonRecords = await this.cache.get<RowCount>(key);
+    if (cachedCountSeasonRecords) {
+      return cachedCountSeasonRecords;
+    }
+
+    const [{ amountOfRows }] = await this.db
+      .select({ amountOfRows: count(usersTable.id) })
+      .from(usersTable)
+      .execute();
+
+    await this.cache.set(key, { amountOfRows });
+
+    return { amountOfRows };
   }
 
   async getUserById(id: string): Promise<User | undefined> {
