@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import type { SessionWithUser } from 'db';
 
-import { serverFetcher } from './utils/clients';
+import { serverFetcher } from './utils/web.clients';
 
 export async function middleware(request: NextRequest) {
   const origin = request.nextUrl.origin;

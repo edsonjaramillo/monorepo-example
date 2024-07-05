@@ -11,7 +11,7 @@ import { folders } from 'common';
 import { Button, cn } from 'ui';
 
 import { useImageSelector } from '../../context/web.context';
-import { clientFetcher } from '../../utils/clients';
+import { clientFetcher } from '../../utils/web.clients';
 
 type ImageSelectorProperties = {
   field: string;

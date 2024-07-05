@@ -11,7 +11,7 @@ import { StringUtils, folders } from 'common';
 
 import { Button, File, Form, InputGroup, Label, Radio, Text } from 'ui';
 
-import { clientFetcher } from '../utils/clients';
+import { clientFetcher } from '../utils/web.clients';
 
 const toastId = 'upload-form-toast';
 type FormSchema = z.infer<typeof zUploadImageFormClientSchema>;

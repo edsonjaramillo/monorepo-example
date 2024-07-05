@@ -14,7 +14,7 @@ import { zSignInSchema } from 'validation';
 import { Button, DEFAULT_DURATION, Form, Input, InputGroup, Label, Text } from 'ui';
 
 import { useSession } from '../context/web.context';
-import { clientFetcher } from '../utils/clients';
+import { clientFetcher } from '../utils/web.clients';
 
 const toastId = 'signin-form-toast';
 type FormSchema = z.infer<typeof zSignInSchema>;

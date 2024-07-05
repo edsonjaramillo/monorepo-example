@@ -10,7 +10,7 @@ import { zSignupSchema } from 'validation';
 
 import { Button, Form, Input, InputGroup, Label, Text } from 'ui';
 
-import { clientFetcher } from '../utils/clients';
+import { clientFetcher } from '../utils/web.clients';
 
 const toastId = 'signup-form-toast';
 type FormSchema = z.infer<typeof zSignupSchema>;
