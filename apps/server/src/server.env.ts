@@ -5,6 +5,7 @@ import { zString } from 'validation';
 import { NODE_ENV } from 'common';
 
 const serverEnvSchema = z.object({
+  WEB_URL: zString,
   NODE_ENV: z.enum(NODE_ENV),
   PORT: zString.regex(/^\d+$/).transform(Number),
   DATABASE_URL: zString.regex(/^postgres:\/\/.*$/),

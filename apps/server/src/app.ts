@@ -18,7 +18,7 @@ if (serverEnv.NODE_ENV === 'development') {
   app.use(logger());
 }
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: serverEnv.WEB_URL }));
 
 // session verification middleware
 app.use('/user/*', sessionify(['admin', 'employee', 'user']));
