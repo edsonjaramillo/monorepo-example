@@ -9,9 +9,9 @@ import { zFolderEnum, zUploadImageFormServerSchema } from 'validation';
 import { JSend, folders } from 'common';
 
 import { zValidator } from '../middlware/zValidate';
-import { backblaze } from '../utils/backblaze/Backblaze';
 import { Placeholder } from '../utils/image/Placeholder';
 import { imagesQueries } from '../utils/query.clients';
+import { s3 } from '../utils/s3/S3';
 
 const CONVERTED_IMAGE_TYPE = 'webp';
 
@@ -49,9 +49,9 @@ employeeImagesRouter.post('/upload', async (c) => {
 
   const webpBuffer = await originalImageBuffer.toFormat(CONVERTED_IMAGE_TYPE).toBuffer();
 
-  await backblaze.uploadFile(filename, webpBuffer);
+  await s3.uploadFile(filename, webpBuffer);
 
-  const url = backblaze.getUploadUrl(filename);
+  const url = s3.getUploadUrl(filename);
 
   const blurDataUrl = await Placeholder.imageToBase64(url, width, height);
 
