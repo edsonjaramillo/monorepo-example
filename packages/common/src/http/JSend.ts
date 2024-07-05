@@ -21,24 +21,24 @@ export type JSendResponse<T = PossibleData> =
   | WarningResponse
   | PaginationResponse<T>;
 
-export class JSend {
-  static success(data: Data, message: string): JSendResponse {
+export const JSend = {
+  success(data: Data, message: string): JSendResponse {
     return { status: 'success', data, message };
-  }
+  },
 
-  static error(message: string): JSendResponse {
+  error(message: string): JSendResponse {
     return { status: 'error', data: undefined, message };
-  }
+  },
 
-  static info(data: Data, message: string): JSendResponse {
+  info(data: Data, message: string): JSendResponse {
     return { status: 'info', data, message };
-  }
+  },
 
-  static warning(message: string): JSendResponse {
+  warning(message: string): JSendResponse {
     return { status: 'warning', data: undefined, message };
-  }
+  },
 
-  static pagination(data: Data, pagination: Pagination, message: string): JSendResponse {
+  pagination(data: Data, pagination: Pagination, message: string): JSendResponse {
     return { status: 'success', data, pagination, message };
-  }
-}
+  },
+};
