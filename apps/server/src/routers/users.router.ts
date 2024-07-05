@@ -1,15 +1,20 @@
 import { Hono } from 'hono';
 
-import { JSend } from 'common';
+import { JSend, calculatePaginationDetails } from 'common';
 
+import { paginate } from '../middlware/paginate';
 import { usersQueries } from '../utils/query.clients';
 
 export const usersRouter = new Hono();
 
-usersRouter.get('/', async (c) => {
-  const users = await usersQueries.getUsers();
+usersRouter.get('/', paginate(), async (c) => {
+  const { limit, offset, page } = c.get('pagination');
 
-  return c.json(JSend.success(users, 'Users fetched successfully'));
+  const users = await usersQueries.getUsers(limit, offset);
+  const { amountOfRows } = await usersQueries.getUserCounts();
+  const pagination = calculatePaginationDetails(page, amountOfRows, limit);
+
+  return c.json(JSend.pagination(users, pagination, 'Users fetched successfully'));
 });
 
 usersRouter.get('/:id', async (c) => {
