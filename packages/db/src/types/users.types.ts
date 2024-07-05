@@ -14,3 +14,7 @@ export type UserCredentials = Pick<
 
 export type UserCreate = typeof usersTable.$inferInsert;
 export type UserUpdate = Omit<UserCreate, 'id'>;
+export type UserSelfUpdate = Omit<
+  UserUpdate,
+  'email' | 'password' | 'role' | 'createdAt' | 'updatedAt'
+>;

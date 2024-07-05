@@ -6,7 +6,13 @@ import { USERS_COLUMNS, USERS_CREDENTIALS_COLUMNS } from '../columns/users.colum
 import { UsersKeys } from '../keys';
 import { usersTable } from '../schema';
 import type { RowCount } from '../types/shared.types';
-import type { User, UserCreate, UserCredentials, UserUpdate } from '../types/users.types';
+import type {
+  User,
+  UserCreate,
+  UserCredentials,
+  UserSelfUpdate,
+  UserUpdate,
+} from '../types/users.types';
 
 export class UsersQueries {
   private readonly db: Database;
@@ -59,11 +65,11 @@ export class UsersQueries {
       return cachedUser;
     }
 
-    const query = this.db.query.usersTable
-      .findFirst({ where: eq(usersTable.id, sql.placeholder('id')), columns: USERS_COLUMNS })
-      .prepare('getUserById');
+    const user = await this.db.query.usersTable.findFirst({
+      where: eq(usersTable.id, id),
+      columns: USERS_COLUMNS,
+    });
 
-    const user = await query.execute({ id });
     if (user) {
       await this.cache.set(cachedUserKey, user);
     }
@@ -78,14 +84,11 @@ export class UsersQueries {
       return cachedCredentials;
     }
 
-    const query = this.db.query.usersTable
-      .findFirst({
-        where: eq(usersTable.email, sql.placeholder('email')),
-        columns: USERS_CREDENTIALS_COLUMNS,
-      })
-      .prepare('getUserCredentials');
+    const user = await this.db.query.usersTable.findFirst({
+      where: eq(usersTable.email, email),
+      columns: USERS_CREDENTIALS_COLUMNS,
+    });
 
-    const user = await query.execute({ email });
     if (!user) {
       return undefined;
     }
@@ -96,19 +99,16 @@ export class UsersQueries {
   }
 
   async createUser(user: UserCreate) {
-    const query = this.db
-      .insert(usersTable)
-      .values({
-        name: sql.placeholder('name'),
-        email: sql.placeholder('email'),
-        password: sql.placeholder('password'),
-      })
-      .prepare('createUser');
-
-    await query.execute(user);
+    await this.cache.cleanPatterns(UsersKeys.onCreate());
+    await this.db.insert(usersTable).values(user);
   }
 
-  async updateUser(id: string, user: UserUpdate) {
+  async updateUser(id: string, email: string, user: UserUpdate) {
+    await this.cache.cleanPatterns(UsersKeys.onUpdate(id, email));
+    await this.db.update(usersTable).set(user).where(eq(usersTable.id, id));
+  }
+
+  async selfUpdateUser(id: string, user: UserSelfUpdate) {
     await this.db.update(usersTable).set(user).where(eq(usersTable.id, id));
   }
 }
