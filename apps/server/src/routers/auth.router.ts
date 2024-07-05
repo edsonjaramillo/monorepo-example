@@ -7,7 +7,7 @@ import { zSignInSchema, zSignupSchema } from 'validation';
 import { DateTZ, JSend } from 'common';
 
 import { zValidator } from '../middlware/zValidate';
-import { passwordManager } from '../utils/PasswordManager';
+import { PasswordManager } from '../utils/PasswordManager';
 import { cookieOptions } from '../utils/cookies';
 import { sessionsQueries, usersQueries } from '../utils/query.clients';
 
@@ -16,7 +16,7 @@ export const publicAuthRouter = new Hono();
 publicAuthRouter.post('/signup', zValidator(zSignupSchema, 'json'), async (c) => {
   const body = c.req.valid('json');
 
-  const password = await passwordManager.hash(body.password);
+  const password = await PasswordManager.hash(body.password);
 
   await usersQueries.createUser({ ...body, password });
 
@@ -31,7 +31,7 @@ publicAuthRouter.post('/signin', zValidator(zSignInSchema, 'json'), async (c) =>
     return c.json(JSend.error('Invalid credentials'));
   }
 
-  const isVerified = await passwordManager.verify(credentials.password, body.password);
+  const isVerified = await PasswordManager.verify(credentials.password, body.password);
   if (!isVerified) {
     return c.json(JSend.error('Invalid credentials'));
   }
