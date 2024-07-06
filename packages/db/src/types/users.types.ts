@@ -4,6 +4,7 @@ import type {
   USERS_SESSION_COLUMNS,
 } from '../columns/users.columns';
 import { usersTable } from '../schema';
+import type { ImageAsset } from './images.types';
 
 export type User = Pick<typeof usersTable.$inferSelect, keyof typeof USERS_COLUMNS>;
 export type UserSession = Pick<typeof usersTable.$inferSelect, keyof typeof USERS_SESSION_COLUMNS>;
@@ -18,3 +19,5 @@ export type UserSelfUpdate = Omit<
   UserUpdate,
   'email' | 'password' | 'role' | 'createdAt' | 'updatedAt'
 >;
+
+export type UserWithImage = User & { image: ImageAsset | null };

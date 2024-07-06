@@ -2,17 +2,18 @@ import { count, eq } from 'drizzle-orm';
 
 import { CacheClient } from 'cache';
 
+import { CORE_IMAGE_COLUMNS } from '../columns';
 import { USERS_COLUMNS, USERS_CREDENTIALS_COLUMNS } from '../columns/users.columns';
-import { Database } from '../database.client';
+import type { Database } from '../database.client';
 import { UsersKeys } from '../keys';
 import { usersTable } from '../schema';
 import type { RowCount } from '../types/shared.types';
 import type {
-  User,
   UserCreate,
   UserCredentials,
   UserSelfUpdate,
   UserUpdate,
+  UserWithImage,
 } from '../types/users.types';
 
 export class UsersQueries {
@@ -24,9 +25,9 @@ export class UsersQueries {
     this.cache = cache_;
   }
 
-  async getUsers(limit: number, offset: number): Promise<User[]> {
+  async getUsers(limit: number, offset: number): Promise<UserWithImage[]> {
     const cachedUsersKey = UsersKeys.bulk(limit, offset);
-    const cachedUsers = await this.cache.get<User[]>(cachedUsersKey);
+    const cachedUsers = await this.cache.get<UserWithImage[]>(cachedUsersKey);
     if (cachedUsers) {
       return cachedUsers;
     }
@@ -35,6 +36,7 @@ export class UsersQueries {
       limit,
       offset,
       columns: USERS_COLUMNS,
+      with: { image: { columns: CORE_IMAGE_COLUMNS } },
     });
 
     await this.cache.set(cachedUsersKey, users);
@@ -59,9 +61,9 @@ export class UsersQueries {
     return { amountOfRows };
   }
 
-  async getUserById(id: string): Promise<User | undefined> {
+  async getUserById(id: string): Promise<UserWithImage | undefined> {
     const cachedUserKey = UsersKeys.byId(id);
-    const cachedUser = await this.cache.get<User>(cachedUserKey);
+    const cachedUser = await this.cache.get<UserWithImage>(cachedUserKey);
     if (cachedUser) {
       return cachedUser;
     }
@@ -69,6 +71,7 @@ export class UsersQueries {
     const user = await this.database.query.usersTable.findFirst({
       where: eq(usersTable.id, id),
       columns: USERS_COLUMNS,
+      with: { image: { columns: CORE_IMAGE_COLUMNS } },
     });
 
     if (!user) {
