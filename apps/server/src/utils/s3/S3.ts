@@ -32,8 +32,8 @@ class S3 {
     await awsDriver.send(command);
   }
 
-  getUploadUrl(filename: string) {
-    return `${this.endpoint}/${this.bucketName}/${filename}`;
+  getUploadUrl(folder: string, filename: string) {
+    return `${this.endpoint}/${this.bucketName}/${folder}/${filename}`;
   }
 }
 
