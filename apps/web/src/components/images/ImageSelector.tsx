@@ -1,10 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { ImageAsset } from 'db';
+import type { ImageAsset } from 'db';
 
 import { folders } from 'common';
 
