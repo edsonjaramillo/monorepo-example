@@ -6,7 +6,12 @@ import { NODE_ENV } from 'common';
 
 const webEnvSchema = z.object({
   NODE_ENV: z.enum(NODE_ENV),
-  SERVER_URL: zString,
+  NEXT_PUBLIC_SERVER_URL: zString,
 });
 
-export const webEnv = webEnvSchema.parse(process.env);
+const env = process.env;
+
+export const webEnv = webEnvSchema.parse({
+  NODE_ENV: env.NODE_ENV,
+  NEXT_PUBLIC_SERVER_URL: env.NEXT_PUBLIC_SERVER_URL,
+});
