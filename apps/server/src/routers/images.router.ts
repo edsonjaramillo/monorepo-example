@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 import { zFolderEnum, zUploadImageFormServerSchema } from 'validation';
 
-import { JSend, folders } from 'common';
+import { JSend } from 'common';
 
 import { zValidator } from '../middlware/zValidate';
 import { Placeholder } from '../utils/image/Placeholder';
@@ -20,45 +20,40 @@ const MAX_IMAGE_SIZE = 10_485_760;
 
 export const employeeImagesRouter = new Hono();
 
-employeeImagesRouter.post('/upload', async (c) => {
-  const body = await c.req.parseBody();
+employeeImagesRouter.post(
+  '/upload',
+  zValidator(zUploadImageFormServerSchema, 'form'),
+  async (c) => {
+    const { folder, image } = c.req.valid('form');
 
-  const { success: validFormData, data: formData } = zUploadImageFormServerSchema.safeParse(body);
-  if (!validFormData) {
-    throw new Error('Invalid form data');
-  }
+    // if the size of the image is greater than 10MB then throw an error
+    if (image.size > MAX_IMAGE_SIZE) {
+      throw new Error('Image size is greater than 10MB');
+    }
 
-  // if the size of the image is greater than 10MB then throw an error
-  if (formData.image.size > MAX_IMAGE_SIZE) {
-    throw new Error('Image size is greater than 10MB');
-  }
+    const id = uuidv7();
+    const filename = `${id}.${CONVERTED_IMAGE_TYPE}`;
+    const withFolder = `${folder}/${filename}`;
 
-  const { success: isValidFolder, data: folder } = z.enum(folders).safeParse(formData.folder);
-  if (!isValidFolder) {
-    throw new Error('Invalid folder');
-  }
+    const originalImageBuffer = await getBuffer(image);
+    const { width, height } = await originalImageBuffer.metadata();
+    if (!width || !height) {
+      throw new Error('Failed to get image metadata');
+    }
 
-  const id = uuidv7();
-  const filename = `${folder}/${id}.${CONVERTED_IMAGE_TYPE}`;
+    const webpBuffer = await originalImageBuffer.toFormat(CONVERTED_IMAGE_TYPE).toBuffer();
 
-  const originalImageBuffer = await getBuffer(formData.image);
-  const { width, height } = await originalImageBuffer.metadata();
-  if (!width || !height) {
-    throw new Error('Failed to get image metadata');
-  }
+    await s3.uploadFile(withFolder, webpBuffer);
 
-  const webpBuffer = await originalImageBuffer.toFormat(CONVERTED_IMAGE_TYPE).toBuffer();
+    const url = s3.getUploadUrl(folder, filename);
 
-  await s3.uploadFile(filename, webpBuffer);
+    const blurDataUrl = await Placeholder.imageToBase64(url, width, height);
 
-  const url = s3.getUploadUrl(filename);
+    await imagesQueries.createImage(folder, { id, filename, height, width, url, blurDataUrl });
 
-  const blurDataUrl = await Placeholder.imageToBase64(url, width, height);
-
-  await imagesQueries.createImage(folder, { id, filename, height, width, url, blurDataUrl });
-
-  return c.json(JSend.success(undefined, 'File uploaded successfully'));
-});
+    return c.json(JSend.success(undefined, 'File uploaded successfully'));
+  },
+);
 
 const zGetImagesByFolder = z.object({
   folder: zFolderEnum,
