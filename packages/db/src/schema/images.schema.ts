@@ -30,5 +30,5 @@ export const imagesTable = pgTable(
 );
 
 export const imagesRelations = relations(imagesTable, ({ one }) => ({
-  user: one(usersTable, { fields: [imagesTable.userId], references: [usersTable.image] }),
+  user: one(usersTable, { fields: [imagesTable.userId], references: [usersTable.imageId] }),
 }));
