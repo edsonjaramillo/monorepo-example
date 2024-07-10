@@ -41,7 +41,7 @@ export function SignupForm() {
             toast.info('Signing up...', { id: toastId });
             const response = await clientFetcher.post('/auth/signup', formData);
             if (response.status === 'success') {
-              router.push('/signin');
+              router.push('/auth/sign-in');
               toast.success('Signed up', { id: toastId });
               return;
             }
