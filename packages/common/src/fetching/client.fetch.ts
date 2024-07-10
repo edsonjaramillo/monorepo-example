@@ -1,4 +1,5 @@
 import type { JSendResponse } from '../http/JSend';
+import type { CustomRequestInit } from './shared.fetch';
 
 export class ClientFetcher {
   private readonly baseUrl: string;
@@ -7,10 +8,15 @@ export class ClientFetcher {
     this.baseUrl = url;
   }
 
-  async get<T>(path: string) {
+  async get<T>(path: string, options?: CustomRequestInit) {
     const endpoint = `${this.baseUrl}${path}`;
     const response = await fetch(endpoint, {
+      ...options,
       credentials: 'include',
+      next: {
+        ...options?.next,
+        tags: ['all', ...(options?.tags ?? [])],
+      },
     });
 
     const data = await response.json();

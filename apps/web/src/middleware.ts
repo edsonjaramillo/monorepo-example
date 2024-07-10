@@ -24,7 +24,7 @@ export async function middleware(request: NextRequest) {
 
     const { data: session, status } = await serverFetcher.get<SessionWithUser>(
       '/user/auth/verify',
-      cookies(),
+      { nextCookies: cookies() },
     );
 
     if (status !== 'success') {
