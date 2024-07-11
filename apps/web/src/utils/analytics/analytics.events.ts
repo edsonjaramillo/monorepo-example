@@ -26,7 +26,6 @@ function checkMaxiumumAttempts(cookie: string, maxClicks: number): boolean {
     return true;
   }
 
-  // positive values only allowed
   const isValid = /^[1-9]\d*$/.test(cookieValue);
   if (!isValid) {
     return false;
