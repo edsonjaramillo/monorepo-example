@@ -1,13 +1,16 @@
 import { glob } from 'glob';
 import fs from 'node:fs/promises';
 
+type PackageJSON = Record<string, Record<string, string>>;
+
 // Main function
 async function main() {
   const depsMap = new Map<string, string>();
 
   const packageJsons = await getPackageJson();
   for (const packageJson of packageJsons) {
-    const json = JSON.parse(await fs.readFile(packageJson, 'utf8'));
+    const json = JSON.parse(await fs.readFile(packageJson, 'utf8')) as PackageJSON;
+
     const { devDependencies, dependencies } = json;
     const deps = { ...devDependencies, ...dependencies };
 
@@ -17,6 +20,10 @@ async function main() {
       }
 
       const version = deps[dependencyName];
+      if (!version) {
+        continue;
+      }
+
       if (!depsMap.has(dependencyName)) {
         depsMap.set(dependencyName, version);
         continue;
