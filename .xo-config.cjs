@@ -18,6 +18,7 @@ module.exports = {
     '@typescript-eslint/object-curly-spacing': 'off',
     'arrow-parens': 'off',
     'capitalized-comments': 'off',
+    'n/prefer-global/process': 'off',
     'import/extensions': 'off',
     'import/no-cycle': 'off',
     'import/order': 'off',

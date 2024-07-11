@@ -1,5 +1,4 @@
 import { defineConfig } from 'drizzle-kit';
-import process from 'node:process';
 
 export default defineConfig({
   schema: './src/schema/index.ts',
