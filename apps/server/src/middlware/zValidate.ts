@@ -42,5 +42,5 @@ export const zValidator = <
       throw new Error(`Invalid ${target}.`);
     }
 
-    return result.data as z.infer<T>;
+    return result.data as Promise<z.infer<T>>;
   });
