@@ -12,7 +12,7 @@ export const zEmail = zString.email('Invalid email address');
 export const zFile = z.instanceof(File);
 
 export const zBlob = z.object({
-  '0': z.instanceof(Blob),
+  0: z.instanceof(Blob),
 });
 
 export const zStringToBoolean = zString
