@@ -16,31 +16,13 @@ import { clientFetcher } from '../../utils/web.clients';
 const toastId = 'upload-form-toast';
 type FormSchema = z.infer<typeof zUploadImageFormClientSchema>;
 
-async function onSubmit(data: FormSchema) {
-  toast.info('Uploading...', { id: toastId });
-
-  const formData = new FormData();
-  formData.append('folder', data.folder);
-  // @ts-expect-error - image is a Blob but zod validation does not support it
-  formData.append('image', data.image[0]);
-
-  const response = await clientFetcher.form('/employee/images/upload', formData);
-
-  if (response.status === 'success') {
-    toast.success('Image uploaded!', { id: toastId });
-    return;
-  }
-
-  toast.error(response.message, { id: toastId });
-}
-
 function onInvalid(errors: FieldErrors<FormSchema>) {
   toast.error('Please fix the errors in the form.', { id: toastId });
 }
 
 export function UploadImageForm() {
   const methods = useForm<FormSchema>({ resolver: zodResolver(zUploadImageFormClientSchema) });
-  const { formState, handleSubmit } = methods;
+  const { formState, handleSubmit, resetField } = methods;
   const { isSubmitting } = formState;
   return (
     <div className="py-8">
@@ -50,7 +32,25 @@ export function UploadImageForm() {
         </Text>
       </div>
       <FormProvider {...methods}>
-        <Form onSubmit={handleSubmit(onSubmit, onInvalid)}>
+        <Form
+          onSubmit={handleSubmit(async (data: FormSchema) => {
+            toast.info('Uploading...', { id: toastId });
+
+            const formData = new FormData();
+            formData.append('folder', data.folder);
+            // @ts-expect-error - image is a Blob but zod validation does not support it
+            formData.append('image', data.image[0]);
+
+            const response = await clientFetcher.form('/employee/images/upload', formData);
+
+            if (response.status === 'success') {
+              toast.success('Image uploaded!', { id: toastId });
+              resetField('image');
+              return;
+            }
+
+            toast.error(response.message, { id: toastId });
+          }, onInvalid)}>
           <InputGroup>
             <Text as="label">Folder</Text>
             <div className="flex flex-col gap-3">
