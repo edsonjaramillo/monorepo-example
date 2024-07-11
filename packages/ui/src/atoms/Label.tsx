@@ -3,9 +3,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { cn } from '../lib/cn';
-import { textVariants } from './Text';
-
-export const labelCls = cn(textVariants({ size: 'small' }), 'block font-medium');
+import { labelCls } from './Text';
 
 type LabelProperties = React.ComponentProps<'label'> & { field: string };
 export function Label({ className, children, field, ...properties }: LabelProperties) {

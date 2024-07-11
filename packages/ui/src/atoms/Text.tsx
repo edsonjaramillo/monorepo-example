@@ -1,7 +1,6 @@
 import { type VariantProps, tv } from 'tailwind-variants';
 
 import { cn } from '../lib/cn';
-import { labelCls } from './Label';
 
 export type As = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'label';
 
@@ -30,9 +29,12 @@ export const textVariants = tv({
     defaultVariants: { size: 'base', color: 'standard' },
   },
 });
+
 type TextCore = React.ComponentProps<'div'>;
 type TextVariants = VariantProps<typeof textVariants>;
 export type TextProperties = TextCore & TextVariants & { as: As };
+
+export const labelCls = cn(textVariants({ size: 'small' }), 'block font-medium');
 
 export function Text({
   as,
