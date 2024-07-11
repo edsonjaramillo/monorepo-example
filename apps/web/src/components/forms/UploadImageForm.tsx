@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { zUploadImageFormClientSchema } from 'validation';
 

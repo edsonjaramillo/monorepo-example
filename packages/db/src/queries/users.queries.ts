@@ -1,6 +1,6 @@
 import { count, eq } from 'drizzle-orm';
 
-import { CacheClient } from 'cache';
+import type { CacheClient } from 'cache';
 
 import { CORE_IMAGE_COLUMNS } from '../columns';
 import { USERS_COLUMNS, USERS_CREDENTIALS_COLUMNS } from '../columns/users.columns';

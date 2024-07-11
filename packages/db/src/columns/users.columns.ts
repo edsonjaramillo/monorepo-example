@@ -1,4 +1,4 @@
-import { usersTable } from '../schema';
+import type { usersTable } from '../schema';
 import type { ColumnsSelector } from './shared.columns';
 
 export const USERS_COLUMNS = {

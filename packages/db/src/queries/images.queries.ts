@@ -1,6 +1,6 @@
 import { desc, eq } from 'drizzle-orm';
 
-import { CacheClient } from 'cache';
+import type { CacheClient } from 'cache';
 
 import type { Folders } from 'common';
 

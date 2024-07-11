@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { SessionWithUser } from 'db';
+import type { SessionWithUser } from 'db';
 
 type State = { session: SessionWithUser | undefined };
 type Actions = {

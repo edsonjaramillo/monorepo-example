@@ -3,7 +3,7 @@ import type {
   USERS_CREDENTIALS_COLUMNS,
   USERS_SESSION_COLUMNS,
 } from '../columns/users.columns';
-import { usersTable } from '../schema';
+import type { usersTable } from '../schema';
 import type { ImageAsset } from './images.types';
 
 export type User = Pick<typeof usersTable.$inferSelect, keyof typeof USERS_COLUMNS>;
