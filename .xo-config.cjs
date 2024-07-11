@@ -12,7 +12,6 @@ module.exports = {
   extensions: ['ts', 'tsx'],
   rules: {
     '@typescript-eslint/ban-types': 'off',
-    '@typescript-eslint/consistent-type-imports': 'off',
     '@typescript-eslint/indent': 'off',
     '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/no-unsafe-argument': 'off',
