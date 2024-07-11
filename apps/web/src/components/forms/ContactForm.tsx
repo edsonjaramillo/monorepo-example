@@ -13,8 +13,7 @@ const toastId = 'contact-form-toast';
 type FormSchema = z.infer<typeof zContactFormSchema>;
 
 async function onSubmit(_: FormSchema) {
-  toast.info('Sending message...', { id: toastId, duration: Number.POSITIVE_INFINITY });
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  toast.info('Sending message...', { id: toastId });
   toast.success('Message sent!', { id: toastId });
 }
 
